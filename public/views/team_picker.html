@@ -1,0 +1,12 @@
+<md-input-container>
+    <label>Match</label>
+    <md-select ng-model="match">
+        <md-option ng-repeat="match in matches" value="{{match}}">{{match}}</md-option>
+    </md-select>
+</md-input-container>
+<md-input-container>
+    <label>Team</label>
+    <md-select ng-model="team">
+        <md-option ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+    </md-select>
+</md-input-container>
