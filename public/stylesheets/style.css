@@ -8,10 +8,15 @@ a {
 }
 
 md-input-container{
-  margin-top: 5%;
+  margin-top: 10%;
   left: 5%;
   width: 90%;
-  margin: auto 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.empty{
+    height: 5%;
 }
 
 .center{
@@ -23,6 +28,11 @@ md-input-container{
   padding: 0;
   color: #ecf0f1;
 }
+
+label, md-option{
+  font-size: 20px;
+}
+
 footer{
   text-align: center;
   color: #3498db;
