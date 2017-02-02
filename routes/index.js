@@ -24,4 +24,15 @@ router.post('/new_task', function(req, res, next){
   res.send("Success!");
 });
 
+router.post('/check_pass', function(req, res, next){
+  var pass = req.param('password');
+  res.setHeader('Content-Type', 'application/json');
+  if(pass === "pass"){
+    res.send(JSON.stringify({msg: "Success!"}));
+  }
+  else{
+    res.send(JSON.stringify({msg: "Failed!"}));
+  }
+});
+
 module.exports = router;
