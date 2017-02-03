@@ -5,6 +5,11 @@ body {
 
 a {
   color: #00B7FF;
+  text-decoration: none;
+}
+
+input::-webkit-input-placeholder {
+    font-size: 15px;
 }
 
 md-input-container{
@@ -16,7 +21,7 @@ md-input-container{
 }
 
 .empty{
-    height: 5%;
+    height: 20px;
 }
 
 .center{
@@ -29,6 +34,11 @@ md-input-container{
   color: #ecf0f1;
 }
 
+.title{
+  height: 7%;
+  text-align: center;
+}
+
 label, md-option{
   font-size: 20px;
 }
@@ -36,6 +46,7 @@ label, md-option{
 footer{
   text-align: center;
   color: #3498db;
+  font-size:11px;
 }
 
 body {
@@ -86,4 +97,13 @@ body {
 
 button:focus {
     outline:none;
+}
+
+button a {
+  color: #ffffff;
+}
+
+input[type="checkbox"]{
+  width: 17px; /*Desired width*/
+  height: 17px; /*Desired height*/
 }
