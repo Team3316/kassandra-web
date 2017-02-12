@@ -29,6 +29,10 @@ md-input-container{
   text-align: center;
 }
 
+.left{
+  float:left;
+}
+
 .center > h2{
   padding: 0;
   color: #ecf0f1;
@@ -104,6 +108,25 @@ button a {
 }
 
 input[type="checkbox"]{
-  width: 17px; /*Desired width*/
-  height: 17px; /*Desired height*/
+  width: 14px; /*Desired width*/
+  height: 14px; /*Desired height*/
+  padding: 0;
+  margin:0;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+  *overflow: hidden;
+}
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+.checkbox {
+  font-size: 15px;
+}
+
+.container{
+  float:left;
 }
