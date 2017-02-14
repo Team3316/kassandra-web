@@ -37,6 +37,17 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             alert(response.data.message);
         });
     }
+
+    $scope.get_teams = function(){
+        console.log("working!");
+        $http({
+            url: "http://www.thebluealliance.com/api/v2/district/ne/2014/events",
+            headers:{
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then(function(data){
+        });
+    }
 })
     .config(function ($mdThemingProvider, $stateProvider) {
         $mdThemingProvider.theme('default')
@@ -46,7 +57,10 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         $stateProvider.state({
             name: 'team_picker',
             url: '/team_picker',
-            templateUrl: '/views/team_picker.html'
+            templateUrl: '/views/team_picker.html',
+            headers:{
+                "Access-Control-Allow-Origin": "*"
+            }
         });
         $stateProvider.state({
             name: 'about',
