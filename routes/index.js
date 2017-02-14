@@ -5,7 +5,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  //Might be needed to delete!
+  res.header('Keep-Alive', 'timeout=15, max=100');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.header('Cache-Control', 'no-cache');
   res.render(__dirname + "index.html");
 });
 

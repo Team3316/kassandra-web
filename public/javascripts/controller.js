@@ -2,7 +2,7 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = ['dan', 'shirel'];
-    $scope.teams = ['555', '666', '777'];
+    $scope.teams = ['frc555', 'frc666', 'frc777', 'frc9090', 'frc3316', 'frc5505'];
     $scope.accessToken = "OMRI_GRANTED";
     $scope.checkboxCrossLine = {
        crossLine : false
@@ -43,12 +43,21 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
 
     $scope.get_teams = function(){
         console.log("working!");
-        $http({
-            url: "http://www.thebluealliance.com/api/v2/district/ne/2014/events",
-            headers:{
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(function(data){
+        var url = "https://www.thebluealliance.com/api/v2/match/2016cmp_f1m1";
+        $http.get(url).then(function(data){
+            //console.log(JSON.stringify(data));
+            //Why I did the shit down there
+            var jdata = data[Object.keys(data)[0]];
+            var red = jdata.alliances.red.teams;
+            var blue = jdata.alliances.blue.teams;
+            console.log(JSON.stringify(red));
+            console.log(JSON.stringify(blue));
+            var teams = blue.concat(red);
+            var final = [];
+            teams.forEach(function(element) {
+                final.push(element.replace('frc', ''));
+            }, this);
+            $scope.teams = final;
         });
     }
 })

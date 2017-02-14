@@ -127,3 +127,11 @@ label {
 .container{
   float:left;
 }
+
+md-option:nth-child(-n+3){
+  color:blue!important;
+}
+
+md-option:nth-child(n+4){
+  color:red!important;
+}
