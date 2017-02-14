@@ -4,6 +4,9 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = ['dan', 'shirel'];
     $scope.teams = ['555', '666', '777'];
     $scope.accessToken = "OMRI_GRANTED";
+    $scope.checkboxCrossLine = {
+       crossLine : false
+     };
 
     $scope.checkPass = function(){
         var pass = document.getElementById("pass").value;
@@ -62,6 +65,14 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 "Access-Control-Allow-Origin": "*"
             }
         });
+
+        $stateProvider.state({
+            name: 'autonomous',
+            url: '/autonomous',
+            templateUrl: '/views/autonomous.html'
+
+        });
+
         $stateProvider.state({
             name: 'about',
             url: '/about',
