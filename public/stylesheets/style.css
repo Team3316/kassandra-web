@@ -128,10 +128,10 @@ label {
   float:left;
 }
 
-md-option:nth-child(-n+3){
-  color:blue!important;
+.ateam:nth-child(-n+3){
+  color:#3498db!important;
 }
 
-md-option:nth-child(n+4){
-  color:red!important;
+.ateam:nth-child(n+4){
+  color:#e74c3c!important;
 }

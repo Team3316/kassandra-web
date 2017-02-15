@@ -2,8 +2,16 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = ['dan', 'shirel'];
-    $scope.teams = ['frc555', 'frc666', 'frc777', 'frc9090', 'frc3316', 'frc5505'];
+    $scope.teams = [];
+    
+    var config = {headers: {
+                'Content-Type' : 'application/json; charset="utf-8"',
+                'X-TBA-App-Id' : '3316:Kassandra:2.0'
+            }
+        };
+        
     $scope.accessToken = "OMRI_GRANTED";
+
     $scope.checkboxCrossLine = {
        crossLine : false
      };
@@ -41,17 +49,24 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         });
     }
 
-    $scope.get_teams = function(){
-        console.log("working!");
-        var url = "https://www.thebluealliance.com/api/v2/match/2016cmp_f1m1";
-        $http({
-            method: 'GET',
-            url: url,
-            headers: {
-                'Cache-Control':'no-cache',
-                'X-TBA-App-Id' : '3316:Kassandra:2.0'
-            }
-        }).then(function(data){
+    $scope.get_matches = function(){
+        var url = "https://www.thebluealliance.com/api/v2/event/2016txlu/matches";
+        $http.get(url, config).then(function(data){
+            var jdata = data[Object.keys(data)[0]];
+            var matches = [];
+            jdata.forEach(function(element) {
+                var match = (element.comp_level).toUpperCase() + element.match_number + 'm' + element.set_number;
+                matches.push(match);
+                console.log(match);
+            }, this);
+            $scope.matches = matches;
+        });
+    }
+
+    $scope.get_teams = function(match){
+        var ending = "2016txlu_" + match.toLowerCase();
+        var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
+        $http.get(url, config).then(function(data){
             //console.log(JSON.stringify(data));
             //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
