@@ -44,7 +44,14 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.get_teams = function(){
         console.log("working!");
         var url = "https://www.thebluealliance.com/api/v2/match/2016cmp_f1m1";
-        $http.get(url).then(function(data){
+        $http({
+            method: 'GET',
+            url: url,
+            headers: {
+                'Cache-Control':'no-cache',
+                'X-TBA-App-Id' : '3316:Kassandra:2.0'
+            }
+        }).then(function(data){
             //console.log(JSON.stringify(data));
             //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
