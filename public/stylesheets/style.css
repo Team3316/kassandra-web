@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
 a {
@@ -36,11 +37,6 @@ md-input-container{
 .center > h2{
   padding: 0;
   color: #ecf0f1;
-}
-
-.title{
-  height: 7%;
-  text-align: center;
 }
 
 label, md-option{
@@ -125,7 +121,11 @@ label {
 }
 
 .container{
-  float:left;
+  position: relative;
+  padding-top: 10%;
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
 }
 
 .ateam:nth-child(-n+3){
@@ -134,4 +134,56 @@ label {
 
 .ateam:nth-child(n+4){
   color:#e74c3c!important;
+}
+
+.all_center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.pass-container{
+  position: absolute;
+  width: 100%;
+  top: 20%;
+  text-align: center;
+}
+
+button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 80%;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type="password"] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  font-size: 20px;
+  width: 75%;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+input[type="password"]:focus,
+input[type="password"].focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+
+.short-input{
+  width: 20px;
+}
+
+md-checkbox{
+  left: calc(50% - 150px);
+  top: 5%;
 }

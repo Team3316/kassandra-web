@@ -7,11 +7,11 @@
 </md-input-container>
 <md-input-container>
     <label>Team</label>
-    <md-select ng-model="team"> 
+    <md-select ng-model="team" id="team"> 
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
 <div class="empty"></div>
 <div class="center">
-    <a href= "/#/autonomous"/><button class="btn btn-default blue-circle-button">Submit!</button></a>
+    <button ng-click="submit_team_match(match, team);" class="btn btn-default blue-circle-button">Submit!</button>
 </div>

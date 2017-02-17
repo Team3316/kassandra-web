@@ -1,29 +1,40 @@
-<div class = "title"><h3>Autonomous</h3></div>
-<div class="left" dir="rtl">
-    <div class = "container" dir = "rtl">
-        <label class="checkbox"><span dir ="ltr">Crossed line</span>
-        <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Fuel to Top</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Fuel to Bottom</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Collected from floor</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Collected from hopper</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Gears</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Crossed from HP</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-        <label class="checkbox"><span dir ="ltr">Crossed from floor</span>
-            <md-checkbox class = "checkbox"></md-checkbox>
-        </label>
-    </div>
+<div class="container">
+<md-checkbox ng-model="c_baseline" aria-label="Finished?">
+    Crossed Baseline
+</md-checkbox><br>
+
+<md-checkbox ng-model="r_hopper" aria-label="Finished?">
+    Released Hopper
+</md-checkbox><br>
+
+<md-checkbox ng-model="c_hopper" aria-label="Finished?">
+    Collected from Hopper
+</md-checkbox><br>
+
+<md-checkbox ng-model="g_planted" aria-label="Finished?">
+    Gears Succesfuly Planted
+</md-checkbox><input class="short-input" type="number" ng-hide="!g_planted" value="1"><br>
+
+<md-checkbox ng-model="g_missed" aria-label="Finished?">
+    Gears Missed
+</md-checkbox><input class="short-input" type="number" ng-hide="!g_missed" value="1"><br>
+
+<md-checkbox ng-model="b_top" aria-label="Finished?">
+    Estimated balls to top
+</md-checkbox><input class="short-input" type="number" ng-hide="!b_top" value="1"><br>
+
+<md-checkbox ng-model="b_bottom" aria-label="Finished?">
+    Estimated balls to bottom
+</md-checkbox><input class="short-input" type="number" ng-hide="!b_bottom" value="1"><br>
+
+<md-checkbox ng-model="i_sniper" aria-label="Finished?">
+    Is a good sniper
+</md-checkbox><br>
+
+<md-checkbox ng-model="i_spiller" aria-label="Finished?">
+    Is a good spiller
+</md-checkbox>
+<div class="center">
+<button id="submit">Submit</button>
+<div class="center">
 </div>
