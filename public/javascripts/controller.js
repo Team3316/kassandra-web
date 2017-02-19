@@ -121,10 +121,18 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         });
 
         $stateProvider.state({
-            name: 'about',
-            url: '/about',
-            template: '<h3>Its the UI-Router hello world app!</h3>'
+            name: 'teleop',
+            url: '/teleop',
+            templateUrl: '/views/teleop.html'
         });
+
+        
+        $stateProvider.state({
+            name: 'defense',
+            url: '/defense',
+            templateUrl: '/views/defense.html'
+        });
+
         $stateProvider.state({
             name: 'login',
             url: '/login',

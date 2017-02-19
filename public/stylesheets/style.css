@@ -183,3 +183,20 @@ input[type="number"]{
   margin:auto;
   display: table;
 }
+
+.comments-types{
+  color:#9CB3BA;
+  font-size: 14px;
+  font-style: italic; 
+}
+
+.text-comment{
+  font-size: 14px;
+  text-align: center;
+  margin: auto;
+}
+
+#Content{
+  height: 100%;
+  overflow-y: scroll;
+}
