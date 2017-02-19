@@ -44,4 +44,8 @@ router.post('/check_pass', function(req, res, next){
   res.send(JSON.stringify({ message : msg }));
 });
 
+router.post('/submit', function(req, res, next){
+  
+});
+
 module.exports = router;

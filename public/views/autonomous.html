@@ -1,40 +1,21 @@
 <div class="container">
-<md-checkbox ng-model="c_baseline" aria-label="Finished?">
-    Crossed Baseline
-</md-checkbox><br>
 
-<md-checkbox ng-model="r_hopper" aria-label="Finished?">
-    Released Hopper
-</md-checkbox><br>
+<CENTER><h1>Autonomous</h1></CENTER>
+<div class="content">
+    <input type="checkbox"/><span>Crossed baseline</span><br>
+    <input type="checkbox"/><span>Released hopper</span><br>
+    <input type="checkbox"/><span>Collected from hopper</span><br>
+    <span>Successfully planted gears: </span><input type="number"/><br>
+    <span>Missed gears: </span><input type="number"/><br>
+    <span>Balls to top: </span><input type="number"/><br>
+    <span>Balls to bottom: </span><input type="number"/><br>
+    <span>Ball misses: </span><input type="number"/><br>
+    <input type="checkbox"/><span>Is sniper</span><br>
+    <input type="checkbox"/><span>Is spiller</span><br>
+</div>
 
-<md-checkbox ng-model="c_hopper" aria-label="Finished?">
-    Collected from Hopper
-</md-checkbox><br>
-
-<md-checkbox ng-model="g_planted" aria-label="Finished?">
-    Gears Succesfuly Planted
-</md-checkbox><input class="short-input" type="number" ng-hide="!g_planted" value="1"><br>
-
-<md-checkbox ng-model="g_missed" aria-label="Finished?">
-    Gears Missed
-</md-checkbox><input class="short-input" type="number" ng-hide="!g_missed" value="1"><br>
-
-<md-checkbox ng-model="b_top" aria-label="Finished?">
-    Estimated balls to top
-</md-checkbox><input class="short-input" type="number" ng-hide="!b_top" value="1"><br>
-
-<md-checkbox ng-model="b_bottom" aria-label="Finished?">
-    Estimated balls to bottom
-</md-checkbox><input class="short-input" type="number" ng-hide="!b_bottom" value="1"><br>
-
-<md-checkbox ng-model="i_sniper" aria-label="Finished?">
-    Is a good sniper
-</md-checkbox><br>
-
-<md-checkbox ng-model="i_spiller" aria-label="Finished?">
-    Is a good spiller
-</md-checkbox>
 <div class="center">
-<button id="submit">Submit</button>
-<div class="center">
+    <button id="submit">Submit</button>
+</div>
+
 </div>
