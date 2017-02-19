@@ -122,15 +122,29 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
 
         $stateProvider.state({
             name: 'teleop',
-            url: '/teleop',
+            url: '/teleop/:match/:team',
             templateUrl: '/views/teleop.html'
         });
+
+        $stateProvider.state({
+            name: 'final_page',
+            url: '/final_page/:match/:team',
+            templateUrl: '/views/final_page.html'
+        });
+
 
         
         $stateProvider.state({
             name: 'defense',
-            url: '/defense',
-            templateUrl: '/views/defense.html'
+            url: '/defense/:match/:team',
+            templateUrl: '/views/defense.html',
+            controller: function($scope, $stateParams){
+                $scope.match = $stateParams.match;
+                $scope.team = $stateParams.team;
+                console.log("match: " + $stateParams.match);
+                console.log("team: " + $stateParams.team);
+                $scope.get_teams($scope.match);
+            }
         });
 
         $stateProvider.state({

@@ -1,11 +1,34 @@
 <div class="center">
-    <h1>Defense</h1>
+    <h1>Defense (Alternative)</h1>
 </div>
-<div class = "content-defense"></div>
+<div class = "content-defense">
+        
+    <md-input-container>
+        <label>Defence on</label>
+        <md-select ng-model="team" id="team"> 
+            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container>
+        <label>Defenced by</label>
+        <md-select ng-model="team" id="team"> 
+            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+        </md-select>
+    </md-input-container>
+
+</div>
 
 <div class = "text-comment">
-    <p class = "comments-types">Comments</p>
+    <p class = "comments-types">Defense Comments </p>
     <textarea rows="8" cols="50" name:"FinalComments">
 
     </textarea>
+
+ <div class = "empty"></div>
+
+<div class="center">
+    <button id="submit" ui-sref= "final_page" >Submit</button>
+</div>
+
 </div>
