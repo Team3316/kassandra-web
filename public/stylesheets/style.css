@@ -196,7 +196,12 @@ input[type="number"]{
   margin: auto;
 }
 
-#Content{
-  height: 100%;
+.field{
+  background-image: url("../images/Shooting.png");
+  background-size: 100% 100%;
+}
+
+#content{
+  height:100%;
   overflow-y: scroll;
 }

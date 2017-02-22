@@ -1,19 +1,19 @@
-<div class="container">
-
-<CENTER><h1>Autonomous</h1></CENTER>
+<div class="center"><h1>Autonomous</h1></div>
 <div class="content">
     <label><input type="checkbox"/> Tried and failed</label>
     <label><input type="checkbox"/> Crossed baseline</label>
     <label><input type="checkbox"/> Collected from floor (Balls)</label>
     <span>Released hopper </span><input type="number"/><br>
     <label><input type="checkbox"/> Collected from hopper</label>
+    <div class="empty"></div>
     <span>Successfully planted gears: </span><input type="number"/><br>
     <span>Missed gears: </span><input type="number"/><br>
     <span>Estimated points: </span><input type="number"/><br>
+    <div class="empty"></div>
+    <canvas id="myCanvas" class="field" ng-click="addOnClick($event)" width="300" height="279"></canvas>
+    <p class="center" ng-click="clear()">Clear</div>
 </div>
 
 <div class="center">
-    <button id="submit" ui-sref= "teleop">Submit</button>
-</div>
-
+    <button id="submit">Submit</button>
 </div>

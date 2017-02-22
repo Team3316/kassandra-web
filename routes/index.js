@@ -34,9 +34,8 @@ router.post('/check_pass', function(req, res, next){
   console.log("pass = " + pass)
   var msg = "";
   res.setHeader('Content-Type', 'application/json');
-  if(pass === "SUPER_SECRET_PASSWORD"){
-    console.log("tootim");
-    msg="Success!";
+  if(pass === "pass"){
+    msg="OMRI_GRANTED";
   }
   else{
       msg = "failed!!";

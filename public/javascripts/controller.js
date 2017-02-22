@@ -3,19 +3,45 @@ var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = [];
     $scope.teams = [];
+
+    //canvas for field
+    var canvas;
+    var context;
     
+    //intialize canvas shit
+    angular.element(document).ready(function () {
+        canvas = document.getElementById('myCanvas');
+        context = canvas.getContext('2d');
+    }); 
+
+    //headers for api calls
     var config = {
         headers: {
             'Content-Type' : 'application/json; charset="utf-8"',
             'X-TBA-App-Id' : '3316:Kassandra:2.0'
         }
     };
+
+    var coordinates = [];
         
     $scope.accessToken = "OMRI_GRANTED";
 
-    $scope.checkboxCrossLine = {
-       crossLine : false
-     };
+    $scope.addOnClick = function(event){
+        var x = event.offsetX;
+        var y = event.offsetY;
+        //console.log("x: " + x + ", y: " + y);
+        coordinates.push({x, y});
+        console.log(coordinates);       
+        context.beginPath();
+        context.strokeStyle = "#e74c3c";
+        context.arc(x, y, 10, 0, 2 * Math.PI, false);
+        context.stroke();
+    }
+
+    $scope.clear = function(){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        coordinates = [];
+    }
 
     $scope.checkPass = function(){
         var pass = document.getElementById("pass").value;
@@ -24,33 +50,20 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             url: '/check_pass',
             data: {password: pass}
         }).then(function successCallback(response){
-            alert(response.data.message);
-        })
-        .error(function(){
-            checkPass();
+            if(response.data.message === "OMRI_GRANTED"){
+                $cookies.put('access_token', 'OMRI_GRANTED');
+                console.log($cookies.get("access_token"));
+                //$cookies.remove('access_token');
+            }
         });
     }
 
     $scope.init = function(){
         console.log("init!");
         var accessToken = $cookies.get("access_token");
-        if(accessToken === 'OMRI_GRANTED'){
-            $location.path('/team_picker');
+        if(accessToken !== 'OMRI_GRANTED'){
+            window.location.href = '#/login';
         }
-        else{
-            console.log("not logged in!");
-        }
-    }
-
-    $scope.login = function(){
-        var pass = document.getElementById("pass").value;
-        $http.post({
-            method:'POST',
-            url: '/check_pass',
-            data: {password: pass}
-        }).then(function successCallback(response){
-            alert(response.data.message);
-        });
     }
 
     //these matches are a test only
@@ -94,7 +107,7 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             location.href = "/#/autonomous/" + m + "/" + t;
     }
 })
-    .config(function ($mdThemingProvider, $stateProvider) {
+.config(function ($mdThemingProvider, $stateProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('cyan')
             .accentPalette('teal');
@@ -103,8 +116,8 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             name: 'team_picker',
             url: '/team_picker',
             templateUrl: '/views/team_picker.html',
-            headers:{
-                "Access-Control-Allow-Origin": "*"
+            controller: function($scope){
+                $scope.init();
             }
         });
 
@@ -117,19 +130,26 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 $scope.team = $stateParams.team;
                 console.log("match: " + $stateParams.match);
                 console.log("team: " + $stateParams.team);
+                $scope.init();
             }
         });
 
         $stateProvider.state({
             name: 'teleop',
             url: '/teleop/:match/:team',
-            templateUrl: '/views/teleop.html'
+            templateUrl: '/views/teleop.html',
+            controller: function($scope){
+                $scope.init();
+            }
         });
 
         $stateProvider.state({
             name: 'final_page',
             url: '/final_page/:match/:team',
-            templateUrl: '/views/final_page.html'
+            templateUrl: '/views/final_page.html',
+            controller: function($scope){
+                $scope.init();
+            }
         });
 
 
@@ -143,7 +163,7 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 $scope.team = $stateParams.team;
                 console.log("match: " + $stateParams.match);
                 console.log("team: " + $stateParams.team);
-                $scope.get_teams($scope.match);
+                $scope.init();
             }
         });
 
