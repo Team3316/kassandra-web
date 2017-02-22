@@ -40,7 +40,7 @@ md-input-container{
 }
 
 label, md-option{
-  font-size: 20px;
+  font-size: 17px;
 }
 
 footer{
@@ -162,6 +162,20 @@ button {
     cursor: pointer;
 }
 
+button:visited{
+    background-color: #cedbe9;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 80%;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
 input[type="password"] {
   padding: 10px;
   border: solid 1px #dcdcdc;
@@ -204,4 +218,18 @@ input[type="number"]{
 #content{
   height:100%;
   overflow-y: scroll;
+}
+
+#clearButton{
+    background-color: #99B1B7;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 50%;
+    margin: 4px 2px;
+    cursor: pointer;
 }
