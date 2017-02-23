@@ -4,6 +4,9 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = [];
     $scope.teams = [];
 
+    //to delete
+    //$cookies.remove("access_token");
+
     //canvas for field
     var canvas;
     var context;
