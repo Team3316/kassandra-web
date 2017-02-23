@@ -1,4 +1,3 @@
-
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = [];
@@ -114,6 +113,12 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         $mdThemingProvider.theme('default')
             .primaryPalette('cyan')
             .accentPalette('teal');
+
+        $stateProvider.state({
+            name: 'login',
+            url: '/login',
+            templateUrl: '/views/login.html'
+        });    
 
         $stateProvider.state({
             name: 'team_picker',

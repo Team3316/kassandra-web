@@ -26,8 +26,10 @@ md-input-container{
 }
 
 .center{
+  vertical-align: middle;
   font-size: 20px;
   text-align: center;
+  margin:auto;
 }
 
 .left{
