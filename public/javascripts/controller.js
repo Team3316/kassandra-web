@@ -56,8 +56,7 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         }).then(function successCallback(response){
             if(response.data.message === "OMRI_GRANTED"){
                 $cookies.put('access_token', 'OMRI_GRANTED');
-                console.log($cookies.get("access_token"));
-                //$cookies.remove('access_token');
+                window.location.href = "#/team_picker";
             }
         });
     }
