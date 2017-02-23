@@ -10,12 +10,13 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     //canvas for field
     var canvas;
     var context;
-    
-    //intialize canvas shit
-    angular.element(document).ready(function () {
-        canvas = document.getElementById('myCanvas');
-        context = canvas.getContext('2d');
-    }); 
+
+    $scope.find_canvas = function(){
+        while(canvas === undefined && context === undefined){
+            canvas = document.getElementById('myCanvas');
+            context = canvas.getContext('2d');
+        }
+    };
 
     //headers for api calls
     var config = {
