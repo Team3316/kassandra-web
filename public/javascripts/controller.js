@@ -159,8 +159,6 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 $scope.init();
             }
         });
-
-
         
         $stateProvider.state({
             name: 'defense',
@@ -173,11 +171,5 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 console.log("team: " + $stateParams.team);
                 $scope.init();
             }
-        });
-
-        $stateProvider.state({
-            name: 'login',
-            url: '/login',
-            templateUrl: '/views/login.html' 
         });
 });
