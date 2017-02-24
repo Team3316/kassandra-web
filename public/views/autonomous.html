@@ -1,19 +1,32 @@
-<div class="center"><h1>Autonomous</h1></div>
+<div class="center"><h3>Autonomous</h3></div>
 <div class="content">
+
+    <p class= "comments-types">move</p>
+
     <label><input type="checkbox"/> Tried and failed</label>
     <label><input type="checkbox"/> Crossed baseline</label>
-    <label><input type="checkbox"/> Collected from floor (Balls)</label>
-    <span>Released hopper </span><input type="number"/><br>
+    
+    <p class= "comments-types">Fuel</p>
+    <label><input type="checkbox"/> Collected from floor</label>
     <label><input type="checkbox"/> Collected from hopper</label>
-    <div class="empty"></div>
-    <span>Successfully planted gears: </span><input type="number"/><br>
-    <span>Missed gears: </span><input type="number"/><br>
-    <span>Estimated points: </span><input type="number"/><br>
+    <label>Estimated points: <input type="number"/><br></label>
+
+    <p class= "comments-types">Gears</p>
+
+    <label>Successfully planted gears: <input type="number"/><br></label>
+    <label>Missed gears: <input type="number"/><br></label>
+
+    <p class= "comments-types">Hoppers</p>
+    <label>Released hopper <input type="number"/><br></label>
+
     <div class="empty"></div>
     <canvas id="myCanvas" class="field" ng-click="addOnClick($event)" width="300" height="279"></canvas>
-    <p ng-init="find_canvas();" class="center" ng-click="clear()">Clear</div>
+
+    <div class="center" >
+        <button id = "clearButton" ng-click="clear()">Clear
+    </div>
 </div>
 
 <div class="center">
-    <button id="submit">Submit</button>
+    <button ui-sref="teleop">Submit</button>
 </div>
