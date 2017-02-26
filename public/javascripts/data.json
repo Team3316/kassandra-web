@@ -1,17 +1,19 @@
-[{
+{
+    "match":"1",
     "team":"0000",
-    "match":"1", 
     "auto":{
         "triedAndFailed":"no",
-        "croseedBaseline":"no",
+        "crosedBaseline":"no",
         "fuelCollectedFromFloor":"no",
         "fuelCollectedFromHopper":"no",
         "estimatedPoints":"0",
         "succeessfullyPlantedGears":"0",
         "missedGears":"0",
         "releasedHopper":"0",
-        "shoutingFromX":"0",
-        "shoutingFromY":"0"   
+        "coordinates":{
+            "x":"NaN",
+            "y":"NaN"  
+        }
     },
     "teleop":{
         "releasedHopper":"0",
@@ -32,4 +34,4 @@
     },
     "generalComments":""
 
-}]
+}

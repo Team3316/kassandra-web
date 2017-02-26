@@ -1,17 +1,17 @@
 <div class="empty"></div>
 <md-input-container ng-init="get_matches();">
     <label>Match</label>
-    <md-select ng-model="match" ng-change="get_teams(match);" class="matches">
+    <md-select ng-model="matchSelected" ng-change="get_teams(matchSelected);" class="matches">
         <md-option ng-repeat="match in matches" value="{{match}}">{{match}}</md-option>
     </md-select>
 </md-input-container>
 <md-input-container>
     <label>Team</label>
-    <md-select ng-model="team" id="team"> 
+    <md-select ng-model="teamSelected" id="team"> 
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
 <div class="empty"></div>
 <div class="center">
-    <button ng-click="submit_team_match(match, team);" >Submit!</button>
+    <button ng-click="submit_team_match(matchSelected, teamSelected);" >Submit!</button>
 </div>

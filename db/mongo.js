@@ -1,12 +1,15 @@
 var mongoose = require('mongoose');
 var exports = module.exports = {};
 
-mongoose.connect('mongodb://localhost:27017/test');
+mongoose.connect('mongodb://localhost:27017/DATA');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 var tasks = new mongoose.Schema({done: Boolean, task: String, date: Date}); 
 var Task = mongoose.model('Task', tasks);
+
+var teams = new mongoose.Schema({teamNo: String}); 
+var Team = mongoose.model('Team', teams);
 
 db.once('open', function() {
   console.log("connected!");
@@ -24,6 +27,17 @@ exports.newTask = function (task){
   commit(task);
 };
 
+exports.newTeam = function (team){
+  if(!team){
+    return;
+  }
+  var team = new Team({teamNo: team});
+   team.save(function(err, task){
+        if (err) return console.error(err);
+        console.log("added!");
+  });
+};
+
 exports.getTasks = function (res){
   console.log("lol");
   Task.find({}, function(err, doc){
@@ -34,6 +48,12 @@ exports.getTasks = function (res){
     }, this);
     res.contentType('application/json');
     res.send(JSON.stringify(all));
+  });
+};
+
+exports.getTeams = function (res){
+  Team.find({}, function(err, doc){
+    res.send(JSON.stringify(doc));
   });
 };
 
