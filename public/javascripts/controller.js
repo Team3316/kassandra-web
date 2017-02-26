@@ -2,13 +2,15 @@ var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.matches = [];
     $scope.teams = [];
-
     //to delete
     //$cookies.remove("access_token");
 
     //canvas for field
-    var canvas;
-    var context;
+    var canvas = undefined;
+    var context= undefined;
+
+    var canvas2= undefined;
+    var context2= undefined;
 
     $scope.find_canvas = function(){
         while(canvas === undefined && context === undefined){
@@ -16,6 +18,13 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             context = canvas.getContext('2d');
         }
     };
+
+    $scope.find_canvas2 = function(){
+        while(canvas2 === undefined && context2 === undefined){
+            canvas2 = document.getElementById('myCanvas');
+            context2 = canvas.getContext('2d');
+        }
+    }
 
     //headers for api calls
     var config = {
@@ -26,24 +35,59 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     };
 
     var coordinates = [];
+    var coordinates2 = [];
         
     $scope.accessToken = "OMRI_GRANTED";
 
     $scope.addOnClick = function(event){
-        var x = event.offsetX;
-        var y = event.offsetY;
-        //console.log("x: " + x + ", y: " + y);
-        coordinates.push({x, y});
-        console.log(coordinates);       
-        context.beginPath();
-        context.strokeStyle = "#e74c3c";
-        context.arc(x, y, 10, 0, 2 * Math.PI, false);
-        context.stroke();
+        if(canvas.getContext){
+            var x = event.offsetX;
+            var y = event.offsetY;
+            //console.log("x: " + x + ", y: " + y);
+            coordinates.push({x, y});
+            console.log(coordinates);       
+            context.beginPath();
+            context.strokeStyle = "#e74c3c";
+            context.arc(x, y, 10, 0, 2 * Math.PI, false);
+            context.stroke();
+        }
+        else{
+            find_canvas();
+        }
+    }
+
+    $scope.addOnClick2 = function(event){
+        if(canvas2.getContext){
+            var x = event.offsetX;
+            var y = event.offsetY;
+            //console.log("x: " + x + ", y: " + y);
+            coordinates2.push({x, y});
+            console.log("2:" + coordinates2);       
+            context2.beginPath();
+            context2.strokeStyle = "#e74c3c";
+            context2.arc(x, y, 10, 0, 2 * Math.PI, false);
+            context2.stroke();
+        }
+        else{
+            find_canvas2();
+        }
     }
 
     $scope.clear = function(){
         context.clearRect(0, 0, canvas.width, canvas.height);
         coordinates = [];
+    }
+
+    $scope.undo = function(){
+        coordinates.pop();
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        coordinates.forEach(function(element) {
+            console.log(element.x + "," + element.y)
+            context.beginPath();
+            context.strokeStyle = "#e74c3c";
+            context.arc(element.x, element.y, 10, 0, 2 * Math.PI, false);
+            context.stroke();
+        }, this);
     }
 
     $scope.checkPass = function(){
@@ -66,6 +110,10 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         if(accessToken !== 'OMRI_GRANTED'){
             window.location.href = '#/login';
         }
+    }
+
+    $scope.admin = function(){
+        console.log("make admin cookie");
     }
 
     //these matches are a test only
@@ -108,6 +156,27 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         if(t != undefined && m != undefined)
             location.href = "/#/autonomous/" + m + "/" + t;
     }
+
+    $scope.teleop = function(){
+        location.href = "/#/teleop/" + $scope.match + "/" + $scope.team;
+    }
+
+    $scope.pull_matches = function(){
+        //pull matches from data base
+        $scope.db_matches = ["QM3", "QM2", "QM1"];
+    }
+
+    $scope.pull_teams = function(){
+        $scope.db_teams = ["0002", "1232", "3232"];
+    }
+
+    $scope.team_selected = function(team){
+        document.getElementById("link_area").innerHTML += "<a href="+team+">" +team+ "</a>"
+    }
+    
+    $scope.match_selected = function(match){
+        document.getElementById("link_area").innerHTML += "<a href="+match+">" +match+ "</a>"
+    }
 })
 .config(function ($mdThemingProvider, $stateProvider) {
         $mdThemingProvider.theme('default')
@@ -146,7 +215,11 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             name: 'teleop',
             url: '/teleop/:match/:team',
             templateUrl: '/views/teleop.html',
-            controller: function($scope){
+            controller: function($scope, $stateParams){
+                $scope.match = $stateParams.match;
+                $scope.team = $stateParams.team;
+                console.log("match: " + $stateParams.match);
+                console.log("team: " + $stateParams.team);
                 $scope.init();
             }
         });
@@ -170,6 +243,15 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
                 console.log("match: " + $stateParams.match);
                 console.log("team: " + $stateParams.team);
                 $scope.init();
+            }
+        });
+
+        $stateProvider.state({
+            name: 'admin',
+            url: '/admin',
+            templateUrl: '/views/admin.html',
+            controller: function($scope, $stateParams){
+                $scope.admin();
             }
         });
 });

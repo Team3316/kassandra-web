@@ -20,13 +20,13 @@
     <label>Released hopper <input type="number"/><br></label>
 
     <div class="empty"></div>
-    <canvas id="myCanvas" class="field" ng-click="addOnClick($event)" width="300" height="279"></canvas>
-
     <div class="center" >
-        <button id = "clearButton" ng-click="clear()">Clear
+        <button class = "btn" ng-click="clear()">Clear</button>
+        <button class = "btn" ng-click="undo()">Undo</button>
     </div>
+    <canvas id="myCanvas" class="field" ng-click="addOnClick($event)" width="300" height="279"></canvas>
 </div>
 
 <div class="center">
-    <button ui-sref="teleop">Submit</button>
+    <button ng-click="teleop()">Submit</button>
 </div>
