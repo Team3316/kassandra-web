@@ -8,8 +8,45 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var tasks = new mongoose.Schema({done: Boolean, task: String, date: Date}); 
 var Task = mongoose.model('Task', tasks);
 
-var teams = new mongoose.Schema({teamNo: String}); 
-var Team = mongoose.model('Team', teams);
+var cycle = new mongoose.Schema({
+    match:Number,
+    team:Number,
+    auto:{
+        triedAndFailed: Boolean,
+        crosedBaseline:Boolean,
+        fuelCollectedFromFloor:Boolean,
+        fuelCollectedFromHopper:Boolean,
+        estimatedPoints:Number,
+        succeessfullyPlantedGears:Number,
+        missedGears:Number,
+        releasedHopper:Number,
+        coordinates:{
+            x:Number,
+            y:Number  
+        }
+    },
+    teleop:{
+        releasedHopper:Number,
+        gearsCollectedFromHP:Boolean,
+        gearsCollectedFromFloor:Boolean,
+        plantedGears:Number,
+        missedGears:Number,
+        fuelCollectedFromFloor:Boolean,
+        fuelCollectedFromHP:Boolean,
+        estimatedPoints:Number,
+        climbingTriedFailed:Boolean,
+        climbingSuccess:Number
+    },
+    defense:{
+        defenseOn:Number,
+        defenseBy:Number,
+        defenseComments:String
+    },
+    generalComments:String
+
+}); 
+
+var Cycle = mongoose.model("myCycle", cycle);
 
 db.once('open', function() {
   console.log("connected!");
@@ -35,6 +72,18 @@ exports.newTeam = function (team){
    team.save(function(err, task){
         if (err) return console.error(err);
         console.log("added!");
+  });
+};
+
+
+exports.newCycle = function (cycle){
+  if(!cycle){
+    return;
+  }
+  var cycle = new Cycle(cycle);
+   cycle.save(function(err, task){
+        if (err) return console.error(err);
+        console.log("Added cycle !");
   });
 };
 

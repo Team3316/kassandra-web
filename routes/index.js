@@ -36,6 +36,12 @@ router.post('/new_team', function(req, res, next){
   res.send("Success!");
 });
 
+router.post('/new_cycle',function(req,res,next){
+  //var cycle = req.params.body);  
+  mongo.newCycle(cycle);
+  res.send("Success!");
+});
+
 router.post('/check_pass', function(req, res, next){
   console.log("try!");
   var pass = req.param('password');

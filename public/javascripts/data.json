@@ -2,10 +2,10 @@
     "match":"1",
     "team":"0000",
     "auto":{
-        "triedAndFailed":"no",
-        "crosedBaseline":"no",
-        "fuelCollectedFromFloor":"no",
-        "fuelCollectedFromHopper":"no",
+        "triedAndFailed":false,
+        "crosedBaseline":false,
+        "fuelCollectedFromFloor":false,
+        "fuelCollectedFromHopper":false,
         "estimatedPoints":"0",
         "succeessfullyPlantedGears":"0",
         "missedGears":"0",
@@ -17,15 +17,15 @@
     },
     "teleop":{
         "releasedHopper":"0",
-        "gearsCollectedFromHP":"no",
-        "gearsCollectedFromFloor":"no",
+        "gearsCollectedFromHP":false,
+        "gearsCollectedFromFloor":false,
         "plantedGears":"0",
         "missedGears":"0",
-        "fuelCollectedFromFloor":"no",
-        "fuelCollectedFromHP":"no",
+        "fuelCollectedFromFloor":false,
+        "fuelCollectedFromHP":false,
         "estimatedPoints":"0",
-        "climbingTriedFailed":"no",
-        "climbingSuccess":"no"
+        "climbingTriedFailed":false,
+        "climbingSuccess":false
     },
     "defense":{
         "defenseOn":"0000",

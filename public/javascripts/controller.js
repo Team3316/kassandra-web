@@ -43,11 +43,7 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         context.stroke();
     }
 
-    $scope.updateTeam_picker = function(){
-        $scope.allData.team = $scope.team;
-        $scope.allData.match = $scope.match;
-        
-    }
+
 
 
     $scope.clear = function () {
@@ -121,6 +117,12 @@ app.controller('ctr', function ($scope, $http, $cookies) {
             location.href = "/#/autonomous/" + m + "/" + t;
     }
 
+        $scope.updateTeam_picker = function(){
+        $scope.allData.team = $scope.team;
+        $scope.allData.match = $scope.match;
+        
+    }
+
     $scope.updateAuto = function(triedAndFailed,crosedBaseline,fuelCollectedFromFloor,fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper){
         
         $scope.allData.auto.triedAndFailed = triedAndFailed;
@@ -157,15 +159,18 @@ app.controller('ctr', function ($scope, $http, $cookies) {
     }
 
     $scope.finalButton = function(generalComments) {
+        
         $scope.allData.generalComments = generalComments;
+
+        $http.post('/new_team', "cycle").then(function (data) {
+            console.log(data);
+            }, function (err) {
+            console.log(err);
+        });
+
     }
 
-    $http.post('/new_team', {"team":$scope.allData} ).then(function (data) {
-        console.log(data);
-        console.log("DanSUBMIT");
-    }, function (err) {
-        console.log(err);
-    });
+
     
     $http.get('/teams').then(function (data) {
         $scope.getdata = data.data;
