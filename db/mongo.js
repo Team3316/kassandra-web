@@ -9,7 +9,7 @@ var tasks = new mongoose.Schema({done: Boolean, task: String, date: Date});
 var Task = mongoose.model('Task', tasks);
 
 var cycle = new mongoose.Schema({
-    match:Number,
+    match:String,
     team:Number,
     auto:{
         triedAndFailed: Boolean,
@@ -21,8 +21,7 @@ var cycle = new mongoose.Schema({
         missedGears:Number,
         releasedHopper:Number,
         coordinates:{
-            x:Number,
-            y:Number  
+            coords:Array
         }
     },
     teleop:{
@@ -35,7 +34,10 @@ var cycle = new mongoose.Schema({
         fuelCollectedFromHP:Boolean,
         estimatedPoints:Number,
         climbingTriedFailed:Boolean,
-        climbingSuccess:Number
+        climbingSuccess:Number,
+        coordinates:{
+            coords:Array
+        }
     },
     defense:{
         defenseOn:Number,
@@ -46,7 +48,7 @@ var cycle = new mongoose.Schema({
 
 }); 
 
-var Cycle = mongoose.model("myCycle", cycle);
+var Cycle = mongoose.model("Cycle", cycle);
 
 db.once('open', function() {
   console.log("connected!");
@@ -102,6 +104,24 @@ exports.getTasks = function (res){
 
 exports.getTeams = function (res){
   Team.find({}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getCycles = function (){
+  Cycle.find({}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getCycleByTeam = function (id){
+  Cycle.find({team: id}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getCycleByMatch = function (id){
+  Cycle.find({match: id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };

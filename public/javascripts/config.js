@@ -1,4 +1,4 @@
-app.config(function ($mdThemingProvider, $stateProvider) {
+app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('cyan')
         .accentPalette('teal');
@@ -58,13 +58,15 @@ app.config(function ($mdThemingProvider, $stateProvider) {
 
     $stateProvider.state({
         name: 'login',
-        url: '/login',
+        url: '/',
         templateUrl: '/views/login.html'
     });
 
     $stateProvider.state({
-        name: 'data',
-        url: '/data',
-        templateUrl: '/views/data.html'
+        name: 'admin',
+        url: '/admin',
+        templateUrl: '/views/admin.html'
     });
+
+    $urlRouterProvider.otherwise('/');
 });

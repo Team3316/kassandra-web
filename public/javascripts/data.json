@@ -1,35 +1,37 @@
 {
-    "match":"1",
-    "team":"0000",
+    "match":"",
+    "team":0,
     "auto":{
         "triedAndFailed":false,
         "crosedBaseline":false,
         "fuelCollectedFromFloor":false,
         "fuelCollectedFromHopper":false,
-        "estimatedPoints":"0",
-        "succeessfullyPlantedGears":"0",
-        "missedGears":"0",
-        "releasedHopper":"0",
+        "estimatedPoints":0,
+        "succeessfullyPlantedGears":0,
+        "missedGears":0,
+        "releasedHopper":0,
         "coordinates":{
-            "x":"NaN",
-            "y":"NaN"  
+            "coords": []
         }
     },
     "teleop":{
-        "releasedHopper":"0",
+        "releasedHopper":0,
         "gearsCollectedFromHP":false,
         "gearsCollectedFromFloor":false,
-        "plantedGears":"0",
-        "missedGears":"0",
+        "plantedGears":0,
+        "missedGears":0,
         "fuelCollectedFromFloor":false,
         "fuelCollectedFromHP":false,
-        "estimatedPoints":"0",
+        "estimatedPoints":0,
         "climbingTriedFailed":false,
-        "climbingSuccess":false
+        "climbingSuccess":false,
+        "coordinates":{
+            "coords": []
+        }
     },
     "defense":{
-        "defenseOn":"0000",
-        "defenseBy":"0000",
+        "defenseOn":0,
+        "defenseBy":0,
         "defenseComments":""
     },
     "generalComments":""

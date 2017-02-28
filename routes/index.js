@@ -14,30 +14,31 @@ router.get('/', function(req, res, next) {
   res.render(__dirname + "index.html");
 });
 
-/* GET tasks json. */
-router.get('/get_tasks', function(req, res, next) {
+router.get('/get_cycles', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
   console.log("called");
-  mongo.getTasks(res);
+  mongo.getCycles();
   console.log("called");
 });
 
-router.get('/teams', function(req, res, next) {
+router.get('/get_cycles_by_team', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
+  var id = req.param('team'); 
   console.log("called");
-  mongo.getTeams(res);
+  mongo.getCycleByTeam(id);
   console.log("called");
 });
 
-router.post('/new_team', function(req, res, next){
-  console.log("new team!");
-  var team = req.param('team');
-  mongo.newTeam(team);
-  res.send("Success!");
+router.get('/get_cycles_by_match', function(req, res, next) {
+  //res.setHeader('Content-Type', 'application/json');
+  var id = req.param('match');   
+  console.log("called");
+  mongo.getCycleByMatch(id);
+  console.log("called");
 });
 
 router.post('/new_cycle',function(req,res,next){
-  //var cycle = req.params.body);  
+  var cycle = req.param('allData');  
   mongo.newCycle(cycle);
   res.send("Success!");
 });
@@ -55,10 +56,6 @@ router.post('/check_pass', function(req, res, next){
       msg = "failed!!";
   }
   res.send(JSON.stringify({ message : msg }));
-});
-
-router.post('/submit', function(req, res, next){
-  
 });
 
 module.exports = router;

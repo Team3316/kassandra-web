@@ -1,5 +1,5 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr', function ($scope, $http, $cookies) {
+app.controller('ctr', function ($scope, $http, $cookies, $location) {
     $scope.matches = [];
     $scope.teams = [];
     //to delete
@@ -17,19 +17,19 @@ app.controller('ctr', function ($scope, $http, $cookies) {
     var canvas2 = null;
     var context2 = null;
 
-    $scope.find_canvas = function(){
-        while(canvas === null){
+    $scope.find_canvas = function () {
+        while (canvas === null) {
             canvas = document.getElementById('myCanvas');
-            if(canvas){
+            if (canvas) {
                 context = canvas.getContext('2d');
             }
         }
     };
-    $scope.find_canvas2 = function(){
+    $scope.find_canvas2 = function () {
         console.log("poop");
-        while(canvas2 === null){
+        while (canvas2 === null) {
             canvas2 = document.getElementById('myCanvas2');
-            if(canvas2){
+            if (canvas2) {
                 context2 = canvas2.getContext('2d');
             }
         }
@@ -45,52 +45,52 @@ app.controller('ctr', function ($scope, $http, $cookies) {
             'X-TBA-App-Id': '3316:Kassandra:2.0'
         }
     };
-        
+
     $scope.accessToken = "OMRI_GRANTED";
 
-    $scope.addOnClick = function(event){
-        if(canvas.getContext){
+    $scope.addOnClick = function (event) {
+        if (canvas.getContext) {
             var x = event.offsetX;
             var y = event.offsetY;
             //console.log("x: " + x + ", y: " + y);
-            coordinates.push({x, y});
-            console.log(coordinates);       
+            coordinates.push({ x, y });
+            console.log(coordinates);
             context.beginPath();
             context.strokeStyle = "#e74c3c";
             context.arc(x, y, 10, 0, 2 * Math.PI, false);
             context.stroke();
         }
-        else{
+        else {
             find_canvas();
         }
     }
 
-    $scope.addOnClick2 = function(event){
-        if(canvas2.getContext){
+    $scope.addOnClick2 = function (event) {
+        if (canvas2.getContext) {
             var x = event.offsetX;
             var y = event.offsetY;
             //console.log("x: " + x + ", y: " + y);
-            coordinates2.push({x, y});
-            console.log(coordinates2);       
+            coordinates2.push({ x, y });
+            console.log(coordinates2);
             context2.beginPath();
             context2.strokeStyle = "#e74c3c";
             context2.arc(x, y, 10, 0, 2 * Math.PI, false);
             context2.stroke();
         }
-        else{
+        else {
             find_canvas2();
         }
     }
 
-    $scope.clear2 = function(){
+    $scope.clear2 = function () {
         context2.clearRect(0, 0, canvas2.width, canvas2.height);
         coordinates2 = [];
     }
 
-    $scope.undo = function(){
+    $scope.undo = function () {
         coordinates.pop();
         context.clearRect(0, 0, canvas.width, canvas.height);
-        coordinates.forEach(function(element) {
+        coordinates.forEach(function (element) {
             console.log(element.x + "," + element.y)
             context.beginPath();
             context.strokeStyle = "#e74c3c";
@@ -99,10 +99,10 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         }, this);
     }
 
-    $scope.undo2 = function(){
+    $scope.undo2 = function () {
         coordinates2.pop();
         context2.clearRect(0, 0, canvas2.width, canvas2.height);
-        coordinates2.forEach(function(element) {
+        coordinates2.forEach(function (element) {
             console.log(element.x + "," + element.y)
             context2.beginPath();
             context2.strokeStyle = "#e74c3c";
@@ -111,7 +111,7 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         }, this);
     }
 
-    $scope.checkPass = function(){
+    $scope.checkPass = function () {
         var pass = document.getElementById("pass").value;
         $http({
             method: 'POST',
@@ -133,7 +133,7 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         }
     }
 
-    $scope.admin = function(){
+    $scope.admin = function () {
         console.log("make admin cookie");
     }
 
@@ -180,34 +180,34 @@ app.controller('ctr', function ($scope, $http, $cookies) {
             location.href = "/#/autonomous/" + m + "/" + t;
     }
 
-    $scope.teleop = function(){
+    $scope.teleop = function () {
         location.href = "/#/teleop/" + $scope.match + "/" + $scope.team;
     }
 
-    $scope.pull_matches = function(){
+    $scope.pull_matches = function () {
         //pull matches from data base
         $scope.db_matches = ["QM3", "QM2", "QM1"];
     }
 
-    $scope.pull_teams = function(){
+    $scope.pull_teams = function () {
         $scope.db_teams = ["0002", "1232", "3232"];
     }
 
-    $scope.team_selected = function(team){
-        document.getElementById("link_area").innerHTML += "<a href="+team+">" +team+ "</a>"
-    }
-    
-    $scope.match_selected = function(match){
-        document.getElementById("link_area").innerHTML += "<a href="+match+">" +match+ "</a>"
+    $scope.team_selected = function (team) {
+        document.getElementById("link_area").innerHTML += "<a href=" + team + ">" + team + "</a>"
     }
 
-    $scope.updateTeam_picker = function(t, m){
+    $scope.match_selected = function (match) {
+        document.getElementById("link_area").innerHTML += "<a href=" + match + ">" + match + "</a>"
+    }
+
+    $scope.updateTeam_picker = function (t, m) {
         $scope.allData.team = t;
-        $scope.allData.match = m;    
+        $scope.allData.match = m;
     }
 
-    $scope.updateAuto = function(triedAndFailed,crosedBaseline,fuelCollectedFromFloor,
-    fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper){ 
+    $scope.updateAuto = function (triedAndFailed, crosedBaseline, fuelCollectedFromFloor,
+        fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
         $scope.allData.auto.triedAndFailed = triedAndFailed;
         $scope.allData.auto.crosedBaseline = crosedBaseline;
         $scope.allData.auto.fuelCollectedFromFloor = fuelCollectedFromFloor;
@@ -215,11 +215,12 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
         $scope.allData.auto.missedGears = missedGears;
-        $scope.allData.auto.releasedHopper = releasedHopper;    
+        $scope.allData.auto.releasedHopper = releasedHopper;
+        $scope.allData.auto.coordinates.coords = coordinates;
     }
 
-    $scope.updateTeleop = function(releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor,plantedGears,
-    missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss){
+    $scope.updateTeleop = function (releasedHopper, gearsCollectedFromHP, gearsCollectedFromFloor, plantedGears,
+        missedGears, fuelCollectedFromFloor, fuelCollectedFromHP, estimatedPoints, climbingTriedFailed, climbingSuccesss) {
         $scope.allData.teleop.releasedHopper = releasedHopper;
         $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP;
         $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor;
@@ -230,26 +231,33 @@ app.controller('ctr', function ($scope, $http, $cookies) {
         $scope.allData.teleop.estimatedPoints = estimatedPoints;
         $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed;
         $scope.allData.teleop.climbingSuccesss = climbingSuccesss;
-        
+        $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
-    $scope.updateDefense = function(defenseComments){
-        $scope.allData.defense.defenseComments = defenseComments; 
+    $scope.updateDefense = function (defenseComments) {
+        $scope.allData.defense.defenseComments = defenseComments;
     }
 
-    $scope.finalButton = function(generalComments) {
+    $scope.finalButton = function (generalComments) {
         $scope.allData.generalComments = generalComments;
-        $http.post('/new_team', "cycle").then(function (data) {
-            console.log(data);
-            }, function (err) {
+        $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
+            $http.get('javascripts/data.json').then(function (response) {
+                $scope.allData = response.data;
+                $location.url('/team_picker');
+        }, function (err) {
+                    console.log(err);
+                });
+        }, function (err) {
             console.log(err);
         });
 
+
+
     }
 
-    $http.get('/teams').then(function (data) {
-        $scope.getdata = data.data;
-    }, function (err) {
-        console.log(err);
-    });
+    // $http.get('/teams').then(function (data) {
+    //     $scope.getdata = data.data;
+    // }, function (err) {
+    //     console.log(err);
+    // });
 });
