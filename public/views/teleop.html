@@ -22,7 +22,11 @@
     <label><input type="checkbox"/> Success </label>    
 
     <div class = "empty"></div>
-    <canvas id="myCanvas2" class="field" ng-click="addOnClick($event)" width="300" height="279"></canvas>
+    <div class="center" >
+        <button class = "btn" ng-click="clear2()">Clear</button>
+        <button class = "btn" ng-click="undo2()">Undo</button>
+    </div>
+    <canvas id="myCanvas2" class="field" ng-click="addOnClick2($event)" width="300" height="279"></canvas>
 
 </div> 
 

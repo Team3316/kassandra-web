@@ -6,23 +6,28 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     //$cookies.remove("access_token");
 
     //canvas for field
-    var canvas = undefined;
-    var context= undefined;
+    var canvas = null;
+    var context= null;
 
-    var canvas2= undefined;
-    var context2= undefined;
+    var canvas2= null;
+    var context2= null;
 
     $scope.find_canvas = function(){
-        while(canvas === undefined && context === undefined){
+        while(canvas === null){
             canvas = document.getElementById('myCanvas');
-            context = canvas.getContext('2d');
+            if(canvas){
+                context = canvas.getContext('2d');
+            }
         }
     };
 
     $scope.find_canvas2 = function(){
-        while(canvas2 === undefined && context2 === undefined){
-            canvas2 = document.getElementById('myCanvas');
-            context2 = canvas.getContext('2d');
+        console.log("poop");
+        while(canvas2 === null){
+            canvas2 = document.getElementById('myCanvas2');
+            if(canvas2){
+                context2 = canvas2.getContext('2d');
+            }
         }
     }
 
@@ -62,7 +67,7 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             var y = event.offsetY;
             //console.log("x: " + x + ", y: " + y);
             coordinates2.push({x, y});
-            console.log("2:" + coordinates2);       
+            console.log(coordinates2);       
             context2.beginPath();
             context2.strokeStyle = "#e74c3c";
             context2.arc(x, y, 10, 0, 2 * Math.PI, false);
@@ -78,6 +83,11 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         coordinates = [];
     }
 
+    $scope.clear2 = function(){
+        context2.clearRect(0, 0, canvas2.width, canvas2.height);
+        coordinates2 = [];
+    }
+
     $scope.undo = function(){
         coordinates.pop();
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -87,6 +97,18 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             context.strokeStyle = "#e74c3c";
             context.arc(element.x, element.y, 10, 0, 2 * Math.PI, false);
             context.stroke();
+        }, this);
+    }
+
+    $scope.undo2 = function(){
+        coordinates2.pop();
+        context2.clearRect(0, 0, canvas2.width, canvas2.height);
+        coordinates2.forEach(function(element) {
+            console.log(element.x + "," + element.y)
+            context2.beginPath();
+            context2.strokeStyle = "#e74c3c";
+            context2.arc(element.x, element.y, 10, 0, 2 * Math.PI, false);
+            context2.stroke();
         }, this);
     }
 
@@ -177,81 +199,4 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.match_selected = function(match){
         document.getElementById("link_area").innerHTML += "<a href="+match+">" +match+ "</a>"
     }
-})
-.config(function ($mdThemingProvider, $stateProvider) {
-        $mdThemingProvider.theme('default')
-            .primaryPalette('cyan')
-            .accentPalette('teal');
-
-        $stateProvider.state({
-            name: 'login',
-            url: '/login',
-            templateUrl: '/views/login.html'
-        });    
-
-        $stateProvider.state({
-            name: 'team_picker',
-            url: '/team_picker',
-            templateUrl: '/views/team_picker.html',
-            controller: function($scope){
-                $scope.init();
-            }
-        });
-
-        $stateProvider.state({
-            name: 'autonomous',
-            url: '/autonomous/:match/:team',
-            templateUrl: '/views/autonomous.html',
-            controller: function($scope, $stateParams){
-                $scope.match = $stateParams.match;
-                $scope.team = $stateParams.team;
-                console.log("match: " + $stateParams.match);
-                console.log("team: " + $stateParams.team);
-                $scope.init();
-            }
-        });
-
-        $stateProvider.state({
-            name: 'teleop',
-            url: '/teleop/:match/:team',
-            templateUrl: '/views/teleop.html',
-            controller: function($scope, $stateParams){
-                $scope.match = $stateParams.match;
-                $scope.team = $stateParams.team;
-                console.log("match: " + $stateParams.match);
-                console.log("team: " + $stateParams.team);
-                $scope.init();
-            }
-        });
-
-        $stateProvider.state({
-            name: 'final_page',
-            url: '/final_page/:match/:team',
-            templateUrl: '/views/final_page.html',
-            controller: function($scope){
-                $scope.init();
-            }
-        });
-        
-        $stateProvider.state({
-            name: 'defense',
-            url: '/defense/:match/:team',
-            templateUrl: '/views/defense.html',
-            controller: function($scope, $stateParams){
-                $scope.match = $stateParams.match;
-                $scope.team = $stateParams.team;
-                console.log("match: " + $stateParams.match);
-                console.log("team: " + $stateParams.team);
-                $scope.init();
-            }
-        });
-
-        $stateProvider.state({
-            name: 'admin',
-            url: '/admin',
-            templateUrl: '/views/admin.html',
-            controller: function($scope, $stateParams){
-                $scope.admin();
-            }
-        });
 });
