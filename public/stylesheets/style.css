@@ -238,3 +238,24 @@ h3{
   padding-bottom: 0px;
   margin: 10px;
 }
+
+
+#link_area{
+  width: 100%;
+  word-wrap: break-word;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+
+.team-data{
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.link{
+  color: blue;
+}
+
+.link::hover{
+  color: red;
+}

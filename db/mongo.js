@@ -102,25 +102,36 @@ exports.getTasks = function (res){
   });
 };
 
-exports.getTeams = function (res){
-  Team.find({}, function(err, doc){
-    res.send(JSON.stringify(doc));
+exports.getAllTeams = function (res){
+  Cycle.find({}, 'team', function(err, doc){
+    var result = [];
+    doc.forEach(function(element) {
+      result.push(element._doc.team);
+    }, this);
+    result = Array.from(new Set(result));
+    res.send(JSON.stringify(result));
   });
 };
 
-exports.getCycles = function (){
+exports.getCycles = function (res){
   Cycle.find({}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getCycleByTeam = function (id){
+exports.getCycle = function (res, id, match){
+  Cycle.find({team:id, match:match}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getCycleByTeam = function (res, id){
   Cycle.find({team: id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getCycleByMatch = function (id){
+exports.getCycleByMatch = function (res, id){
   Cycle.find({match: id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });

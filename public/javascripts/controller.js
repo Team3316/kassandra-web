@@ -48,6 +48,17 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
 
     $scope.accessToken = "OMRI_GRANTED";
 
+    function clear_all(){
+        canvas = null;
+        context = null;
+        canvas2 = null;
+        context2 = null;
+        coordinates = [];
+        coordinates2 = [];
+        $scope.matches = [];
+        $scope.teams = [];
+    }
+
     $scope.addOnClick = function (event) {
         if (canvas.getContext) {
             var x = event.offsetX;
@@ -80,6 +91,11 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         else {
             find_canvas2();
         }
+    }
+
+    $scope.clear = function () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        coordinates = [];
     }
 
     $scope.clear2 = function () {
@@ -190,11 +206,26 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     }
 
     $scope.pull_teams = function () {
-        $scope.db_teams = ["0002", "1232", "3232"];
+        
+        // $scope.db_teams = ["0002", "1232", "3232"];
+        $http.get("/get_all_teams").then(function(data){
+            console.log(data);
+            $scope.db_teams = data.data;
+        });
     }
 
     $scope.team_selected = function (team) {
-        document.getElementById("link_area").innerHTML += "<a href=" + team + ">" + team + "</a>"
+        $scope._match = [];
+        $http.get("/get_cycles_by_team/" +team).then(function(data){
+            console.log(data);
+            data.data.forEach(function(element) {
+                $scope._match.push(element.match);
+                // Object.keys(element).forEach(function(k){
+                //     area.innerHTML += '<p class="team-data">' + k + ' - ' + JSON.stringify(element[k]) + '</p>';
+                // });
+            }, this);
+        });
+        console.log($scope._match);
     }
 
     $scope.match_selected = function (match) {
@@ -237,6 +268,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     $scope.updateDefense = function (defenseComments) {
         $scope.allData.defense.defenseComments = defenseComments;
     }
+    
+    $scope.get_single_match = function(team, match){
+        console.log("avad!!!");
+        $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
+            document.getElementById("link_area") += JSON.stringify(data.data);
+        });
+    }
 
     $scope.finalButton = function (generalComments) {
         $scope.allData.generalComments = generalComments;
@@ -244,6 +282,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             $http.get('javascripts/data.json').then(function (response) {
                 $scope.allData = response.data;
                 $location.url('/team_picker');
+                clear_all();
         }, function (err) {
                     console.log(err);
                 });
