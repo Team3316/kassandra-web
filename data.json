@@ -1,14 +1,35 @@
 [{
     "team":"0000",
-    "numberGame":"1",
-    "AUTOtriedAndFailed":"no",
-    "AUTOcroseedBaseline":"no",
-    "AUTOcollectedFromFloor":"no",
-    "AUTOcollectedFromHopper":"no",
-    "AUTOestimatedPoints":"0",
-    "AUTOsucceessfullyPlantedGears":"0",
-    "AUTOmissedGears":"0",
-    "AUTOreleasedHopper":"0",
-    "AUTOshoutingFromX":"0",
-    "AUTOshoutingFromY":"0"
+    "match":"1", 
+    "auto":{
+        "triedAndFailed":"no",
+        "croseedBaseline":"no",
+        "fuelCollectedFromFloor":"no",
+        "fuelCollectedFromHopper":"no",
+        "estimatedPoints":"0",
+        "succeessfullyPlantedGears":"0",
+        "missedGears":"0",
+        "releasedHopper":"0",
+        "shoutingFromX":"0",
+        "shoutingFromY":"0"   
+    },
+    "teleop":{
+        "releasedHopper":"0",
+        "gearsCollectedFromHP":"no",
+        "gearsCollectedFromFloor":"no",
+        "plantedGears":"0",
+        "missedGears":"0",
+        "fuelCollectedFromFloor":"no",
+        "fuelCollectedFromHP":"no",
+        "estimatedPoints":"0",
+        "climbingTriedFailed":"no",
+        "climbingSuccess":"no"
+    },
+    "defense":{
+        "defenseOn":"0000",
+        "defenseBy":"0000",
+        "defenseComments":""
+    },
+    "generalComments":""
+
 }]
