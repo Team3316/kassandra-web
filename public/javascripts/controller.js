@@ -215,6 +215,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     }
 
     $scope.team_selected = function (team) {
+        $scope.db_team = team;
         $scope._match = [];
         $http.get("/get_cycles_by_team/" +team).then(function(data){
             console.log(data);
@@ -269,10 +270,12 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.allData.defense.defenseComments = defenseComments;
     }
     
-    $scope.get_single_match = function(team, match){
+    window.get_single_match =  function(btn){
+        var team = parseInt($scope.db_team);
+        var match = btn.value;
         console.log("avad!!!");
         $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
-            document.getElementById("link_area") += JSON.stringify(data.data);
+            console.log(JSON.stringify(data.data));
         });
     }
 

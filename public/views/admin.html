@@ -13,5 +13,5 @@
     </md-select>
 </md-input-container>
 <div class="center">
-    <button ng-click="get_single_match({{db_team}}, '{{match}}')" ng-repeat="match in _match">{{match}}</button>
+    <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match}}">{{match}}</button>
 </div>
