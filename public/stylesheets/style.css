@@ -42,7 +42,7 @@ md-input-container{
 }
 
 label, md-option{
-  font-size: 17px;
+  font-size: 20px;
 }
 
 footer{
@@ -200,7 +200,9 @@ input[type="number"]{
 .comments-types{
   color:#9CB3BA;
   font-size: 14px;
-  font-style: italic; 
+  font-style: italic;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .text-comment{
@@ -230,4 +232,9 @@ input[type="number"]{
     width: 40%;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+h3{
+  padding-bottom: 0px;
+  margin: 10px;
 }

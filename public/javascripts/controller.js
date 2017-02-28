@@ -1,16 +1,21 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr' ,function ($scope, $http, $cookies) {
+app.controller('ctr', function ($scope, $http, $cookies) {
     $scope.matches = [];
     $scope.teams = [];
     //to delete
     //$cookies.remove("access_token");
 
+    $http.get('javascripts/data.json').then(function (response) {
+        $scope.allData = response.data;
+    }, function (err) {
+        console.log(err);
+    });
+
     //canvas for field
     var canvas = null;
-    var context= null;
-
-    var canvas2= null;
-    var context2= null;
+    var context = null;
+    var canvas2 = null;
+    var context2 = null;
 
     $scope.find_canvas = function(){
         while(canvas === null){
@@ -20,7 +25,6 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             }
         }
     };
-
     $scope.find_canvas2 = function(){
         console.log("poop");
         while(canvas2 === null){
@@ -31,16 +35,16 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         }
     }
 
+    var coordinates = [];
+    var coordinates2 = [];
+
     //headers for api calls
     var config = {
         headers: {
-            'Content-Type' : 'application/json; charset="utf-8"',
-            'X-TBA-App-Id' : '3316:Kassandra:2.0'
+            'Content-Type': 'application/json; charset="utf-8"',
+            'X-TBA-App-Id': '3316:Kassandra:2.0'
         }
     };
-
-    var coordinates = [];
-    var coordinates2 = [];
         
     $scope.accessToken = "OMRI_GRANTED";
 
@@ -78,11 +82,6 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         }
     }
 
-    $scope.clear = function(){
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        coordinates = [];
-    }
-
     $scope.clear2 = function(){
         context2.clearRect(0, 0, canvas2.width, canvas2.height);
         coordinates2 = [];
@@ -117,19 +116,19 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
         $http({
             method: 'POST',
             url: '/check_pass',
-            data: {password: pass}
-        }).then(function successCallback(response){
-            if(response.data.message === "OMRI_GRANTED"){
+            data: { password: pass }
+        }).then(function successCallback(response) {
+            if (response.data.message === "OMRI_GRANTED") {
                 $cookies.put('access_token', 'OMRI_GRANTED');
                 window.location.href = "#/team_picker";
             }
         });
     }
 
-    $scope.init = function(){
+    $scope.init = function () {
         console.log("init!");
         var accessToken = $cookies.get("access_token");
-        if(accessToken !== 'OMRI_GRANTED'){
+        if (accessToken !== 'OMRI_GRANTED') {
             window.location.href = '#/login';
         }
     }
@@ -139,12 +138,12 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     }
 
     //these matches are a test only
-    $scope.get_matches = function(){
+    $scope.get_matches = function () {
         var url = "https://www.thebluealliance.com/api/v2/event/2016txlu/matches";
-        $http.get(url, config).then(function(data){
+        $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
             var matches = [];
-            jdata.forEach(function(element) {
+            jdata.forEach(function (element) {
                 var match = (element.comp_level).toUpperCase() + element.match_number + 'm' + element.set_number;
                 matches.push(match);
                 //console.log(match);
@@ -154,10 +153,10 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     }
 
     //gets teams of the current match
-    $scope.get_teams = function(match){
+    $scope.get_teams = function (match) {
         var ending = "2016txlu_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
-        $http.get(url, config).then(function(data){
+        $http.get(url, config).then(function (data) {
             //console.log(JSON.stringify(data));
             //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
@@ -167,15 +166,17 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
             console.log(JSON.stringify(blue));
             var teams = blue.concat(red);
             var final = [];
-            teams.forEach(function(element) {
+            teams.forEach(function (element) {
                 final.push(element.replace('frc', ''));
             }, this);
             $scope.teams = final;
         });
     }
 
-    $scope.submit_team_match = function(t, m){
-        if(t != undefined && m != undefined)
+    $scope.submit_team_match = function (t, m) {
+        $scope.allData.team = t;
+        $scope.allData.match = m;
+        if (t != undefined && m != undefined)
             location.href = "/#/autonomous/" + m + "/" + t;
     }
 
@@ -199,4 +200,56 @@ app.controller('ctr' ,function ($scope, $http, $cookies) {
     $scope.match_selected = function(match){
         document.getElementById("link_area").innerHTML += "<a href="+match+">" +match+ "</a>"
     }
+
+    $scope.updateTeam_picker = function(t, m){
+        $scope.allData.team = t;
+        $scope.allData.match = m;    
+    }
+
+    $scope.updateAuto = function(triedAndFailed,crosedBaseline,fuelCollectedFromFloor,
+    fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper){ 
+        $scope.allData.auto.triedAndFailed = triedAndFailed;
+        $scope.allData.auto.crosedBaseline = crosedBaseline;
+        $scope.allData.auto.fuelCollectedFromFloor = fuelCollectedFromFloor;
+        $scope.allData.auto.fuelCollectedFromHopper = fuelCollectedFromHopper;
+        $scope.allData.auto.estimatedPoints = estimatedPoints;
+        $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
+        $scope.allData.auto.missedGears = missedGears;
+        $scope.allData.auto.releasedHopper = releasedHopper;    
+    }
+
+    $scope.updateTeleop = function(releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor,plantedGears,
+    missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss){
+        $scope.allData.teleop.releasedHopper = releasedHopper;
+        $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP;
+        $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor;
+        $scope.allData.teleop.plantedGears = plantedGears;
+        $scope.allData.teleop.missedGears = missedGears;
+        $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor;
+        $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHP;
+        $scope.allData.teleop.estimatedPoints = estimatedPoints;
+        $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed;
+        $scope.allData.teleop.climbingSuccesss = climbingSuccesss;
+        
+    }
+
+    $scope.updateDefense = function(defenseComments){
+        $scope.allData.defense.defenseComments = defenseComments; 
+    }
+
+    $scope.finalButton = function(generalComments) {
+        $scope.allData.generalComments = generalComments;
+        $http.post('/new_team', "cycle").then(function (data) {
+            console.log(data);
+            }, function (err) {
+            console.log(err);
+        });
+
+    }
+
+    $http.get('/teams').then(function (data) {
+        $scope.getdata = data.data;
+    }, function (err) {
+        console.log(err);
+    });
 });

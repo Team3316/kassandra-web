@@ -22,9 +22,23 @@ router.get('/get_tasks', function(req, res, next) {
   console.log("called");
 });
 
-router.post('/new_task', function(req, res, next){
-  var task = req.param('task');
-  mongo.newTask(task);
+router.get('/teams', function(req, res, next) {
+  //res.setHeader('Content-Type', 'application/json');
+  console.log("called");
+  mongo.getTeams(res);
+  console.log("called");
+});
+
+router.post('/new_team', function(req, res, next){
+  console.log("new team!");
+  var team = req.param('team');
+  mongo.newTeam(team);
+  res.send("Success!");
+});
+
+router.post('/new_cycle',function(req,res,next){
+  //var cycle = req.params.body);  
+  mongo.newCycle(cycle);
   res.send("Success!");
 });
 

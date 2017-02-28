@@ -21,14 +21,14 @@
 
 <div class = "text-comment">
     <p class = "comments-types">Defense Comments </p>
-    <textarea rows="8" cols="50" name:"FinalComments">
+    <textarea rows="8" cols="50" name:"DefenseComments" ng-model = "defenseComments">
 
     </textarea>
 
  <div class = "empty"></div>
 
 <div class="center">
-    <button ui-sref= "final_page" >Submit</button>
+    <button ui-sref= "final_page" ng-click="updateDefense(defenseComments)" >Submit</button>
 </div>
 
 </div>

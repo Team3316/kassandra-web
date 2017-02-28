@@ -4,14 +4,14 @@
 
 <div class = "text-comment">
     <p class = "comments-types">General Comments </p>
-    <textarea rows="10" cols="70" name:"FinalComments">
+    <textarea rows="10" cols="70" name:"FinalComments" ng-model = "generalComments">
 
     </textarea>
 
  <div class = "empty"></div>
 
 <div class="center">
-    <button class="btn btn-default blue-circle-button" >Submit</button>
+    <button class="btn btn-default blue-circle-button" ng-click = "finalButton(generalComments)">Submit</button>
 </div>
 
 </div>
