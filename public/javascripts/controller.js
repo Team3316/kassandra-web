@@ -301,13 +301,50 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.team = team;
         $scope.match = match;
         $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
-            console.log(data.data);
+            console.log(JSON.stringify(data.data));
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromFloor;
             $scope.rh = data.data[0].auto.releasedHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
+            $scope.trh = data.data[0].teleop.releasedHopper;
+            $scope.tgcfh = data.data[0].teleop.gearsCollectedFromHP;
+            $scope.tgcff = data.data[0].teleop.gearsCollectedFromFloor;
+            $scope.tspg = data.data[0].teleop.plantedGears;
+            $scope.tmg = data.data[0].teleop.missedGears;
+            $scope.tfcff = data.data[0].teleop.fuelCollectedFromFloor;
+            $scope.tfcfh = data.data[0].teleop.fuelCollectedFromHP
+            $scope.tep = data.data[0].teleop.estimatedPoints;
+            $scope.tctaf = data.data[0].teleop.climbingTriedFailed;
+            $scope.tcs = data.data[0].teleop.climbingSuccesss;
+            $scope.ddo = data.data[0].defense.defenseOn;
+            $scope.ddc = data.data[0].defense.defenseComments;
+            $scope.ggc = data.data[0].generalComments;
+            var canv;
+            var ctx;
+            while(canv == null){
+                canv = document.getElementById("reportauto");
+                if(canv.getContext){
+                    ctx = canv.getContext('2d');
+                }
+            }
+            data.data[0].auto.coordinates.coords.forEach(function(element) {
+                var x = element.x;
+                var y = element.y;
+                ctx.beginPath();
+                ctx.strokeStyle = "#e74c3c";
+                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                ctx.stroke();
+            }, this);
+            data.data[0].teleop.coordinates.coords.forEach(function(element) {
+                var x = element.x;
+                var y = element.y;
+                ctx.beginPath();
+                ctx.strokeStyle = "#3498db";
+                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                ctx.stroke();
+            }, this);
         });
     }
 
