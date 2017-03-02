@@ -18,6 +18,7 @@
     "ejs": "^1.0.0",
     "express": "~4.14.0",
     "express-session": "^1.7.6",
+    "heatmap": "0.0.5",
     "jade": "~1.11.0",
     "jquery": "^3.1.1",
     "morgan": "~1.7.0",

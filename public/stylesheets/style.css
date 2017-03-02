@@ -252,10 +252,14 @@ h3{
   word-wrap: break-word;
 }
 
-.link{
-  color: blue;
+.match-content{
+  width: 100%;
+  height: 80%;
+  padding-left: 10px;
+  bottom: 0;
+  overflow-y: scroll;
 }
 
-.link::hover{
-  color: red;
+p{
+  margin: 10px 0;
 }

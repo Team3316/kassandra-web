@@ -190,10 +190,11 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     }
 
     $scope.submit_team_match = function (t, m) {
-        $scope.allData.team = t;
-        $scope.allData.match = m;
-        if (t != undefined && m != undefined)
+        if (t != undefined && m != undefined){
             location.href = "/#/autonomous/" + m + "/" + t;
+            $scope.allData.team = t;
+            $scope.allData.match = m;
+        }
     }
 
     $scope.teleop = function () {
@@ -274,9 +275,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         var team = parseInt($scope.db_team);
         var match = btn.value;
         console.log("avad!!!");
-        $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
-            console.log(JSON.stringify(data.data));
-        });
+        location.href = '#/report/'+team+'/'+match;
     }
 
     $scope.finalButton = function (generalComments) {
@@ -292,9 +291,22 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         }, function (err) {
             console.log(err);
         });
+    }
 
-
-
+    $scope.make_call = function(team, match){
+        console.log(team + ", " + match);
+        $scope.team = team;
+        $scope.match = match;
+        $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
+            console.log(data.data);
+            $scope.tf = data.data[0].auto.triedAndFailed;
+            $scope.cb = data.data[0].auto.crosedBaseline;
+            $scope.cff = data.data[0].auto.fuelCollectedFromFloor;
+            $scope.rh = data.data[0].auto.releasedHopper;
+            $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
+            $scope.mg = data.data[0].auto.missedGears;
+            var heatmapInstance = h337.create(config);
+        });
     }
 
     // $http.get('/teams').then(function (data) {
