@@ -5,16 +5,12 @@ mongoose.connect('mongodb://localhost:27017/DATA');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-var tasks = new mongoose.Schema({done: Boolean, task: String, date: Date}); 
-var Task = mongoose.model('Task', tasks);
-
 var cycle = new mongoose.Schema({
     match:String,
     team:Number,
     auto:{
         triedAndFailed: Boolean,
         crosedBaseline:Boolean,
-        fuelCollectedFromFloor:Boolean,
         fuelCollectedFromHopper:Boolean,
         estimatedPoints:Number,
         succeessfullyPlantedGears:Number,
@@ -41,7 +37,6 @@ var cycle = new mongoose.Schema({
     },
     defense:{
         defenseOn:Number,
-        defenseBy:Number,
         defenseComments:String
     },
     generalComments:String
@@ -58,13 +53,6 @@ db.once('open', function() {
   //getTasks();
 });
 
-exports.newTask = function (task){
-  if(!task){
-    return;
-  }
-  var task = new Task({done:false, task: task, date:Date.now()});
-  commit(task);
-};
 
 exports.newTeam = function (team){
   if(!team){
@@ -134,10 +122,3 @@ exports.getCycleByMatch = function (res, id){
     res.send(JSON.stringify(doc));
   });
 };
-
-function commit(task){
-    task.save(function(err, task){
-        if (err) return console.error(err);
-        console.log("added!");
-  });
-}

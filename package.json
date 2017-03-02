@@ -23,6 +23,7 @@
     "jquery": "^3.1.1",
     "morgan": "~1.7.0",
     "ng-cookies": "^1.0.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "smart-area": "^1.1.0"
   }
 }
