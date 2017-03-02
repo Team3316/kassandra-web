@@ -242,11 +242,10 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.allData.match = m;
     }
 
-    $scope.updateAuto = function (triedAndFailed, crosedBaseline, fuelCollectedFromFloor,
+    $scope.updateAuto = function (triedAndFailed, crosedBaseline, 
         fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
         $scope.allData.auto.triedAndFailed = triedAndFailed;
         $scope.allData.auto.crosedBaseline = crosedBaseline;
-        $scope.allData.auto.fuelCollectedFromFloor = fuelCollectedFromFloor;
         $scope.allData.auto.fuelCollectedFromHopper = fuelCollectedFromHopper;
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
@@ -270,8 +269,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
-    $scope.updateDefense = function (defenseComments) {
+    $scope.updateDefense = function (defenseComments,defenseOn) {
         $scope.allData.defense.defenseComments = defenseComments;
+        $scope.allData.defense.defenseOn = defenseOn;
     }
     
     window.get_single_match =  function(btn){

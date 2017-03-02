@@ -1,20 +1,13 @@
 <button class="leftArrow" ui-sref="teleop"><</button>
 <div class="center">
-    <h3>Defense (Alternative)</h3>
+    <h3>Defense </h3>
 </div>
 <div class = "content-defense">
         
     <md-input-container>
         <label>Defence on</label>
         <md-select ng-model="team" id="team"> 
-            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
-        </md-select>
-    </md-input-container>
-
-    <md-input-container>
-        <label>Defenced by</label>
-        <md-select ng-model="team" id="team"> 
-            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}" ng-model="defenseOn">{{team}}</md-option>
         </md-select>
     </md-input-container>
 
@@ -22,14 +15,14 @@
 
 <div class = "text-comment">
     <p class = "comments-types">Defense Comments </p>
-    <textarea rows="8" cols="50" name:"DefenseComments" ng-model = "defenseComments">
+    <textarea rows="8" cols="50" name:"DefenseComments" ng-model = "defenseComments" placeholder=" T-Bone, Lift, Blocking, Defense on bowler ...">
 
     </textarea>
 
  <div class = "empty"></div>
 
 <div class="center">
-    <button ui-sref= "final_page" ng-click="updateDefense(defenseComments)" >Submit</button>
+    <button ui-sref= "final_page" ng-click="updateDefense(defenseComments,defenseOn)" >Submit</button>
 </div>
 
 </div>

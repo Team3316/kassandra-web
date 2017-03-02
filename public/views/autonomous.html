@@ -8,7 +8,6 @@
     <label><input type="checkbox" ng-model="crosedBaseline"/> Crossed baseline</label>
     
     <p class= "comments-types">Fuel</p>
-    <label><input type="checkbox" ng-model="fuelCollectedFromFloor"/> Collected from floor</label>
     <label><input type="checkbox" ng-model="fuelCollectedFromHopper"/> Collected from hopper</label>
     <label>Estimated points: <input type="number" ng-model="estimatedPoints"/><br></label>
 
@@ -29,5 +28,5 @@
 </div>
 
 <div class="center">
-    <button ng-click="updateAuto(triedAndFailed,crosedBaseline,fuelCollectedFromFloor,fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper); teleop();">Submit</button>
+    <button ng-click="updateAuto(triedAndFailed,crosedBaseline,fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper); teleop();">Submit</button>
 </div>

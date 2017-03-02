@@ -140,13 +140,6 @@ label {
   transform: translate(-50%, -50%);
 }
 
-.pass-container{
-  position: absolute;
-  width: 100%;
-  top: 20%;
-  text-align: center;
-}
-
 button {
     background-color: #008CBA;
     border: none;
