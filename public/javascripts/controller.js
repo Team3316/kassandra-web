@@ -16,8 +16,14 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     var context = null;
     var canvas2 = null;
     var context2 = null;
+    var coordinates = [];
+    var coordinates2 = [];
 
     $scope.find_canvas = function () {
+        canvas = null;
+        context = null;
+        coordinates = [];
+
         while (canvas === null) {
             canvas = document.getElementById('myCanvas');
             if (canvas) {
@@ -27,6 +33,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     };
     $scope.find_canvas2 = function () {
         console.log("poop");
+        canvas2 = null;
+        context2 = null;
+        coordinates2 = [];
         while (canvas2 === null) {
             canvas2 = document.getElementById('myCanvas2');
             if (canvas2) {
@@ -34,9 +43,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             }
         }
     }
-
-    var coordinates = [];
-    var coordinates2 = [];
 
     //headers for api calls
     var config = {
