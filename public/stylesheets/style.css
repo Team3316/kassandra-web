@@ -251,3 +251,26 @@ h3{
   margin:0;
 }
 
+#link_area{
+  width: 100%;
+  word-wrap: break-word;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+
+.team-data{
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.match-content{
+  width: 100%;
+  height: 80%;
+  padding-left: 10px;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+p{
+  margin: 10px 0;
+}

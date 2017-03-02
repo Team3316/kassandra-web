@@ -1,3 +1,4 @@
+
 <div class="empty"></div>
 <md-input-container ng-init="pull_matches()">
     <label>Match</label>
@@ -11,5 +12,6 @@
         <md-option ng-repeat="team in db_teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
-<div id="link_area">
+<div class="center">
+    <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match}}">{{match}}</button>
 </div>

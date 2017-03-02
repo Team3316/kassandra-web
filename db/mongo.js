@@ -89,38 +89,47 @@ exports.newCycle = function (cycle){
   });
 };
 
-exports.getTasks = function (res){
-  console.log("lol");
-  Task.find({}, function(err, doc){
-    all = [];
-    console.log("finished finding!");
+exports.getAllTeams = function (res){
+  Cycle.find({}, 'team', function(err, doc){
+    var result = [];
     doc.forEach(function(element) {
-      all.push({id:element._id, done:element.done, task:element.task, date:element.date});
+      result.push(element._doc.team);
     }, this);
-    res.contentType('application/json');
-    res.send(JSON.stringify(all));
+    result = Array.from(new Set(result));
+    res.send(JSON.stringify(result));
   });
 };
 
-exports.getTeams = function (res){
-  Team.find({}, function(err, doc){
-    res.send(JSON.stringify(doc));
+exports.getAllMatches = function(res){
+  Cycle.find({}, 'match', function(err, doc){
+    var result = [];
+    doc.forEach(function(element) {
+      result.push(element._doc.match);
+    }, this);
+    result = Array.from(new Set(result));
+    res.send(JSON.stringify(result));
   });
-};
+}
 
-exports.getCycles = function (){
+exports.getCycles = function (res){
   Cycle.find({}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getCycleByTeam = function (id){
+exports.getCycle = function (res, id, match){
+  Cycle.find({team:id, match:match}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getCycleByTeam = function (res, id){
   Cycle.find({team: id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getCycleByMatch = function (id){
+exports.getCycleByMatch = function (res, id){
   Cycle.find({match: id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });

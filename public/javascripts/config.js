@@ -17,8 +17,8 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         url: '/autonomous/:match/:team',
         templateUrl: '/views/autonomous.html',
         controller: function ($scope, $stateParams) {
-            $scope.match = $stateParams.match;
-            $scope.team = $stateParams.team;
+            $scope.r_match = $stateParams.match;
+            $scope.r_team = $stateParams.team;
             console.log("match: " + $stateParams.match);
             console.log("team: " + $stateParams.team);
             $scope.init();
@@ -66,6 +66,19 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         name: 'admin',
         url: '/admin',
         templateUrl: '/views/admin.html'
+    });
+
+    $stateProvider.state({
+        name: 'report',
+        url: '/report/:team/:match',
+        templateUrl: '/views/report.html',
+        controller: function ($scope, $stateParams) {
+            var team = $stateParams.team;
+            var match = $stateParams.match;
+            $scope.make_call(team, match);
+            console.log("match: " + $stateParams.match);
+            console.log("team: " + $stateParams.team);
+        }
     });
 
     $urlRouterProvider.otherwise('/');
