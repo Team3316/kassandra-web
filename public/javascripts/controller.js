@@ -202,8 +202,11 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     }
 
     $scope.pull_matches = function () {
-        //pull matches from data base
-        $scope.db_matches = ["QM3", "QM2", "QM1"];
+        // $scope.db_teams = ["0002", "1232", "3232"];
+        $http.get("/get_all_matches").then(function(data){
+            console.log(data);
+            $scope.db_matches = data.data;
+        });
     }
 
     $scope.pull_teams = function () {
@@ -305,7 +308,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             $scope.rh = data.data[0].auto.releasedHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
-            
         });
     }
 

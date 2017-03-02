@@ -89,19 +89,6 @@ exports.newCycle = function (cycle){
   });
 };
 
-exports.getTasks = function (res){
-  console.log("lol");
-  Task.find({}, function(err, doc){
-    all = [];
-    console.log("finished finding!");
-    doc.forEach(function(element) {
-      all.push({id:element._id, done:element.done, task:element.task, date:element.date});
-    }, this);
-    res.contentType('application/json');
-    res.send(JSON.stringify(all));
-  });
-};
-
 exports.getAllTeams = function (res){
   Cycle.find({}, 'team', function(err, doc){
     var result = [];
@@ -112,6 +99,17 @@ exports.getAllTeams = function (res){
     res.send(JSON.stringify(result));
   });
 };
+
+exports.getAllMatches = function(res){
+  Cycle.find({}, 'match', function(err, doc){
+    var result = [];
+    doc.forEach(function(element) {
+      result.push(element._doc.match);
+    }, this);
+    result = Array.from(new Set(result));
+    res.send(JSON.stringify(result));
+  });
+}
 
 exports.getCycles = function (res){
   Cycle.find({}, function(err, doc){
