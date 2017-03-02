@@ -305,7 +305,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             $scope.rh = data.data[0].auto.releasedHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
-            var heatmapInstance = h337.create(config);
+            
         });
     }
 
