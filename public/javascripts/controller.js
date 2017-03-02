@@ -166,7 +166,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             var jdata = data[Object.keys(data)[0]];
             var matches = [];
             jdata.forEach(function (element) {
-                var match = (element.comp_level).toUpperCase() + element.match_number + 'm' + element.set_number;
+                var match = (element.comp_level).toUpperCase() + element.set_number + 'm' + element.match_number;
                 matches.push(match);
                 //console.log(match);
             }, this);
@@ -239,10 +239,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         console.log($scope._match);
     }
 
-    $scope.match_selected = function (match) {
-        document.getElementById("link_area").innerHTML += "<a href=" + match + ">" + match + "</a>"
-    }
-
     $scope.updateTeam_picker = function (t, m) {
         $scope.allData.team = t;
         $scope.allData.match = m;
@@ -250,6 +246,10 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
 
     $scope.updateAuto = function (triedAndFailed, crosedBaseline, 
         fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
+        if(estimatedPoints == ""){estimatedPoints = 0;}
+        if(succeessfullyPlantedGears == ""){succeessfullyPlantedGears = 0;}
+        if(missedGears == ""){missedGears = 0;}
+        if(releasedHopper == ""){releasedHopper = 0;}
         $scope.allData.auto.triedAndFailed = triedAndFailed;
         $scope.allData.auto.crosedBaseline = crosedBaseline;
         $scope.allData.auto.fuelCollectedFromHopper = fuelCollectedFromHopper;
@@ -260,11 +260,16 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.allData.auto.coordinates.coords = coordinates;
     }
 
-    $scope.updateTeleop = function (releasedHopper, gearsCollectedFromHP, gearsCollectedFromFloor, plantedGears,
-        missedGears, fuelCollectedFromFloor, fuelCollectedFromHP, estimatedPoints, climbingTriedFailed, climbingSuccesss) {
+    $scope.updateTeleop = function (releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor,estimatedPoints, plantedGears,missedGears,
+        fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss) {
+        if(estimatedPoints == ""){estimatedPoints = 0;}
+        if(plantedGears == ""){plantedGears = 0;}
+        if(missedGears == ""){missedGears = 0;}
+        if(releasedHopper == ""){releasedHopper = 0;}
         $scope.allData.teleop.releasedHopper = releasedHopper;
         $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP;
         $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor;
+        $scope.allData.teleop.succeessfullyPlantedGears = plantedGears;
         $scope.allData.teleop.plantedGears = plantedGears;
         $scope.allData.teleop.missedGears = missedGears;
         $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor;
@@ -310,10 +315,11 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             console.log(JSON.stringify(data.data));
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
-            $scope.cff = data.data[0].auto.fuelCollectedFromFloor;
+            $scope.cff = data.data[0].auto.fuelCollectedFromHopper;
             $scope.rh = data.data[0].auto.releasedHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
+            $scope.ep = data.data[0].auto.estimatedPoints;
             $scope.trh = data.data[0].teleop.releasedHopper;
             $scope.tgcfh = data.data[0].teleop.gearsCollectedFromHP;
             $scope.tgcff = data.data[0].teleop.gearsCollectedFromFloor;
@@ -353,10 +359,4 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             }, this);
         });
     }
-
-    // $http.get('/teams').then(function (data) {
-    //     $scope.getdata = data.data;
-    // }, function (err) {
-    //     console.log(err);
-    // });
 });
