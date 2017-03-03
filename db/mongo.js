@@ -28,6 +28,7 @@ var cycle = new mongoose.Schema({
         missedGears:Number,
         fuelCollectedFromFloor:Boolean,
         fuelCollectedFromHP:Boolean,
+        fuelCollectedFromHopper: Boolean,
         estimatedPoints:Number,
         climbingTriedFailed:Boolean,
         climbingSuccess:Number,

@@ -7,20 +7,21 @@
     <label>Released hopper <input type="number" ng-model="releasedHopper"/><br></label>
     
     <p class= "comments-types">Gears</p>
-    <label><input type="checkbox" ng-model = "gearsCollectedFromHP"/> Collected from HP</label>
-    <label><input type="checkbox" ng-model = "gearsCollectedFromFloor"/> Collected from floor</label>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP"/> Collected from HP</label>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor"/> Collected from floor</label>
     <label>Successfully planted gears: <input type="number" ng-model = "plantedGears"/><br></label>
     <label>Missed gears:  <input type="number" ng-model = "missedGears"/><br></label>
 
     <p class= "comments-types">Fuel</p>
 
-    <label><input type="checkbox" ng-model = "fuelCollectedFromFloor" /> Collected from floor</label>
-    <label><input type="checkbox" ng-model = "fuelCollectedFromHP"/> Collected from HP </label>    
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper" /> Collected from Hopper</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor" /> Collected from floor</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP"/> Collected from HP </label>    
     <label>Estimated points: <input type="number" ng-model = "estimatedPoints" /><br></label>
 
     <p class= "comments-types">Climbing</p>
-    <label><input type="checkbox" ng-model = "climbingTriedFailed"/> Tried and failed </label>
-    <label><input type="checkbox" ng-model = "climbingSuccesss" /> Success </label>    
+    <label><input type="checkbox" value="0" ng-model = "climbingTriedFailed"/> Tried and failed </label>
+    <label><input type="checkbox" value="0" ng-model = "climbingSuccesss" /> Success </label>    
 
     <div class = "empty"></div>
     <div class="center" >
@@ -32,5 +33,7 @@
 </div> 
 
 <div class="center">
-    <button ui-sref= "defense" ng-click="updateTeleop(releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor,plantedGears,missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss)">Submit</button>
+    <button ui-sref= "defense" ng-click="updateTeleop(releasedHopper,gearsCollectedFromHP,
+    gearsCollectedFromFloor, fuelCollectedFromHopper, estimatedPoints, plantedGears,missedGears,fuelCollectedFromFloor,
+    fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss)">Submit</button>
 </div>

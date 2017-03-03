@@ -21,6 +21,7 @@
         "missedGears":0,
         "fuelCollectedFromFloor":false,
         "fuelCollectedFromHP":false,
+        "fuelCollectedFromHopper": false,
         "estimatedPoints":0,
         "climbingTriedFailed":false,
         "climbingSuccess":false,

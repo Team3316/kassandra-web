@@ -6,8 +6,8 @@
         
     <md-input-container>
         <label>Defence on</label>
-        <md-select ng-model="team" id="team"> 
-            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}" ng-model="defenseOn">{{team}}</md-option>
+        <md-select ng-model="defenseOn" id="team"> 
+            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
         </md-select>
     </md-input-container>
 
@@ -15,14 +15,12 @@
 
 <div class = "text-comment">
     <p class = "comments-types">Defense Comments </p>
-    <textarea rows="8" cols="50" name:"DefenseComments" ng-model = "defenseComments" placeholder=" T-Bone, Lift, Blocking, Defense on bowler ...">
-
-    </textarea>
+    <textarea id="defensecomment" rows="8" cols="50" placeholder=" T-Bone, Lift, Blocking, Defense on bowler ..."></textarea>
 
  <div class = "empty"></div>
 
 <div class="center">
-    <button ui-sref= "final_page" ng-click="updateDefense(defenseComments,defenseOn)" >Submit</button>
+    <button ui-sref= "final_page" ng-click="updateDefense(defenseOn)" >Submit</button>
 </div>
 
 </div>

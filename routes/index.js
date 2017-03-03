@@ -33,16 +33,11 @@ router.get('/get_cycle/:id/:match', function(req, res, next) {
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id; 
-  console.log("called");
   mongo.getCycleByTeam(res, id);
-  console.log("called");
 });
 
 router.get('/get_all_teams', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json'); 
-  console.log("called");
   mongo.getAllTeams(res);
-  console.log("called");
 });
 
 router.get('/get_all_matches', function(req, res, next) {
