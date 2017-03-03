@@ -147,13 +147,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         });
     }
 
-    $scope.init = function () {
-        console.log("init!");
-        var accessToken = $cookies.get("access_token");
-        if (accessToken !== 'OMRI_GRANTED') {
-            window.location.href = '#/login';
-        }
-    }
+    // $scope.init = function () {
+    //     console.log("init!");
+    //     var accessToken = $cookies.get("access_token");
+    //     if (accessToken !== 'OMRI_GRANTED') {
+    //         window.location.href = '#/login';
+    //     }
+    // }
 
     $scope.admin = function () {
         console.log("make admin cookie");
@@ -205,7 +205,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
     }
 
     $scope.teleop = function () {
-        location.href = "/#/teleop/" + $scope.match + "/" + $scope.team;
+        $location.url("/teleop/");
     }
 
     $scope.pull_matches = function () {
@@ -287,7 +287,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         var team = parseInt($scope.db_team);
         var match = btn.value;
         console.log("avad!!!");
-        location.href = '#/report/'+team+'/'+match;
+        $location.url('/report/'+team+'/'+match);
     }
 
     $scope.finalButton = function (generalComments) {

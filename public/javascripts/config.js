@@ -27,7 +27,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
     $stateProvider.state({
         name: 'teleop',
-        url: '/teleop/:match/:team',
+        url: '/teleop/',
         templateUrl: '/views/teleop.html',
         controller: function ($scope) {
             //$scope.init();
