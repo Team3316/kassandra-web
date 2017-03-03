@@ -198,7 +198,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
 
     $scope.submit_team_match = function (t, m) {
         if (t != undefined && m != undefined){
-            location.href = "/#/;
             $location.url('/autonomous/' + m + '/' + t);
             $scope.allData.team = t;
             $scope.allData.match = m;
