@@ -8,7 +8,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         url: '/team_picker',
         templateUrl: '/views/team_picker.html',
         controller: function ($scope) {
-            $scope.init();
+            //$scope.init();
         }
     });
 
