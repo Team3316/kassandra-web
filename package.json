@@ -1,5 +1,12 @@
 {
   "name": "myapp",
+   "keywords": [
+    "express",
+    "mongoose",
+    "mongodb",
+    "passport",
+    "demo"
+  ],
   "version": "0.0.0",
   "engines": {
     "node": "6.94"
@@ -23,6 +30,7 @@
     "express-session": "^1.7.6",
     "jade": "~1.11.0",
     "jquery": "^3.1.1",
+    "mongoose": "~4.8.1",
     "morgan": "~1.7.0",
     "ng-cookies": "^1.0.2",
     "serve-favicon": "~2.3.0",
