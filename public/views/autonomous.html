@@ -4,11 +4,11 @@
 
     <p class= "comments-types">move</p>
 
-    <label><input type="checkbox" ng-model="triedAndFailed"/> Tried and failed</label>
-    <label><input type="checkbox" ng-model="crosedBaseline"/> Crossed baseline</label>
+    <label><input type="checkbox" ng-model="triedAndFailed" value="0"/> Tried and failed</label>
+    <label><input type="checkbox" ng-model="crosedBaseline" value="0"/> Crossed baseline</label>
     
     <p class= "comments-types">Fuel</p>
-    <label><input type="checkbox" ng-model="fuelCollectedFromHopper"/> Collected from hopper</label>
+    <label><input type="checkbox" ng-model="fuelCollectedFromHopper" value="0"/> Collected from hopper</label>
     <label>Estimated points: <input type="number" ng-model="estimatedPoints"/><br></label>
 
     <p class= "comments-types">Gears</p>
@@ -17,7 +17,7 @@
     <label>Missed gears: <input type="number" ng-model = "missedGears"/><br></label>
 
     <p class= "comments-types">Hoppers</p>
-    <label>Released hoppers <input type="number" max="5" ng-model="releasedHopper"/><br></label>
+    <label>Released hoppers <input type="number" ng-model="releasedHopper"/><br></label>
 
     <div class="empty"></div>
     <div class="center" >
