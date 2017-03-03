@@ -142,7 +142,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         }).then(function successCallback(response) {
             if (response.data.message === "OMRI_GRANTED") {
                 $cookies.put('access_token', 'OMRI_GRANTED');
-                window.location.href = "#/team_picker";
+                $location.url('/team_picker');
             }
         });
     }
