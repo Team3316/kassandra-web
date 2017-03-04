@@ -4,8 +4,7 @@ var exports = module.exports = {};
 var MONGO_URL = "process.env.MONGODB_URI";
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
-var error_msg = "";
-db.on('error', function(){error_msg="connection error"; console.error.bind(console, 'connection error:')});
+db.on('error', console.error.bind(console, 'connection error:'));
 
 var cycle = new mongoose.Schema({
     match:String,

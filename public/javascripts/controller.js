@@ -196,9 +196,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 match = match[match.length-1].toUpperCase();
                 matches.push(match);
                 //console.log(match);
-            }, this).error(function(err){
-
-            });
+            }, this);
             $scope.matches = matches;
         });
     }
