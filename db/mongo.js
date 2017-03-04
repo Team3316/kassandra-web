@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var exports = module.exports = {};
 
-var MONGO_URL = process.env.MONGODB_URI;
+var MONGO_URL = "localhost:27017/DATA"//process.env.MONGODB_URI;
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -116,6 +116,7 @@ exports.getCycle = function (res, id, match){
 exports.getCycleByTeam = function (res, id){
   Cycle.find({team: id}, function(err, doc){
     res.send(JSON.stringify(doc));
+    console.log("sent!");
   });
 };
 

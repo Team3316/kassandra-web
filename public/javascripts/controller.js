@@ -1,5 +1,5 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr', function ($scope, $http, $cookies, $location) {
+app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     $scope.matches = [];
     $scope.teams = [];
     //to delete
@@ -290,6 +290,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         $scope.$apply();
     }
 
+    window.get_overall = function(){
+        var team = parseInt($scope.db_team);
+        $http.get('/get_cycles_by_team/'+team).then(function(data){
+            $state.go('overall_report', {obj:data.data});
+        });
+    }
+
     $scope.finalButton = function (generalComments) {
         $scope.allData.generalComments = generalComments;
         $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
@@ -357,5 +364,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
                 ctx.stroke();
             }, this);
         });
+    }
+
+    $scope.overall_organize = function(obj){
+        
     }
 });
