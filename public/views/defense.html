@@ -1,11 +1,11 @@
-<button class="leftArrow" ui-sref="teleop"><</button>
+<button class="leftArrow" ui-sref="teleop" ng-init = "initDefense()"><</button>
 <div class="center">
     <h3>Defense </h3>
 </div>
 <div class = "content-defense">
         
     <md-input-container>
-        <label>Defence on</label>
+        <label>Defense on</label>
         <md-select ng-model="defenseOn" id="team"> 
             <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
         </md-select>
@@ -14,8 +14,8 @@
 </div>
 
 <div class = "text-comment">
-    <p class = "comments-types">Defence Comments </p>
-    <textarea id="defensecomment" rows="8" cols="50" placeholder=" T-Bone, Lift, Blocking, Defence on boiler ..."></textarea>
+    <p class = "comments-types">Defense Comments </p>
+    <textarea id="defensecomment" rows="8" cols="50" placeholder=" T-Bone, Lift, Blocking, Defense on boiler ..." ng-model = "defenseComments"></textarea>
 
  <div class = "empty"></div>
 

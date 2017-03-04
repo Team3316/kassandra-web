@@ -1,14 +1,14 @@
-<button class="leftArrow" ui-sref="team_picker" ng-click="manuallyInsertDataTeamPicker();" ><</button>
+<button class="leftArrow" ui-sref="team_picker" ng-init="initAuto()"><</button>
 <div class="center"><h3>Autonomous</h3></div>
 <div class="content" ng-init="find_canvas()">
 
     <p class= "comments-types">Movement</p>
 
-    <label><input type="checkbox" ng-model="triedAndFailed" value="0"/> Tried and failed</label>
-    <label><input type="checkbox" ng-model="crosedBaseline" value="0"/> Crossed baseline</label>
+    <label><input type="checkbox" ng-model="triedAndFailed" /> Tried and failed</label>
+    <label><input type="checkbox" ng-model="crosedBaseline" /> Crossed baseline</label>
     
     <p class= "comments-types">Fuel</p>
-    <label><input type="checkbox" ng-model="fuelCollectedFromHopper" value="0"/> Collected from hopper</label>
+    <label><input type="checkbox" ng-model="fuelCollectedFromHopper"/> Collected from hopper</label>
     <label>Estimated points: <input type="number" ng-model="estimatedPoints"/><br></label>
 
     <p class= "comments-types">Gears</p>

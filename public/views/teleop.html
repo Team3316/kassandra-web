@@ -1,27 +1,27 @@
-<button class="leftArrow" ui-sref="autonomous"><</button>
+<button class="leftArrow" ui-sref="autonomous" ng-init= "initTeleop()"><</button>
 <div class="center">
     <h3>Teleoperated</h3>
 </div>
 <div class="content" ng-init="find_canvas2()">
     <p class= "comments-types">Hoppers</p>
-    <label>Released hopper <input type="number" ng-model="releasedHopper"/><br></label>
+    <label>Released hopper <input type="number" ng-model="releasedHopper2"/><br></label>
     
     <p class= "comments-types">Gears</p>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP"/> Collected from HP</label>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor"/> Collected from floor</label>
-    <label>Successfully planted gears: <input type="number" ng-model = "plantedGears"/><br></label>
-    <label>Missed gears:  <input type="number" ng-model = "missedGears"/><br></label>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP2"/> Collected from HP</label>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor2"/> Collected from floor</label>
+    <label>Successfully planted gears: <input type="number" ng-model = "plantedGears2"/><br></label>
+    <label>Missed gears:  <input type="number" ng-model = "missedGears2"/><br></label>
 
     <p class= "comments-types">Fuel</p>
 
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper" /> Collected from Hopper</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor" /> Collected from floor</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP"/> Collected from HP </label>    
-    <label>Estimated points: <input type="number" ng-model = "estimatedPoints" /><br></label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper2" /> Collected from Hopper</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor2" /> Collected from floor</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP2"/> Collected from HP </label>    
+    <label>Estimated points: <input type="number" ng-model = "estimatedPoints2" /><br></label>
 
     <p class= "comments-types">Climbing</p>
-    <label><input type="checkbox" value="0" ng-model = "climbingTriedFailed"/> Tried and failed </label>
-    <label><input type="checkbox" value="0" ng-model = "climbingSuccesss" /> Success </label>    
+    <label><input type="checkbox" value="0" ng-model = "climbingTriedFailed2"/> Tried and failed </label>
+    <label><input type="checkbox" value="0" ng-model = "climbingSuccess2" /> Success </label>    
 
     <div class = "empty"></div>
     <div class = "center">
@@ -33,7 +33,7 @@
 </div> 
 
 <div class="center">
-    <button ui-sref= "defense" ng-click="updateTeleop(releasedHopper,gearsCollectedFromHP,
-    gearsCollectedFromFloor, fuelCollectedFromHopper, estimatedPoints, plantedGears,missedGears,fuelCollectedFromFloor,
-    fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss)">Continue</button>
+    <button ui-sref= "defense" ng-click="updateTeleop(releasedHopper2,gearsCollectedFromHP2,
+    gearsCollectedFromFloor2, fuelCollectedFromHopper2, estimatedPoints2, plantedGears2, missedGears2, fuelCollectedFromFloor2,
+    fuelCollectedFromHP2,estimatedPoints2,climbingTriedFailed2,climbingSuccess2);">Continue</button>
 </div>

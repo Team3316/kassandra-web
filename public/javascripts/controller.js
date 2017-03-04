@@ -1,5 +1,6 @@
-var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router', 'ngStorage']);
-app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorage) {
+var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
+app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
+    
     $scope.matches = [];
     $scope.teams = [];
     //to delete
@@ -60,8 +61,32 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
         context2 = null;
         coordinates = [];
         coordinates2 = [];
-        $scope.matches = [];
-        $scope.teams = [];
+
+        $scope.allData.match = "";
+        $scope.allData.team = 0;
+        $scope.allData.auto.triedAndFailed = false;
+        $scope.allData.auto.crosedBaseline = false;
+        $scope.allData.auto.fuelCollectedFromHopper = false;
+        $scope.allData.auto.estimatedPoints = 0;
+        $scope.allData.auto.succeessfullyPlantedGears = 0;
+        $scope.allData.auto.missedGears = 0;
+        $scope.allData.auto.releasedHopper = 0;
+        $scope.allData.auto.coordinates.coords = [];
+        $scope.allData.teleop.releasedHopper = 0;
+        $scope.allData.teleop.gearsCollectedFromHP = false;
+        $scope.allData.teleop.gearsCollectedFromFloor = false;
+        $scope.allData.teleop.plantedGears = 0;
+        $scope.allData.teleop.fuelCollectedFromHopper = false; 
+        $scope.allData.teleop.missedGears = 0;
+        $scope.allData.teleop.fuelCollectedFromFloor = false;
+        $scope.allData.teleop.fuelCollectedFromHP = false;
+        $scope.allData.teleop.estimatedPoints = 0;
+        $scope.allData.teleop.climbingTriedFailed = false;
+        $scope.allData.teleop.climbingSuccess = false;
+        $scope.allData.teleop.coordinates.coords = [];
+        $scope.allData.defense.defenseComments = "";
+        $scope.allData.defense.defenseOn = 0;
+        $scope.allData.generalComments = "";
     }
 
     $scope.addOnClick = function (event) {
@@ -97,6 +122,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
             find_canvas2();
         }
     }
+
+    
 
     $scope.clear = function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -196,6 +223,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
     }
 
     $scope.submit_team_match = function (t, m) {
+        clear_all();
         if (t != undefined && m != undefined){
             $location.url('/autonomous/' + m + '/' + t);
             $scope.allData.team = t;
@@ -236,6 +264,41 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
         $scope.allData.match = m;
     }
 
+    $scope.initAuto = function (){
+
+        $scope.triedAndFailed = $scope.allData.auto.triedAndFailed;
+        $scope.crosedBaseline = $scope.allData.auto.crosedBaseline;
+        $scope.fuelCollectedFromHopper = $scope.allData.auto.fuelCollectedFromHopper;
+        $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
+        $scope.succeessfullyPlantedGears = $scope.allData.auto.succeessfullyPlantedGears;
+        $scope.missedGears = $scope.allData.auto.missedGears;
+        $scope.releasedHopper = $scope.allData.auto.releasedHopper;
+    
+    }
+
+    $scope.initTeleop = function (){
+        
+        $scope.releasedHopper2 = $scope.allData.teleop.releasedHopper; 
+        $scope.gearsCollectedFromHP2 = $scope.allData.teleop.gearsCollectedFromHP;
+        $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor; 
+        $scope.plantedGears2 = $scope.allData.teleop.plantedGears;   
+        $scope.missedGears2 = $scope.allData.teleop.missedGears;
+        $scope.fuelCollectedFromFloor2 = $scope.allData.teleop.fuelCollectedFromFloor;
+        $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
+        $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
+        $scope.estimatedPoints2 = $scope.allData.teleop.estimatedPoints;
+        $scope.climbingTriedFailed2 = $scope.allData.teleop.climbingTriedFailed;
+        $scope.climbingSuccess2 = $scope.allData.teleop.climbingSuccess;
+    }
+
+    $scope.initDefense = function(){
+        $scope.defenseComments = $scope.allData.defense.defenseComments;
+    }
+
+    $scope.initFinal = function () {
+        $scope.generalComments = $scope.allData.generalComments;
+    }
+
     $scope.updateAuto = function (triedAndFailed, crosedBaseline, 
         fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
         for (var i = 0, j = arguments.length; i < j; i++){
@@ -253,25 +316,24 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
         $scope.allData.auto.coordinates.coords = coordinates;
     }
 
-    $scope.updateTeleop = function (releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor, fuelCollectedFromHopper,
-     estimatedPoints, plantedGears,missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss) {
+    $scope.updateTeleop = function (releasedHopper2,gearsCollectedFromHP2,gearsCollectedFromFloor2, fuelCollectedFromHopper2,
+     estimatedPoints2, plantedGears2,missedGears2,fuelCollectedFromFloor2,fuelCollectedFromHP2,estimatedPoints2,climbingTriedFailed2,climbingSuccess2) {
         for (var i = 0, j = arguments.length; i < j; i++){
             if(arguments[i] == undefined || arguments[i] == ""){
                 arguments[i] = 0;
             }
         }
-        $scope.allData.teleop.releasedHopper = releasedHopper;
-        $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP;
-        $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor;
-        $scope.allData.teleop.succeessfullyPlantedGears = plantedGears;
-        $scope.allData.teleop.plantedGears = plantedGears;
-        $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper; 
-        $scope.allData.teleop.missedGears = missedGears;
-        $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor;
-        $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHP;
-        $scope.allData.teleop.estimatedPoints = estimatedPoints;
-        $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed;
-        $scope.allData.teleop.climbingSuccess = climbingSuccesss;
+        $scope.allData.teleop.releasedHopper = releasedHopper2;
+        $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP2;
+        $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor2;
+        $scope.allData.teleop.plantedGears = plantedGears2;
+        $scope.allData.teleop.missedGears = missedGears2;
+        $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor2;
+        $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper2;
+        $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
+        $scope.allData.teleop.estimatedPoints = estimatedPoints2;
+        $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed2;
+        $scope.allData.teleop.climbingSuccess = climbingSuccess2;
         $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
@@ -290,6 +352,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
         $scope.$apply();
     }
 
+    window.get_overall = function(){
+        var team = parseInt($scope.db_team);
+        $http.get('/get_cycles_by_team/'+team).then(function(data){
+            $state.go('overall_report', {obj:data.data});
+        });
+    }
+
     $scope.finalButton = function (generalComments) {
         $scope.allData.generalComments = generalComments;
         $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
@@ -303,10 +372,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
         }, function (err) {
             console.log(err);
         });
-    }
-
-    $scope.manuallyInsertDataTeamPicker = function(){
-        
     }
 
     $scope.make_call = function(team, match){
@@ -362,4 +427,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorag
             }, this);
         });
     }
+
+    $scope.overall_organize = function(obj){
+        
+    }
+
+    $scope.insertAuto = function () {
+        return $scope.allData.auto.triedAndFailed;
+    }
+
 });
