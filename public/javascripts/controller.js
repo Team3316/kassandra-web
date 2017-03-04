@@ -328,7 +328,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
             $scope.tfcfho = data.data[0].teleop.fuelCollectedFromHopper;
             $scope.tep = data.data[0].teleop.estimatedPoints;
             $scope.tctaf = data.data[0].teleop.climbingTriedFailed;
-            $scope.tcs = data.data[0].teleop.climbingSuccesss;
+            $scope.tcs = data.data[0].teleop.climbingSuccess;
             $scope.ddo = data.data[0].defense.defenseOn;
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
