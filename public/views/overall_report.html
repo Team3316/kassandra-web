@@ -1,10 +1,30 @@
 <CENTER><h1>{{team}}</h1></CENTER>
 <div class="match-content">
-<h3>Movement</h3>
-<p>Tried & Failed: {{o_tf}}</p>
-<p>Crossed baseline: {{o_cb}}</p>
-<h3>Fuel</h3>
-<p>Collected from hopper: {{o_cfh}}</p>
-<p>Collected from floor: {{o_cff}}</p>
-<p>Collected from HP: {{o_chp}}</p>
+    <h3 style="margin: 10px 0;">Autonomus</h6>
+    <p>Tried and failed: {{o_tf | number : 3}}</p>
+    <p>Crossed baseline: {{o_cb | number : 3}}</p>
+    <p>Collected from hopper: {{o_cfh}}</p>
+    <p>Estimated points: {{o_ep | number : 3}}</p>
+    <p>Released hoppers: {{o_rh | number : 3}}</p>
+    <p>Successfully planted gears: {{o_spg | number : 3}}</p>
+    <p>Missed gears: {{o_mg | number : 3}}</p>
+    <h3 style="margin: 10px 0;">Teleop</h6>
+    <p>Released hoppers: {{o_trh | number : 3}}</p>
+    <p>Gears collected from HP: {{o_tgcfh}}</p>
+    <p>Gears collected from floor: {{o_tgcff}}</p>
+    <p>Successfully planted gears: {{o_tspg}}</p>
+    <p>Missed gears: {{o_tmg | number : 3}}</p>
+    <p>Fuel collecected from floor: {{o_tfcff}}</p>
+    <p>Fuel collecected from HP: {{o_tfcfh}}</p>
+    <p>Fuel collecected from hopper: {{o_tfcfho}}</p>
+    <p>Estimated points: {{o_tep | number : 3}}</p>
+    <p>Didn't climb: {{o_dc | number : 3}}</p>
+    <p>Climb tried and failed: {{o_tctaf | number : 3}}</p>
+    <p>Climb success: {{o_tcs | number : 3}}</p>
+    <h3 style="margin: 10px 0;">Defense</h6>
+    <p>Defense on: {{o_ddo}}</p>
+    <p>Defense comments: {{o_ddc}}</p>
+    <h3 style="margin: 10px 0;">General</h6>
+    <p>General comments: {{o_ggc}}</p>
+    <canvas id="reportauto2" class="field" width="300" height="279"></canvas>
 </div>

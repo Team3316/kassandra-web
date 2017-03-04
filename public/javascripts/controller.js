@@ -254,7 +254,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     }
 
     $scope.updateTeleop = function (releasedHopper,gearsCollectedFromHP,gearsCollectedFromFloor, fuelCollectedFromHopper,
-     estimatedPoints, plantedGears,missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccesss) {
+     estimatedPoints, plantedGears,missedGears,fuelCollectedFromFloor,fuelCollectedFromHP,estimatedPoints,climbingTriedFailed,climbingSuccess) {
         for (var i = 0, j = arguments.length; i < j; i++){
             if(arguments[i] == undefined || arguments[i] == ""){
                 arguments[i] = 0;
@@ -271,7 +271,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHP;
         $scope.allData.teleop.estimatedPoints = estimatedPoints;
         $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed;
-        $scope.allData.teleop.climbingSuccess = climbingSuccesss;
+        $scope.allData.teleop.climbingSuccess = climbingSuccess;
         $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
@@ -298,6 +298,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     }
 
     $scope.finalButton = function (generalComments) {
+        if(generalComments == "" || generalComments == null || generalComments == undefined){generalComments = "";}
         $scope.allData.generalComments = generalComments;
         $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
             $http.get('javascripts/data.json').then(function (response) {
@@ -367,6 +368,78 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     }
 
     $scope.overall_organize = function(obj){
-        
+        $scope.o_tf = 0; 
+        $scope.o_cb = 0;
+        $scope.o_cfh = false;
+        $scope.o_rh = 0;
+        $scope.o_spg = 0;
+        $scope.o_mg = 0;
+        $scope.o_ep = 0;
+        $scope.o_trh = 0;
+        $scope.o_tgcfh = false;
+        $scope.o_tgcff = false;
+        $scope.o_tspg = 0;
+        $scope.o_tmg = 0;
+        $scope.o_tfcff = false;
+        $scope.o_tfcfh = false;
+        $scope.o_tfcfho = false;
+        $scope.o_tep = 0;
+        $scope.o_tctaf = 0;
+        $scope.o_tcs = 0;
+        $scope.o_ddo = "";
+        $scope.o_ddc = "";
+        $scope.o_ggc = "";
+        var canv;
+        var ctx;
+        while(canv == null){
+            canv = document.getElementById("reportauto2");
+            if(canv.getContext){
+                ctx = canv.getContext('2d');
+            }
+        }
+        obj.forEach(function(element) {
+            $scope.o_tf += element.auto.triedAndFailed/obj.length; //auto tf
+            $scope.o_cb += element.auto.crosedBaseline/obj.length; //auto cb
+            $scope.o_cfh = $scope.o_cfh || element.auto.fuelCollectedFromHopper; //auto fuel hopper
+            $scope.o_rh += element.auto.releasedHopper/obj.length; //auto rh
+            $scope.o_spg += element.auto.succeessfullyPlantedGears/obj.length; //auto planted gears
+            $scope.o_mg += element.auto.missedGears/obj.length; // auto missedGears
+            $scope.o_ep += element.auto.estimatedPoints/obj.length; //auto etimated points
+            $scope.o_trh += element.teleop.releasedHopper/obj.length; //teleop releasedHoppers
+            $scope.o_tgcfh = $scope.o_tgcfh || element.teleop.gearsCollectedFromHP; //teleop gears collected hp
+            $scope.o_tgcff = $scope.o_tgcff || element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
+            $scope.o_tspg += element.teleop.plantedGears/obj.length; //teleop planted gears
+            $scope.o_tmg += element.teleop.missedGears/obj.length; //teleop missedGears
+            $scope.o_tfcff = $scope.o_tfcff || (element.teleop.fuelCollectedFromFloor==true); //teleop collect fuel floor
+            $scope.o_tfcfh = $scope.o_tfcfh || (element.teleop.fuelCollectedFromHP == true); //teleop collect fuel hp
+            $scope.o_tfcfho = $scope.o_tfcfho || (element.teleop.fuelCollectedFromHopper == true); //teleop collect fuel hopper
+            $scope.o_tep += $scope.o_tep/obj.length; //teleop estimated points
+            $scope.o_tctaf += element.teleop.climbingTriedFailed/obj.length; //climb tried and failed
+            $scope.o_tcs += element.teleop.climbingSuccess/obj.length; //climb success
+            $scope.o_ddo += element.match + ":" + element.defense.defenseOn  + "\r\n";
+            $scope.o_ddc += element.match + ":" + element.defense.defenseComments  + "\n";
+            $scope.o_ggc += element.match + ":" + element.generalComments  + "\n";
+            element.auto.coordinates.coords.forEach(function(e) {
+                if(e){
+                var x = e.x;
+                var y = e.y;
+                ctx.beginPath();
+                ctx.strokeStyle = "#e74c3c";
+                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                ctx.stroke();
+                }
+            }, this);
+            element.teleop.coordinates.coords.forEach(function(e) {
+                if(e){
+                var x = e.x;
+                var y = e.y;
+                ctx.beginPath();
+                ctx.strokeStyle = "#3498db";
+                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                ctx.stroke();
+                }
+            }, this);
+        }, this);
+        $scope.o_dc = (1-$scope.o_tctaf-$scope.o_tcs);
     }
 });

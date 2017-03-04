@@ -86,7 +86,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         templateUrl: '/views/overall_report.html',
         controller: function ($scope, $stateParams) {
             var obj = $stateParams.obj;
-            overall_organize(obj);
+            $scope.overall_organize(obj);
             console.log(obj);
         }
     });
