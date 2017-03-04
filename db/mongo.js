@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var exports = module.exports = {};
 
-var url = process.env.MONGODB_URI;
-mongoose.connect(url);
+var MONGO_URL = process.env.MONGODB_URI;
+mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 

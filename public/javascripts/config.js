@@ -8,7 +8,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         url: '/team_picker',
         templateUrl: '/views/team_picker.html',
         controller: function ($scope) {
-            $scope.init();
+            //$scope.init();
         }
     });
 
@@ -21,16 +21,16 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.r_team = $stateParams.team;
             console.log("match: " + $stateParams.match);
             console.log("team: " + $stateParams.team);
-            $scope.init();
+            //$scope.init();
         }
     });
 
     $stateProvider.state({
         name: 'teleop',
-        url: '/teleop/:match/:team',
+        url: '/teleop/',
         templateUrl: '/views/teleop.html',
         controller: function ($scope) {
-            $scope.init();
+            //$scope.init();
         }
     });
 
@@ -39,7 +39,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         url: '/final_page/:match/:team',
         templateUrl: '/views/final_page.html',
         controller: function ($scope) {
-            $scope.init();
+            //$scope.init();
         }
     });
 
@@ -52,7 +52,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.team = $stateParams.team;
             console.log("match: " + $stateParams.match);
             console.log("team: " + $stateParams.team);
-            $scope.init();
+            //$scope.init();
         }
     });
 

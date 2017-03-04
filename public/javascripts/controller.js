@@ -142,18 +142,18 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         }).then(function successCallback(response) {
             if (response.data.message === "OMRI_GRANTED") {
                 $cookies.put('access_token', 'OMRI_GRANTED');
-                window.location.href = "#/team_picker";
+                $location.url('/team_picker');
             }
         });
     }
 
-    $scope.init = function () {
-        console.log("init!");
-        var accessToken = $cookies.get("access_token");
-        if (accessToken !== 'OMRI_GRANTED') {
-            window.location.href = '#/login';
-        }
-    }
+    // $scope.init = function () {
+    //     console.log("init!");
+    //     var accessToken = $cookies.get("access_token");
+    //     if (accessToken !== 'OMRI_GRANTED') {
+    //         window.location.href = '#/login';
+    //     }
+    // }
 
     $scope.admin = function () {
         console.log("make admin cookie");
@@ -198,14 +198,14 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
 
     $scope.submit_team_match = function (t, m) {
         if (t != undefined && m != undefined){
-            location.href = "/#/autonomous/" + m + "/" + t;
+            $location.url('/autonomous/' + m + '/' + t);
             $scope.allData.team = t;
             $scope.allData.match = m;
         }
     }
 
     $scope.teleop = function () {
-        location.href = "/#/teleop/" + $scope.match + "/" + $scope.team;
+        $location.url("/teleop/");
     }
 
     $scope.pull_matches = function () {
@@ -287,7 +287,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         var team = parseInt($scope.db_team);
         var match = btn.value;
         console.log("avad!!!");
-        location.href = '#/report/'+team+'/'+match;
+        $location.url('/report/'+team+'/'+match);
     }
 
     $scope.finalButton = function (generalComments) {
