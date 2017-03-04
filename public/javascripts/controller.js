@@ -1,5 +1,5 @@
-var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr', function ($scope, $http, $cookies, $location) {
+var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router', 'ngStorage']);
+app.controller('ctr', function ($scope, $http, $cookies, $location, $localStorage) {
     $scope.matches = [];
     $scope.teams = [];
     //to delete
@@ -303,6 +303,10 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         }, function (err) {
             console.log(err);
         });
+    }
+
+    $scope.manuallyInsertDataTeamPicker = function(){
+        
     }
 
     $scope.make_call = function(team, match){
