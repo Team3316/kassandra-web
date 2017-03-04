@@ -187,7 +187,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     //these matches are a test only
     $scope.get_matches = function () {
-        var url = "https://www.thebluealliance.com/api/v2/event/2017txlu/matches";
+        var url = "https://www.thebluealliance.com/api/v2/event/2017mndu/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
             var matches = [];
@@ -196,7 +196,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 match = match[match.length-1].toUpperCase();
                 matches.push(match);
                 //console.log(match);
-            }, this);
+            }, this).error(function(err){
+
+            });
             $scope.matches = matches;
         });
     }
