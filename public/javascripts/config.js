@@ -76,8 +76,6 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             var team = $stateParams.team;
             var match = $stateParams.match;
             $scope.make_call(team, match);
-            console.log("match: " + $stateParams.match);
-            console.log("team: " + $stateParams.team);
         }
     });
 

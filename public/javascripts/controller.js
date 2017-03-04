@@ -32,7 +32,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         }
     };
     $scope.find_canvas2 = function () {
-        console.log("poop");
         canvas2 = null;
         context2 = null;
         coordinates2 = [];
@@ -287,7 +286,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         var team = parseInt($scope.db_team);
         var match = btn.value;
         console.log("avad!!!");
-        $location.url('/report/'+team+'/'+match);
+        $location.path('/report/'+team+'/'+match);
     }
 
     $scope.finalButton = function (generalComments) {
