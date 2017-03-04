@@ -1,4 +1,4 @@
-<button class="leftArrow" ui-sref="teleop" ng-init = "initDefense()"><</button>
+<button class="leftArrow" ui-sref="teleop" ng-click="updateDefense(defenseOn)" ng-init="initDefense()"><</button>
 <div class="center">
     <h3>Defense </h3>
 </div>
@@ -6,7 +6,7 @@
         
     <md-input-container>
         <label>Defense on</label>
-        <md-select ng-model="defenseOn" id="team"> 
+        <md-select ng-model="defenseOn" id="team" > 
             <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
         </md-select>
     </md-input-container>

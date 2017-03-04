@@ -293,6 +293,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.initDefense = function(){
         $scope.defenseComments = $scope.allData.defense.defenseComments;
+        $scope.defenseOn = $scope.allData.defense.defenseOn;
     }
 
     $scope.initFinal = function () {
@@ -359,9 +360,16 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         });
     }
 
-    $scope.finalButton = function (generalComments) {
+    $scope.update_final = function (generalComments) {
         if(generalComments == "" || generalComments == null || generalComments == undefined){generalComments = "";}
         $scope.allData.generalComments = generalComments;
+    }
+
+    $scope.initFinal = function () {
+        $scope.generalComments = $scope.allData.generalComments;
+    }
+
+    $scope.finalButton = function () {
         $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
             $http.get('javascripts/data.json').then(function (response) {
                 $scope.allData = response.data;

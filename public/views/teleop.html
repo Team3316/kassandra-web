@@ -1,8 +1,10 @@
-<button class="leftArrow" ui-sref="autonomous" ng-init= "initTeleop()"><</button>
+<button class="leftArrow" ui-sref="autonomous" ng-click="updateTeleop(releasedHopper2,gearsCollectedFromHP2,
+    gearsCollectedFromFloor2, fuelCollectedFromHopper2, estimatedPoints2, plantedGears2, missedGears2, fuelCollectedFromFloor2,
+    fuelCollectedFromHP2,estimatedPoints2,climbingTriedFailed2,climbingSuccess2);"><</button>
 <div class="center">
     <h3>Teleoperated</h3>
 </div>
-<div class="content" ng-init="find_canvas2()">
+<div class="content" ng-init="find_canvas2(); initTeleop()">
     <p class= "comments-types">Hoppers</p>
     <label>Released hopper <input type="number" ng-model="releasedHopper2"/><br></label>
     
