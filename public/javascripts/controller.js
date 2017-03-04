@@ -287,6 +287,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location) {
         var match = btn.value;
         console.log("avad!!!");
         $location.path('/report/'+team+'/'+match);
+        $scope.apply();
     }
 
     $scope.finalButton = function (generalComments) {
