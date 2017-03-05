@@ -1,3 +1,6 @@
+<div class="center">
+    <h3>Admin</h3>
+</div>
 
 <div class="empty"></div>
 <md-input-container ng-init="pull_matches()">
@@ -16,3 +19,9 @@
     <button onclick="get_overall();">OVERALL</button>
     <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match.match}}">{{match.match}}</button>
 </div>
+
+<div class="empty"></div>
+<div class="empty"></div>
+<div class="empty"></div>
+<div class="empty"></div>
+<button class = "toAdmin" ui-sref = "team_picker" >&#8618</button>

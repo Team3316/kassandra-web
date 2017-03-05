@@ -154,6 +154,17 @@ button {
     cursor: pointer;
 }
 
+.toAdmin{
+  background-color: #008CBA;
+  opacity:0.5;
+  border: none;
+  text-align:center;
+  display: inline-block;
+  width:20%;
+  margin: 0;
+  cursor:pointer;
+}
+
 button:visited{
     background-color: #cedbe9;
     border: none;
