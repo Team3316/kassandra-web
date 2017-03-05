@@ -23,7 +23,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     $scope.find_canvas = function () {
         canvas = null;
         context = null;
-        coordinates = [];
+        //coordinates = [];
 
         while (canvas === null) {
             canvas = document.getElementById('myCanvas');
@@ -35,7 +35,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     $scope.find_canvas2 = function () {
         canvas2 = null;
         context2 = null;
-        coordinates2 = [];
+        //coordinates2 = [];
         while (canvas2 === null) {
             canvas2 = document.getElementById('myCanvas2');
             if (canvas2) {
@@ -59,8 +59,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         context = null;
         canvas2 = null;
         context2 = null;
-        coordinates = [];
-        coordinates2 = [];
+        //coordinates = [];
+        //coordinates2 = [];
 
         $scope.allData.match = "";
         $scope.allData.team = 0;
@@ -187,7 +187,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     //these matches are a test only
     $scope.get_matches = function () {
-        var url = "https://www.thebluealliance.com/api/v2/event/2017txlu/matches";
+        var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
             var matches = [];
@@ -203,7 +203,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     //gets teams of the current match
     $scope.get_teams = function (match) {
-        var ending = "2017txlu_" + match.toLowerCase();
+        var ending = "2017isde1_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
             //console.log(JSON.stringify(data));
@@ -273,7 +273,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.succeessfullyPlantedGears = $scope.allData.auto.succeessfullyPlantedGears;
         $scope.missedGears = $scope.allData.auto.missedGears;
         $scope.releasedHopper = $scope.allData.auto.releasedHopper;
-    
+
     }
 
     $scope.initTeleop = function (){
@@ -456,9 +456,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.o_tep = 0;
         $scope.o_tctaf = 0;
         $scope.o_tcs = 0;
-        $scope.o_ddo = "";
-        $scope.o_ddc = "";
-        $scope.o_ggc = "";
+        $scope.o_ddo = []
+        $scope.o_ddc = [];
+        $scope.o_ggc = [];
         var canv;
         var ctx;
         while(canv == null){
@@ -486,9 +486,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.o_tep += $scope.o_tep/obj.length; //teleop estimated points
             $scope.o_tctaf += element.teleop.climbingTriedFailed/obj.length; //climb tried and failed
             $scope.o_tcs += element.teleop.climbingSuccess/obj.length; //climb success
-            $scope.o_ddo += element.match + ":" + element.defense.defenseOn  + "\r\n";
-            $scope.o_ddc += element.match + ":" + element.defense.defenseComments  + "\n";
-            $scope.o_ggc += element.match + ":" + element.generalComments  + "\n";
+            $scope.o_ddo.push(element.match + ":" + element.defense.defenseOn);
+            $scope.o_ddc.push(element.match + ":" + element.defense.defenseComments);
+            $scope.o_ggc.push(element.match + ":" + element.generalComments);
             element.auto.coordinates.coords.forEach(function(e) {
                 if(e){
                 var x = e.x;

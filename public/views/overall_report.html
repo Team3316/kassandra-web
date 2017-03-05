@@ -30,10 +30,10 @@
     <p class="pReport"><i>Climb success:</i> {{o_tcs | number : 3}}</p>
 
     <h3 class="comments-types">Defense</h6>
-    <p class="pReport"><i>Defense on:</i> {{o_ddo}}</p>
-    <p class="pReport"><i>Defense comments:</i> {{o_ddc}}</p>
+    <p class="pReport" ng-repeat="do in o_ddo"><i>Defense on:</i> {{do}}</p>
+    <p class="pReport" ng-repeat="dc in o_ddc"><i>Defense comments:</i> {{dc}}</p>
     <h3 class="comments-types">General</h6>
-    <p class="pReport"><i>General comments:</i> {{o_ggc}}</p>
+    <p class="pReport" ng-repeat="gc in o_ggc"><i>General comments:</i> {{gc}}</p>
     <canvas id="reportauto2" class="field" width="300" height="279"></canvas>
 
 </div>
