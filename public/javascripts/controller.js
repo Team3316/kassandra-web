@@ -187,7 +187,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     //these matches are a test only
     $scope.get_matches = function () {
-        var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
+        var url = "https://www.thebluealliance.com/api/v2/event/2017txlu/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
             var matches = [];
@@ -203,7 +203,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     //gets teams of the current match
     $scope.get_teams = function (match) {
-        var ending = "2017isde1_" + match.toLowerCase();
+        var ending = "2017txlu_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
             //console.log(JSON.stringify(data));
