@@ -127,10 +127,14 @@ exports.unhideCycle = function (res, id, match){
   });
 };
 
-exports.getCycleByTeam = function (res, id){
-  Cycle.find({team: id}, function(err, doc){
+exports.getCycleByTeam = function (res, id, get_all){
+  if (get_all) {
+    query = {team: id};
+  } else {
+    query = {team: id, is_visible: true};
+  }
+  Cycle.find(query, function(err, doc){
     res.send(JSON.stringify(doc));
-    console.log("sent!");
   });
 };
 

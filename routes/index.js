@@ -45,7 +45,13 @@ router.get('/unhide_cycle/:id/:match', function(req, res, next) {
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id; 
-  mongo.getCycleByTeam(res, id);
+  mongo.getCycleByTeam(res, id, false);
+});
+
+router.get('/get_all_cycles_by_team/:id', function(req, res, next) {
+  //res.setHeader('Content-Type', 'application/json');
+  var id = req.params.id; 
+  mongo.getCycleByTeam(res, id, true);
 });
 
 router.get('/get_all_teams', function(req, res, next) {

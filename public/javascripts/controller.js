@@ -254,9 +254,17 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.team_selected = function (team) {
         $scope.db_team = team;
-        $http.get("/get_cycles_by_team/" +team).then(function(data){
+        $http.get("/get_all_cycles_by_team/" +team).then(function(data){
                 $scope._match = data.data;
         });
+    }
+
+    $scope.set_color = function (match) {
+        if (match.is_visible) {
+            return { "background-color": "#008CBA" };
+        } else {
+            return { "background-color": "#333" };
+        }
     }
 
     $scope.hideCycle = function (team, match) {
