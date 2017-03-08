@@ -259,6 +259,24 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         });
     }
 
+    $scope.hideCycle = function (team, match) {
+        // TODO: Handle Errors
+        $http.get("/hide_cycle/" + team + "/"+ match).then(function(data){
+            if(data.data.nModified == 1) {
+                $scope.is_visible = false;
+            }
+        });
+    }
+
+    $scope.unhideCycle = function (team, match) {
+        // TODO: Handle Errors
+        $http.get("/unhide_cycle/" + team + "/"+ match).then(function(data){
+            if(data.data.nModified == 1) {
+                $scope.is_visible = true;
+            }
+        });
+    }
+
     $scope.updateTeam_picker = function (t, m) {
         $scope.allData.team = t;
         $scope.allData.match = m;
@@ -410,6 +428,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.ddo = data.data[0].defense.defenseOn;
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
+            $scope.is_visible = data.data[0].is_visible;
             var canv;
             var ctx;
             while(canv == null){

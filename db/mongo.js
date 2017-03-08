@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var exports = module.exports = {};
 
-var MONGO_URL = process.env.MONGODB_URI;
-//var MONGO_URL = "localhost:27017/DATA" 
+//var MONGO_URL = process.env.MONGODB_URI;
+var MONGO_URL = "localhost:27017/DATA" 
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -42,7 +42,8 @@ var cycle = new mongoose.Schema({
         defenseOn:Number,
         defenseComments:String
     },
-    generalComments:String
+    generalComments:String,
+    is_visible:{type:Boolean,default:true}
 
 }); 
 
@@ -110,6 +111,18 @@ exports.getCycles = function (res){
 
 exports.getCycle = function (res, id, match){
   Cycle.find({team:id, match:match}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.hideCycle = function (res, id, match){
+  Cycle.update({team:id, match:match}, {is_visible:false}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.unhideCycle = function (res, id, match){
+  Cycle.update({team:id, match:match}, {is_visible:true}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
