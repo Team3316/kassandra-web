@@ -1,6 +1,6 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
-    
+
     $scope.matches = [];
     $scope.teams = [];
     //to delete
@@ -54,7 +54,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.accessToken = "OMRI_GRANTED";
 
-    function clear_all(){
+    function clear_all() {
         canvas = null;
         context = null;
         canvas2 = null;
@@ -76,7 +76,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.teleop.gearsCollectedFromHP = false;
         $scope.allData.teleop.gearsCollectedFromFloor = false;
         $scope.allData.teleop.plantedGears = 0;
-        $scope.allData.teleop.fuelCollectedFromHopper = false; 
+        $scope.allData.teleop.fuelCollectedFromHopper = false;
         $scope.allData.teleop.missedGears = 0;
         $scope.allData.teleop.fuelCollectedFromFloor = false;
         $scope.allData.teleop.fuelCollectedFromHP = false;
@@ -123,7 +123,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         }
     }
 
-    
+
 
     $scope.clear = function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -190,12 +190,16 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
+            jdata.sort(function(a, b){
+                if(a.time < b.time) return -1;
+                if(a.time > b.time) return 1;
+                return 0;
+            });
             var matches = [];
             jdata.forEach(function (element) {
-                var match = element.key.split("_");//(element.comp_level).toUpperCase() + element.set_number + 'm' + element.match_number;
-                match = match[match.length-1].toUpperCase();
+                var match = element.key.split("_");
+                match = match[match.length - 1].toUpperCase();
                 matches.push(match);
-                //console.log(match);
             }, this);
             $scope.matches = matches;
         });
@@ -224,7 +228,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.submit_team_match = function (t, m) {
         clear_all();
-        if (t != undefined && m != undefined){
+        if (t != undefined && m != undefined) {
             $location.url('/autonomous/' + m + '/' + t);
             $scope.allData.team = t;
             $scope.allData.match = m;
@@ -237,16 +241,16 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.pull_matches = function () {
         // $scope.db_teams = ["0002", "1232", "3232"];
-        $http.get("/get_all_matches").then(function(data){
+        $http.get("/get_all_matches").then(function (data) {
             console.log(data);
             $scope.db_matches = data.data;
         });
     }
 
     $scope.pull_teams = function () {
-        
+
         // $scope.db_teams = ["0002", "1232", "3232"];
-        $http.get("/get_all_teams").then(function(data){
+        $http.get("/get_all_teams").then(function (data) {
             console.log(data);
             $scope.db_teams = data.data;
         });
@@ -254,8 +258,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.team_selected = function (team) {
         $scope.db_team = team;
-        $http.get("/get_cycles_by_team/" +team).then(function(data){
-                $scope._match = data.data;
+        $http.get("/get_cycles_by_team/" + team).then(function (data) {
+            $scope._match = data.data;
         });
     }
 
@@ -264,7 +268,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.match = m;
     }
 
-    $scope.initAuto = function (){
+    $scope.initAuto = function () {
 
         $scope.triedAndFailed = $scope.allData.auto.triedAndFailed;
         $scope.crosedBaseline = $scope.allData.auto.crosedBaseline;
@@ -276,12 +280,12 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     }
 
-    $scope.initTeleop = function (){
-        
-        $scope.releasedHopper2 = $scope.allData.teleop.releasedHopper; 
+    $scope.initTeleop = function () {
+
+        $scope.releasedHopper2 = $scope.allData.teleop.releasedHopper;
         $scope.gearsCollectedFromHP2 = $scope.allData.teleop.gearsCollectedFromHP;
-        $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor; 
-        $scope.plantedGears2 = $scope.allData.teleop.plantedGears;   
+        $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor;
+        $scope.plantedGears2 = $scope.allData.teleop.plantedGears;
         $scope.missedGears2 = $scope.allData.teleop.missedGears;
         $scope.fuelCollectedFromFloor2 = $scope.allData.teleop.fuelCollectedFromFloor;
         $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
@@ -291,7 +295,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.climbingSuccess2 = $scope.allData.teleop.climbingSuccess;
     }
 
-    $scope.initDefense = function(){
+    $scope.initDefense = function () {
         $scope.defenseComments = $scope.allData.defense.defenseComments;
         $scope.defenseOn = $scope.allData.defense.defenseOn;
     }
@@ -300,10 +304,10 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.generalComments = $scope.allData.generalComments;
     }
 
-    $scope.updateAuto = function (triedAndFailed, crosedBaseline, 
+    $scope.updateAuto = function (triedAndFailed, crosedBaseline,
         fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
-        for (var i = 0, j = arguments.length; i < j; i++){
-            if(arguments[i] == undefined || arguments[i] == ""){
+        for (var i = 0, j = arguments.length; i < j; i++) {
+            if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
             }
         }
@@ -317,10 +321,10 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.auto.coordinates.coords = coordinates;
     }
 
-    $scope.updateTeleop = function (releasedHopper2,gearsCollectedFromHP2,gearsCollectedFromFloor2, fuelCollectedFromHopper2,
-     estimatedPoints2, plantedGears2,missedGears2,fuelCollectedFromFloor2,fuelCollectedFromHP2,estimatedPoints2,climbingTriedFailed2,climbingSuccess2) {
-        for (var i = 0, j = arguments.length; i < j; i++){
-            if(arguments[i] == undefined || arguments[i] == ""){
+    $scope.updateTeleop = function (releasedHopper2, gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
+        estimatedPoints2, plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climbingTriedFailed2, climbingSuccess2) {
+        for (var i = 0, j = arguments.length; i < j; i++) {
+            if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
             }
         }
@@ -340,28 +344,28 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.updateDefense = function (defenseOn) {
         var dc = document.getElementById("defensecomment").value;
-        if(defenseComments = "" || !defenseOn){defenseOn = 0}
+        if (defenseComments = "" || !defenseOn) { defenseOn = 0 }
         $scope.allData.defense.defenseComments = dc;
         $scope.allData.defense.defenseOn = defenseOn;
     }
-    
-    window.get_single_match =  function(btn){
+
+    window.get_single_match = function (btn) {
         var team = parseInt($scope.db_team);
         var match = btn.value;
         console.log("avad!!!");
-        $location.path('/report/'+team+'/'+match);
+        $location.path('/report/' + team + '/' + match);
         $scope.$apply();
     }
 
-    window.get_overall = function(){
+    window.get_overall = function () {
         var team = parseInt($scope.db_team);
-        $http.get('/get_cycles_by_team/'+team).then(function(data){
-            $state.go('overall_report', {obj:data.data});
+        $http.get('/get_cycles_by_team/' + team).then(function (data) {
+            $state.go('overall_report', { obj: data.data });
         });
     }
 
     $scope.update_final = function (generalComments) {
-        if(generalComments == "" || generalComments == null || generalComments == undefined){generalComments = "";}
+        if (generalComments == "" || generalComments == null || generalComments == undefined) { generalComments = ""; }
         $scope.allData.generalComments = generalComments;
     }
 
@@ -375,19 +379,19 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 $scope.allData = response.data;
                 $location.url('/team_picker');
                 clear_all();
-        }, function (err) {
-                    console.log(err);
-                });
+            }, function (err) {
+                console.log(err);
+            });
         }, function (err) {
             console.log(err);
         });
     }
 
-    $scope.make_call = function(team, match){
+    $scope.make_call = function (team, match) {
         console.log(team + ", " + match);
         $scope.team = team;
         $scope.match = match;
-        $http.get("/get_cycle/" + team + "/"+ match).then(function (data){
+        $http.get("/get_cycle/" + team + "/" + match).then(function (data) {
             console.log(JSON.stringify(data.data));
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
@@ -412,13 +416,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.ggc = data.data[0].generalComments;
             var canv;
             var ctx;
-            while(canv == null){
+            while (canv == null) {
                 canv = document.getElementById("reportauto");
-                if(canv.getContext){
+                if (canv.getContext) {
                     ctx = canv.getContext('2d');
                 }
             }
-            data.data[0].auto.coordinates.coords.forEach(function(element) {
+            data.data[0].auto.coordinates.coords.forEach(function (element) {
                 var x = element.x;
                 var y = element.y;
                 ctx.beginPath();
@@ -426,7 +430,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
                 ctx.stroke();
             }, this);
-            data.data[0].teleop.coordinates.coords.forEach(function(element) {
+            data.data[0].teleop.coordinates.coords.forEach(function (element) {
                 var x = element.x;
                 var y = element.y;
                 ctx.beginPath();
@@ -437,8 +441,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         });
     }
 
-    $scope.overall_organize = function(obj){
-        $scope.o_tf = 0; 
+    $scope.overall_organize = function (obj) {
+        $scope.o_tf = 0;
         $scope.o_cb = 0;
         $scope.o_cfh = false;
         $scope.o_rh = 0;
@@ -461,56 +465,56 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.o_ggc = [];
         var canv;
         var ctx;
-        while(canv == null){
+        while (canv == null) {
             canv = document.getElementById("reportauto2");
-            if(canv.getContext){
+            if (canv.getContext) {
                 ctx = canv.getContext('2d');
             }
         }
-        obj.forEach(function(element) {
-            $scope.o_tf += element.auto.triedAndFailed/obj.length; //auto tf
-            $scope.o_cb += element.auto.crosedBaseline/obj.length; //auto cb
+        obj.forEach(function (element) {
+            $scope.o_tf += element.auto.triedAndFailed / obj.length; //auto tf
+            $scope.o_cb += element.auto.crosedBaseline / obj.length; //auto cb
             $scope.o_cfh = $scope.o_cfh || element.auto.fuelCollectedFromHopper; //auto fuel hopper
-            $scope.o_rh += element.auto.releasedHopper/obj.length; //auto rh
-            $scope.o_spg += element.auto.succeessfullyPlantedGears/obj.length; //auto planted gears
-            $scope.o_mg += element.auto.missedGears/obj.length; // auto missedGears
-            $scope.o_ep += element.auto.estimatedPoints/obj.length; //auto etimated points
-            $scope.o_trh += element.teleop.releasedHopper/obj.length; //teleop releasedHoppers
+            $scope.o_rh += element.auto.releasedHopper / obj.length; //auto rh
+            $scope.o_spg += element.auto.succeessfullyPlantedGears / obj.length; //auto planted gears
+            $scope.o_mg += element.auto.missedGears / obj.length; // auto missedGears
+            $scope.o_ep += element.auto.estimatedPoints / obj.length; //auto etimated points
+            $scope.o_trh += element.teleop.releasedHopper / obj.length; //teleop releasedHoppers
             $scope.o_tgcfh = $scope.o_tgcfh || element.teleop.gearsCollectedFromHP; //teleop gears collected hp
             $scope.o_tgcff = $scope.o_tgcff || element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
-            $scope.o_tspg += element.teleop.plantedGears/obj.length; //teleop planted gears
-            $scope.o_tmg += element.teleop.missedGears/obj.length; //teleop missedGears
-            $scope.o_tfcff = $scope.o_tfcff || (element.teleop.fuelCollectedFromFloor==true); //teleop collect fuel floor
+            $scope.o_tspg += element.teleop.plantedGears / obj.length; //teleop planted gears
+            $scope.o_tmg += element.teleop.missedGears / obj.length; //teleop missedGears
+            $scope.o_tfcff = $scope.o_tfcff || (element.teleop.fuelCollectedFromFloor == true); //teleop collect fuel floor
             $scope.o_tfcfh = $scope.o_tfcfh || (element.teleop.fuelCollectedFromHP == true); //teleop collect fuel hp
             $scope.o_tfcfho = $scope.o_tfcfho || (element.teleop.fuelCollectedFromHopper == true); //teleop collect fuel hopper
-            $scope.o_tep += $scope.o_tep/obj.length; //teleop estimated points
-            $scope.o_tctaf += element.teleop.climbingTriedFailed/obj.length; //climb tried and failed
-            $scope.o_tcs += element.teleop.climbingSuccess/obj.length; //climb success
+            $scope.o_tep += $scope.o_tep / obj.length; //teleop estimated points
+            $scope.o_tctaf += element.teleop.climbingTriedFailed / obj.length; //climb tried and failed
+            $scope.o_tcs += element.teleop.climbingSuccess / obj.length; //climb success
             $scope.o_ddo.push(element.match + ":" + element.defense.defenseOn);
             $scope.o_ddc.push(element.match + ":" + element.defense.defenseComments);
             $scope.o_ggc.push(element.match + ":" + element.generalComments);
-            element.auto.coordinates.coords.forEach(function(e) {
-                if(e){
-                var x = e.x;
-                var y = e.y;
-                ctx.beginPath();
-                ctx.strokeStyle = "#e74c3c";
-                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                ctx.stroke();
+            element.auto.coordinates.coords.forEach(function (e) {
+                if (e) {
+                    var x = e.x;
+                    var y = e.y;
+                    ctx.beginPath();
+                    ctx.strokeStyle = "#e74c3c";
+                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                    ctx.stroke();
                 }
             }, this);
-            element.teleop.coordinates.coords.forEach(function(e) {
-                if(e){
-                var x = e.x;
-                var y = e.y;
-                ctx.beginPath();
-                ctx.strokeStyle = "#3498db";
-                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                ctx.stroke();
+            element.teleop.coordinates.coords.forEach(function (e) {
+                if (e) {
+                    var x = e.x;
+                    var y = e.y;
+                    ctx.beginPath();
+                    ctx.strokeStyle = "#3498db";
+                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                    ctx.stroke();
                 }
             }, this);
         }, this);
-        $scope.o_dc = (1-$scope.o_tctaf-$scope.o_tcs);
+        $scope.o_dc = (1 - $scope.o_tctaf - $scope.o_tcs);
     }
 
     $scope.insertAuto = function () {
