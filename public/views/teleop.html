@@ -6,21 +6,20 @@
 </div>
 <div class="content" ng-init="find_canvas2(); initTeleop()">
     <p class= "comments-types">Hoppers</p>
-    <label>Released hopper <input type="number" ng-model="releasedHopper2"/><br></label>
+    <label>Released hoppers<input type="number" ng-model="releasedHopper2"/><br></label>
     
-    <p class= "comments-types">Gears</p>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP2"/> Collected from HP</label>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor2"/> Collected from floor</label>
-    <label>Successfully planted gears: <input type="number" ng-model = "plantedGears2"/><br></label>
-    <label>Missed gears:  <input type="number" ng-model = "missedGears2"/><br></label>
-
     <p class= "comments-types">Fuel</p>
-
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper2" /> Collected from Hopper</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor2" /> Collected from floor</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP2"/> Collected from HP </label>    
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper2" />Collected fuel from hopper</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor2" /> Collected fuel from floor</label>
+    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP2"/> Collected fuel from HP </label>    
     <label>Estimated points: <input type="number" ng-model = "estimatedPoints2" /><br></label>
 
+	<p class= "comments-types">Gears</p>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP2"/> Collected gears from HP</label>
+    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor2"/> Collected gears from floor</label>
+    <label>Successfully planted gears: <input type="number" ng-model = "plantedGears2"/><br></label>
+    <label>Missed gears:  <input type="number" ng-model = "missedGears2"/><br></label>
+	
     <p class= "comments-types">Climbing</p>
     <label><input type="checkbox" value="0" ng-model = "climbingTriedFailed2"/> Tried and failed </label>
     <label><input type="checkbox" value="0" ng-model = "climbingSuccess2" /> Success </label>    
