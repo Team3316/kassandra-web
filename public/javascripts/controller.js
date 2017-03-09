@@ -514,8 +514,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.o_tfcfh = $scope.o_tfcfh || (element.teleop.fuelCollectedFromHP == true); //teleop collect fuel hp
             $scope.o_tfcfho = $scope.o_tfcfho || (element.teleop.fuelCollectedFromHopper == true); //teleop collect fuel hopper
             $scope.o_tep += $scope.o_tep / obj.length; //teleop estimated points
-            $scope.o_tctaf += (element.teleop.climbingStatus.equals("climbing failed")) / obj.length; //climb tried and failed
-            $scope.o_tcs += (element.teleop.climbingStatus.equals("climbing succeeded")) / obj.length; //climb success
+            $scope.o_tctaf += (element.teleop.climbingStatus.localeCompare("Climbing failed")==0) / obj.length; //climb tried and failed
+            $scope.o_tcs += (element.teleop.climbingStatus.localeCompare("Climbing succeeded")==0) / obj.length; //climb success
             $scope.o_ddo.push(element.match + ":" + element.defense.defenseOn);
             $scope.o_ddc.push(element.match + ":" + element.defense.defenseComments);
             $scope.o_ggc.push(element.match + ":" + element.generalComments);
