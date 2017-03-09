@@ -7,7 +7,7 @@
     <md-input-container>
         <label>Defense on</label>
         <md-select ng-model="defenseOn" id="team" > 
-            <md-option class="ateam" ng-repeat="team in opposingTeams" value="{{team}}">{{team}}</md-option>
+            <md-option ng-class="{ablueteam:teams.indexOf(team)<3, aredteam:teams.indexOf(team)>=3}" ng-repeat="team in opposingTeams" value="{{team}}">{{team}}</md-option>
         </md-select>
     </md-input-container>
 
