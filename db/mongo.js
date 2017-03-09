@@ -32,8 +32,7 @@ var cycle = new mongoose.Schema({
         fuelCollectedFromHP:Boolean,
         fuelCollectedFromHopper: Boolean,
         estimatedPoints:Number,
-        climbingTriedFailed:Boolean,
-        climbingSuccess:Number,
+        climbingStatus:String,
         coordinates:{
             coords:Array
         }

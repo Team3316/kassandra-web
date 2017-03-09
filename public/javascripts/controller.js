@@ -82,8 +82,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.teleop.fuelCollectedFromFloor = false;
         $scope.allData.teleop.fuelCollectedFromHP = false;
         $scope.allData.teleop.estimatedPoints = 0;
-        $scope.allData.teleop.climbingTriedFailed = false;
-        $scope.allData.teleop.climbingSuccess = false;
+        $scope.allData.teleop.climbingStatus = "";
         $scope.allData.teleop.coordinates.coords = [];
         $scope.allData.defense.defenseComments = "";
         $scope.allData.defense.defenseOn = 0;
@@ -319,8 +318,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
         $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
         $scope.estimatedPoints2 = $scope.allData.teleop.estimatedPoints;
-        $scope.climbingTriedFailed2 = $scope.allData.teleop.climbingTriedFailed;
-        $scope.climbingSuccess2 = $scope.allData.teleop.climbingSuccess;
+        $scope.climbingStatus2 = $scope.allData.teleop.climbingStatus;
     }
 
     $scope.initDefense = function () {
@@ -350,7 +348,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     }
 
     $scope.updateTeleop = function (releasedHopper2, gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
-        estimatedPoints2, plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climbingTriedFailed2, climbingSuccess2) {
+        plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climbingStatus2) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -365,8 +363,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper2;
         $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
         $scope.allData.teleop.estimatedPoints = estimatedPoints2;
-        $scope.allData.teleop.climbingTriedFailed = climbingTriedFailed2;
-        $scope.allData.teleop.climbingSuccess = climbingSuccess2;
+        $scope.allData.teleop.climbingStatus = climbingStatus2;
         $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
@@ -437,8 +434,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.tfcfh = data.data[0].teleop.fuelCollectedFromHP;
             $scope.tfcfho = data.data[0].teleop.fuelCollectedFromHopper;
             $scope.tep = data.data[0].teleop.estimatedPoints;
-            $scope.tctaf = data.data[0].teleop.climbingTriedFailed;
-            $scope.tcs = data.data[0].teleop.climbingSuccess;
+            $scope.tcs = data.data[0].teleop.climbingStatus;
             $scope.ddo = data.data[0].defense.defenseOn;
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
@@ -488,6 +484,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.o_tep = 0;
         $scope.o_tctaf = 0;
         $scope.o_tcs = 0;
+        $scope.o_dc = 0;
         $scope.o_ddo = []
         $scope.o_ddc = [];
         $scope.o_ggc = [];
@@ -516,8 +513,8 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.o_tfcfh = $scope.o_tfcfh || (element.teleop.fuelCollectedFromHP == true); //teleop collect fuel hp
             $scope.o_tfcfho = $scope.o_tfcfho || (element.teleop.fuelCollectedFromHopper == true); //teleop collect fuel hopper
             $scope.o_tep += $scope.o_tep / obj.length; //teleop estimated points
-            $scope.o_tctaf += element.teleop.climbingTriedFailed / obj.length; //climb tried and failed
-            $scope.o_tcs += element.teleop.climbingSuccess / obj.length; //climb success
+            $scope.o_tctaf += (element.teleop.climbingStatus.equals("climbing failed")) / obj.length; //climb tried and failed
+            $scope.o_tcs += (element.teleop.climbingStatus.equals("climbing succeeded")) / obj.length; //climb success
             $scope.o_ddo.push(element.match + ":" + element.defense.defenseOn);
             $scope.o_ddc.push(element.match + ":" + element.defense.defenseComments);
             $scope.o_ggc.push(element.match + ":" + element.generalComments);
