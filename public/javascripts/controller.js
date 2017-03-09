@@ -417,7 +417,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.team = team;
         $scope.match = match;
         $http.get("/get_cycle/" + team + "/" + match).then(function (data) {
-            console.log(JSON.stringify(data.data));
+            console.log("MEOW "+JSON.stringify(data.data));
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromHopper;

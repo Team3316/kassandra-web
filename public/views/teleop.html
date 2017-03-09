@@ -21,11 +21,14 @@
     <label>Missed gears:  <input type="number" ng-model = "missedGears2"/><br></label>
 	
     <p class= "comments-types">Climbing</p>
-    <md-select ng-model="climbingStatus"> 
+    <md-input-container>
+    <label>Climbing</label>
+    <md-select ng-model="climbingStatus2"> 
         <md-option value="Did not try to climb">Did not try to climb</md-option>
         <md-option value="Climbing failed">Climbing failed</md-option>
         <md-option value="Climbing succeeded">Climbing succeeded</md-option>
-    </md-select>   
+    </md-select>
+    </md-input-container>
 
     <div class = "empty"></div>
     <div class = "center">
