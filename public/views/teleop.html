@@ -22,7 +22,12 @@
 	
     <p class= "comments-types">Climbing</p>
     <label><input type="checkbox" value="0" ng-model = "climbingTriedFailed2"/> Tried and failed </label>
-    <label><input type="checkbox" value="0" ng-model = "climbingSuccess2" /> Success </label>    
+    <label><input type="checkbox" value="0" ng-model = "climbingSuccess2" /> Success </label> 
+    <md-select ng-model="climbing"> 
+        <md-option value="climbingStatus">did not try to climb</md-option>
+        <md-option value="climbingStatus">climbing failed</md-option>
+        <md-option value="climbingStatus">climbing success</md-option>
+    </md-select>   
 
     <div class = "empty"></div>
     <div class = "center">
