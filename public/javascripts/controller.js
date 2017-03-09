@@ -280,6 +280,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $http.get("/get_all_teams").then(function (data) {
             console.log(data);
             $scope.db_teams = data.data;
+            $scope.db_teams.sort();
         });
     }
 
