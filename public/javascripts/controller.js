@@ -3,6 +3,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.matches = [];
     $scope.teams = [];
+    $scope.opposingTeams = [];
     //to delete
     //$cookies.remove("access_token");
 
@@ -190,9 +191,9 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
-            jdata.sort(function(a, b){
-                if(a.time < b.time) return -1;
-                if(a.time > b.time) return 1;
+            jdata.sort(function (a, b) {
+                if (a.time < b.time) return -1;
+                if (a.time > b.time) return 1;
                 return 0;
             });
             var matches = [];
@@ -223,6 +224,33 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 final.push(element.replace('frc', ''));
             }, this);
             $scope.teams = final;
+        });
+    }
+
+    $scope.get_opposing_teams = function (match,team) {
+        var ending = "2017isde1_" + match.toLowerCase();
+        var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
+        $http.get(url, config).then(function (data) {
+            //console.log(JSON.stringify(data));
+            //Why I did the shit down there
+            var jdata = data[Object.keys(data)[0]];
+            var red = jdata.alliances.red.teams;
+            var blue = jdata.alliances.blue.teams;
+            console.log(JSON.stringify(red));
+            console.log(JSON.stringify(blue));
+            var opposingTeams = [];
+            var teamstr = "frc".concat(team);
+            if (red.includes(teamstr)) {
+                blue.forEach(function (element) {
+                    opposingTeams.push(element.replace('frc', ''));
+                }, this);
+            }
+            else {
+                red.forEach(function (element) {
+                    opposingTeams.push(element.replace('frc', ''));
+                }, this);
+            }
+            $scope.opposingTeams = opposingTeams;
         });
     }
 

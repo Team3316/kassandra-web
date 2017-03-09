@@ -10,7 +10,7 @@
 </md-input-container>
 <md-input-container>
     <label>Team</label>
-    <md-select ng-model="teamSelected" id="team"> 
+    <md-select ng-model="teamSelected" ng-change="get_opposing_teams(matchSelected, teamSelected);" id="team"> 
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
