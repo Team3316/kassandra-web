@@ -5,7 +5,7 @@
 <md-input-container ng-init="get_matches();">
     <label>Match</label>
     <md-select ng-model="matchSelected" ng-change="get_teams(matchSelected);" class="matches">
-        <md-option ng-repeat="match in matches" value="{{match}}">{{match}}</md-option>
+        <md-option ng-repeat="match in matches" value="{{match.name}}">{{match.name}}</md-option>
     </md-select>
 </md-input-container>
 <md-input-container>

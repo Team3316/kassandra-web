@@ -91,5 +91,11 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         }
     });
 
+    $stateProvider.state({
+        name: 'table',
+        url: '/table',
+        templateUrl: '/views/table.html'
+    });
+
     $urlRouterProvider.otherwise('/');
 });

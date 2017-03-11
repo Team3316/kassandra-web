@@ -150,6 +150,20 @@ label {
   color:#3498db!important;
 }
 
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.greeny {
+  color: #008000;
+}
+
+table {
+    width: 100%;
+}
+
 .all_center{
   position: absolute;
   top: 50%;

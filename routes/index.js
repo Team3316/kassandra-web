@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 router.get('/get_cycles', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
   console.log("called");
-  mongo.getCycles();
+  mongo.getCycles(res);
   console.log("called");
 });
 

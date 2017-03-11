@@ -1,6 +1,6 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
-
+    $scope.match_team_dictionary = {};
     $scope.matches = [];
     $scope.teams = [];
     $scope.opposingTeams = [];
@@ -185,6 +185,11 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         console.log("make admin cookie");
     }
 
+
+    $scope.format_team = function (team_str) {
+       return team_str.replace('frc', '');
+    }
+
     //these matches are a test only
     $scope.get_matches = function () {
         var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
@@ -195,13 +200,13 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
                 if (a.time > b.time) return 1;
                 return 0;
             });
-            var matches = [];
-            jdata.forEach(function (element) {
+            jdata.forEach(function (element, index, arr) {
                 var match = element.key.split("_");
-                match = match[match.length - 1].toUpperCase();
-                matches.push(match);
+                element.name = match[match.length - 1].toUpperCase();
+                element.alliances.red.teams = element.alliances.red.teams.map($scope.format_team);
+                element.alliances.blue.teams = element.alliances.blue.teams.map($scope.format_team);
             }, this);
-            $scope.matches = matches;
+            $scope.matches = jdata;
         });
     }
 
@@ -210,7 +215,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         var ending = "2017isde1_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
-            //console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
             var red = jdata.alliances.red.teams;
@@ -418,7 +423,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         $scope.team = team;
         $scope.match = match;
         $http.get("/get_cycle/" + team + "/" + match).then(function (data) {
-            console.log("MEOW "+JSON.stringify(data.data));
+            console.log(JSON.stringify(data.data));
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromHopper;
@@ -545,6 +550,33 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.insertAuto = function () {
         return $scope.allData.auto.triedAndFailed;
+    }
+
+    $scope.pull_match_team = function () {
+        $http.get('/get_cycles').then(function (data) {
+                data.data.forEach(function (element) {
+                    $scope.match_team_dictionary[element.match]=[];
+                });
+                data.data.forEach(function (element) {
+                    $scope.match_team_dictionary[element.match].push(element.team);
+                });
+            });
+    }
+
+    $scope.entry_exists = function (match, team) {
+        if ((match in $scope.match_team_dictionary))
+        { //&& (team in $scope.match_team_dictionary[match])) {
+            console.log();
+            console.log("team: "+team);
+            console.log("arr: ");console.log($scope.match_team_dictionary[match]);
+            console.log("arr includes team: "+$scope.match_team_dictionary[match].includes(team));
+            return {
+                "color": '#008000'
+            }
+        }
+        return {
+            "color": 'black'
+        }
     }
 
 });
