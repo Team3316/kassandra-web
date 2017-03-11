@@ -159,20 +159,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         }, this);
     }
 
-    $scope.checkPass = function () {
-        var pass = document.getElementById("pass").value;
-        $http({
-            method: 'POST',
-            url: '/check_pass',
-            data: { password: pass }
-        }).then(function successCallback(response) {
-            if (response.data.message === "OMRI_GRANTED") {
-                $cookies.put('access_token', 'OMRI_GRANTED');
-                $location.url('/team_picker');
-            }
-        });
-    }
-
     // $scope.init = function () {
     //     console.log("init!");
     //     var accessToken = $cookies.get("access_token");

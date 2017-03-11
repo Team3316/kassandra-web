@@ -5,7 +5,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
     $stateProvider.state({
         name: 'team_picker',
-        url: '/team_picker',
+        url: '/',
         templateUrl: '/views/team_picker.html',
         controller: function ($scope) {
             //$scope.init();
@@ -54,12 +54,6 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             console.log("team: " + $stateParams.team);
             //$scope.init();
         }
-    });
-
-    $stateProvider.state({
-        name: 'login',
-        url: '/',
-        templateUrl: '/views/login.html'
     });
 
     $stateProvider.state({
