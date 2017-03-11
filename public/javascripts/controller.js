@@ -577,15 +577,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     }
 
     $scope.entry_exists = function (match, team) {
-        if ((match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)))) {
-            return {
-                "color": '#008000',
-                "font-weight": 'bold'
-            }
-        }
-        return {
-            "color": 'black'
-        }
+        return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
-
+    
 });
