@@ -490,7 +490,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.o_mg = 0;
         $scope.o_ep = 0;
         $scope.o_trh = 0;
-        $scope.o_tgcfh = false;
+        $scope.o_tgcfh = 0;
         $scope.o_tgcff = false;
         $scope.o_tspg = 0;
         $scope.o_tmg = 0;
@@ -521,8 +521,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.o_mg += element.auto.missedGears / obj.length; // auto missedGears
             $scope.o_ep += element.auto.estimatedPoints / obj.length; //auto etimated points
             $scope.o_trh += element.teleop.releasedHopper / obj.length; //teleop releasedHoppers
-            $scope.o_tgcfh = $scope.o_tgcfh || element.teleop.gearsCollectedFromHP; //teleop gears collected hp
-            $scope.o_tgcff = $scope.o_tgcff || element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
+            $scope.o_tgcfh += $scope.o_tgcfh / obj.length; //teleop gears collected hp
+            $scope.o_tgcff += $scope.o_tgcff / obj.length; //teleop gears collected floor
             $scope.o_tspg += element.teleop.plantedGears / obj.length; //teleop planted gears
             $scope.o_tmg += element.teleop.missedGears / obj.length; //teleop missedGears
             $scope.o_tfcff = $scope.o_tfcff || (element.teleop.fuelCollectedFromFloor == true); //teleop collect fuel floor
