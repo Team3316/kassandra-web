@@ -5,7 +5,7 @@
     <th>Match</th><th>Blue 1</th><th>Blue 2</th><th>Blue 3</th><th>Red 1</th><th>Red 2</th><th>Red 3</th>
 <tr ng-repeat="match in matches">
     <td>{{match.name}}</td>
-    <td ng-style = "entry_exists(match.name,team)" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
-    <td ng-style = "entry_exists(match.name,team)" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
+    <td ng-class = "{checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
+    <td ng-class = "{checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
 </tr>
 </table>

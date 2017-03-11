@@ -80,7 +80,7 @@ body {
 	width: 7em;
 	position: relative;
 }
-.blue-circle-button:hover {
+.blue-circle-button {
   color:#ffffff;
   background: #cedbe9;
   background: -moz-linear-gradient(top, #cedbe9 0%, #aac5de 17%, #6199c7 50%, #3a84c3 51%, #419ad6 59%, #4bb8f0 71%, #3a8bc2 84%, #26558b 100%);
@@ -156,8 +156,17 @@ table, th, td {
     text-align: center;
 }
 
-.greeny {
-  color: #008000;
+.checked {
+    color: #14a5ff;
+}
+
+.checked:after{
+  content: " ✓";
+  color: green;
+}
+
+.unchecked {
+  color: #3d3d3d;
 }
 
 table {
