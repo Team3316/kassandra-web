@@ -159,20 +159,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         }, this);
     }
 
-    $scope.checkPass = function () {
-        var pass = document.getElementById("pass").value;
-        $http({
-            method: 'POST',
-            url: '/check_pass',
-            data: { password: pass }
-        }).then(function successCallback(response) {
-            if (response.data.message === "OMRI_GRANTED") {
-                $cookies.put('access_token', 'OMRI_GRANTED');
-                $location.url('/team_picker');
-            }
-        });
-    }
-
     // $scope.init = function () {
     //     console.log("init!");
     //     var accessToken = $cookies.get("access_token");
@@ -291,8 +277,34 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
 
     $scope.team_selected = function (team) {
         $scope.db_team = team;
-        $http.get("/get_cycles_by_team/" + team).then(function (data) {
-            $scope._match = data.data;
+        $http.get("/get_all_cycles_by_team/" +team).then(function(data){
+                $scope._match = data.data;
+        });
+    }
+
+    $scope.set_color = function (match) {
+        if (match.is_visible) {
+            return { "background-color": "#008CBA" };
+        } else {
+            return { "background-color": "#333" };
+        }
+    }
+
+    $scope.hideCycle = function (team, match) {
+        // TODO: Handle Errors
+        $http.get("/hide_cycle/" + team + "/"+ match).then(function(data){
+            if(data.data.nModified == 1) {
+                $scope.is_visible = false;
+            }
+        });
+    }
+
+    $scope.unhideCycle = function (team, match) {
+        // TODO: Handle Errors
+        $http.get("/unhide_cycle/" + team + "/"+ match).then(function(data){
+            if(data.data.nModified == 1) {
+                $scope.is_visible = true;
+            }
         });
     }
 
@@ -444,6 +456,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.ddo = data.data[0].defense.defenseOn;
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
+            $scope.is_visible = data.data[0].is_visible;
             var canv;
             var ctx;
             while (canv == null) {

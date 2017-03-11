@@ -30,10 +30,28 @@ router.get('/get_cycle/:id/:match', function(req, res, next) {
   console.log("called");
 });
 
+router.get('/hide_cycle/:id/:match', function(req, res, next) {
+  var id = req.params.id;
+  var match = req.params.match;
+  mongo.hideCycle(res, id, match);
+});
+
+router.get('/unhide_cycle/:id/:match', function(req, res, next) {
+  var id = req.params.id;
+  var match = req.params.match;
+  mongo.unhideCycle(res, id, match);
+});
+
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
   //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id; 
-  mongo.getCycleByTeam(res, id);
+  mongo.getCycleByTeam(res, id, false);
+});
+
+router.get('/get_all_cycles_by_team/:id', function(req, res, next) {
+  //res.setHeader('Content-Type', 'application/json');
+  var id = req.params.id; 
+  mongo.getCycleByTeam(res, id, true);
 });
 
 router.get('/get_all_teams', function(req, res, next) {

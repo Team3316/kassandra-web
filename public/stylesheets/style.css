@@ -320,3 +320,12 @@ p{
 h3{
   margin-left: 0;
 }
+
+#hideCycle, #unhideCycle{
+  width:20%;
+  text-align: center;
+  background-color: #99B1B7;
+  padding: 5px 15px;
+  margin: 4px,2px;
+  cursor: pointer;
+}
