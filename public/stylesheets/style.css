@@ -154,6 +154,7 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
+    font-size: 15px;
 }
 
 .checked {
@@ -202,8 +203,10 @@ button {
   border: none;
   text-align:center;
   display: inline-block;
-  width:20%;
+  width:25%;
+  padding: 10px 10px 10px 10px;
   margin: 0;
+  font-size: 16px;
   cursor:pointer;
 }
 

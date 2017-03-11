@@ -1,5 +1,6 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
+app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, $state) {
+
     $scope.match_team_dictionary = {};
     $scope.matches = [];
     $scope.teams = [];
@@ -20,6 +21,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     var context2 = null;
     var coordinates = [];
     var coordinates2 = [];
+
 
     $scope.find_canvas = function () {
         canvas = null;
@@ -53,8 +55,7 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
         }
     };
 
-    $scope.accessToken = "OMRI_GRANTED";
-
+    
     function clear_all() {
         canvas = null;
         context = null;
@@ -251,10 +252,6 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
             $scope.allData.team = t;
             $scope.allData.match = m;
         }
-    }
-
-    $scope.teleop = function () {
-        $location.url("/teleop/");
     }
 
     $scope.pull_matches = function () {
@@ -579,5 +576,5 @@ app.controller('ctr', function ($scope, $http, $cookies, $location, $state) {
     $scope.entry_exists = function (match, team) {
         return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
-    
+
 });

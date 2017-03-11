@@ -4,19 +4,19 @@
 
     <p class= "comments-types">Movement</p>
 
-    <label><input type="checkbox" ng-model="triedAndFailed" />Tried and failed</label>
-    <label><input type="checkbox" ng-model="crosedBaseline" />Crossed baseline</label>
+    <label><input type="checkbox" ng-model="triedAndFailed" /> Tried and failed</label>
+    <label><input type="checkbox" ng-model="crosedBaseline" /> Crossed baseline</label>
     
 	<p class= "comments-types">Hoppers</p>
-    <label>Released hoppers<input type="number" ng-model="releasedHopper"/><br></label>
+    <label> Released hoppers<input type="number" ng-model="releasedHopper"/><br></label>
 	
     <p class= "comments-types">Fuel</p>
-    <label><input type="checkbox" ng-model="fuelCollectedFromHopper"/>Collected fuel from hopper</label>
-    <label>Estimated points from fuel: <input type="number" ng-model="estimatedPoints"/><br></label>
+    <label><input type="checkbox" ng-model="fuelCollectedFromHopper"/> Collected fuel from hopper</label>
+    <label> Estimated points from fuel: <input type="number" ng-model="estimatedPoints"/><br></label>
 
     <p class= "comments-types">Gears</p>
-    <label>Successfully planted gears: <input type="number" ng-model = "succeessfullyPlantedGears"/><br></label>
-    <label>Missed gears: <input type="number" ng-model = "missedGears"/><br></label>
+    <label> Successfully planted gears: <input type="number" ng-model = "succeessfullyPlantedGears"/><br></label>
+    <label> Missed gears: <input type="number" ng-model = "missedGears"/><br></label>
 
     <div class="empty"></div>
     <div class="center" >
@@ -27,5 +27,5 @@
 </div>
 
 <div class="center">
-    <button ng-click="updateAuto(triedAndFailed,crosedBaseline,fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper); teleop();">Continue</button>
+    <button ng-click="updateAuto(triedAndFailed,crosedBaseline,fuelCollectedFromHopper,estimatedPoints,succeessfullyPlantedGears,missedGears,releasedHopper); " ui-sref="teleop" autoscroll="false">Continue</button>
 </div>
