@@ -154,12 +154,15 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     table-layout: fixed;
 }
 
-table.stats_table {
-  width: 75%;
+table.game_table {
+    width: 100%;
+}
+td.game_table, td.game_table {
+    font-size: 14px;
 }
 
 .checked {
@@ -176,7 +179,7 @@ table.stats_table {
 }
 
 table {
-    width: 100%;
+    width: 85%;
 }
 
 .all_center{
@@ -345,4 +348,11 @@ h3{
   padding: 5px 15px;
   margin: 4px,2px;
   cursor: pointer;
+}
+
+.visible {
+  background-color: #008CBA;
+}
+.invisible {
+  background-color: #303030;
 }
