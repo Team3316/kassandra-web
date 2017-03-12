@@ -287,18 +287,16 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         }
     }
 
-    $scope.hideCycle = function (team, match) {
-        // TODO: Handle Errors
-        $http.get("/hide_cycle/" + team + "/"+ match).then(function(data){
+    $scope.hideCycle = function (id) {
+        $http.get("/hide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
                 $scope.is_visible = false;
             }
         });
     }
 
-    $scope.unhideCycle = function (team, match) {
-        // TODO: Handle Errors
-        $http.get("/unhide_cycle/" + team + "/"+ match).then(function(data){
+    $scope.unhideCycle = function (id) {
+        $http.get("/unhide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
                 $scope.is_visible = true;
             }
@@ -390,10 +388,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     window.get_single_match = function (btn) {
-        var team = parseInt($scope.db_team);
-        var match = btn.value;
-        console.log("avad!!!");
-        $location.path('/report/' + team + '/' + match);
+        $location.path('/report/' + btn.value);
         $scope.$apply();
     }
 
@@ -427,12 +422,11 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         });
     }
 
-    $scope.make_call = function (team, match) {
-        console.log(team + ", " + match);
-        $scope.team = team;
-        $scope.match = match;
-        $http.get("/get_cycle/" + team + "/" + match).then(function (data) {
-            console.log(JSON.stringify(data.data));
+    $scope.make_call = function (id) {
+        $http.get("/get_cycle/" + id).then(function (data) {
+            $scope.id = data.data[0]._id;
+            $scope.match = data.data[0].match;
+            $scope.team = data.data[0].team;
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromHopper;

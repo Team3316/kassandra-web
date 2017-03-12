@@ -17,7 +17,7 @@
 </md-input-container>
 <div class="center">
     <button onclick="get_overall();">OVERALL</button>
-    <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match.match}}" ng-style="set_color(match)">{{match.match}}</button>
+    <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
 </div>
 
 <div class="empty"></div>
