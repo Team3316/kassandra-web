@@ -511,55 +511,58 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 ctx = canv.getContext('2d');
             }
         }
+        $scope.o_nom = 0;
         obj.forEach(function (element) {
-            $scope.o_nom = obj.length;
-            $scope.o_tf += element.auto.triedAndFailed; //auto tf
-            $scope.o_cb += element.auto.crosedBaseline; //auto cb
-            $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
-            $scope.o_mg += element.auto.missedGears; // auto missedGears
-            $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
-            $scope.o_trh += element.teleop.releasedHopper; //teleop releasedHoppers
-            $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
-            $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
-            $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears
-            $scope.o_tmg += element.teleop.missedGears; //teleop missedGears
-            $scope.o_tfcff += element.teleop.fuelCollectedFromFloor; //teleop collect fuel floor
-            $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
-            $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
-            $scope.o_tep += element.teleop.estimatedPoints; //teleop estimated points
-            $scope.o_tctaf += element.teleop.climbingStatus == "Climbing failed"; //climb tried and failed
-            $scope.o_tcs += element.teleop.climbingStatus == "Climbing succeeded"; //climb success
-            $scope.o_dc += (element.teleop.climbingStatus != "Climbing succeeded") &&
-                            (element.teleop.climbingStatus != "Climbing failed");
-            if (element.defense.defenseOn != 0) {
-                $scope.o_ddo.push(element.match + ": " + element.defense.defenseOn);
-            }
-            if (element.defense.defenseComments != "") {
-                $scope.o_ddc.push(element.match + ": " + element.defense.defenseComments);
-            }
-            if (element.generalComments != "") {
-                $scope.o_ggc.push(element.match + ": " + element.generalComments);
-            }
-            element.auto.coordinates.coords.forEach(function (e) {
-                if (e) {
-                    var x = e.x;
-                    var y = e.y;
-                    ctx.beginPath();
-                    ctx.strokeStyle = "#e74c3c";
-                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                    ctx.stroke();
+            if (element.is_visible) {
+                $scope.o_nom++;
+                $scope.o_tf += element.auto.triedAndFailed; //auto tf
+                $scope.o_cb += element.auto.crosedBaseline; //auto cb
+                $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
+                $scope.o_mg += element.auto.missedGears; // auto missedGears
+                $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
+                $scope.o_trh += element.teleop.releasedHopper; //teleop releasedHoppers
+                $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
+                $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
+                $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears
+                $scope.o_tmg += element.teleop.missedGears; //teleop missedGears
+                $scope.o_tfcff += element.teleop.fuelCollectedFromFloor; //teleop collect fuel floor
+                $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
+                $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
+                $scope.o_tep += element.teleop.estimatedPoints; //teleop estimated points
+                $scope.o_tctaf += element.teleop.climbingStatus == "Climbing failed"; //climb tried and failed
+                $scope.o_tcs += element.teleop.climbingStatus == "Climbing succeeded"; //climb success
+                $scope.o_dc += (element.teleop.climbingStatus != "Climbing succeeded") &&
+                                (element.teleop.climbingStatus != "Climbing failed");
+                if (element.defense.defenseOn != 0) {
+                    $scope.o_ddo.push(element.match + ": " + element.defense.defenseOn);
                 }
-            }, this);
-            element.teleop.coordinates.coords.forEach(function (e) {
-                if (e) {
-                    var x = e.x;
-                    var y = e.y;
-                    ctx.beginPath();
-                    ctx.strokeStyle = "#3498db";
-                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                    ctx.stroke();
+                if (element.defense.defenseComments != "") {
+                    $scope.o_ddc.push(element.match + ": " + element.defense.defenseComments);
                 }
-            }, this);
+                if (element.generalComments != "") {
+                    $scope.o_ggc.push(element.match + ": " + element.generalComments);
+                }
+                element.auto.coordinates.coords.forEach(function (e) {
+                    if (e) {
+                        var x = e.x;
+                        var y = e.y;
+                        ctx.beginPath();
+                        ctx.strokeStyle = "#e74c3c";
+                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                        ctx.stroke();
+                    }
+                }, this);
+                element.teleop.coordinates.coords.forEach(function (e) {
+                    if (e) {
+                        var x = e.x;
+                        var y = e.y;
+                        ctx.beginPath();
+                        ctx.strokeStyle = "#3498db";
+                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                        ctx.stroke();
+                    }
+                }, this);
+            }
         }, this);
     }
 

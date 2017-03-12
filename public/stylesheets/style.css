@@ -158,7 +158,7 @@ table, th, td {
     table-layout: fixed;
 }
 
-table.small_table {
+table.stats_table {
   width: 75%;
 }
 
