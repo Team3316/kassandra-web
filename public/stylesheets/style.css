@@ -162,14 +162,6 @@ table.small_table {
   width: 75%;
 }
 
-th.small_table {
-  font-size: 16px;
-}
-
-td.small_table {
-  font-size: 16px;
-}
-
 .checked {
     color: #14a5ff;
 }
