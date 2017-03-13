@@ -154,7 +154,7 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
-    font-size: 18px;
+    font-size: 14.5px;
     table-layout: fixed;
 }
 
@@ -172,6 +172,10 @@ td.game_table, td.game_table {
 .checked:after{
   content: " ✓";
   color: green;
+}
+
+.filtered{
+  font-weight: bold;
 }
 
 .unchecked {

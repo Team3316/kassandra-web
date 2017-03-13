@@ -574,6 +574,10 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
 
+    $scope.team_filtered = function (team, filter_team) {
+        return filter_team && team.includes(filter_team);
+    }
+
     $scope.get_color=function(numerator,denominator,lower,upper) {
         var num = numerator/denominator;
         if (num > upper) {

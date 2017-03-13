@@ -1,6 +1,7 @@
 <button class="leftArrow" ui-sref="admin" ><</button>
 <div class="center">
     <h3>Table</h3>
+    <input type="text" ng-model="filter_team" size="4" placeholder="team"/>
 </div>
 <table class = "game_table" align="center" ng-init="get_matches();pull_matches();pull_match_team();">
     <th class = "game_table">Match</th>
@@ -10,9 +11,9 @@
     <th class = "game_table">Red 1</th>
     <th class = "game_table">Red 2</th>
     <th class = "game_table">Red 3</th>
-<tr ng-repeat="match in matches">
+<tr ng-repeat="match in matches | filter:filter_team">
     <th class = "game_table">{{match.name}}</th>
-    <td class = "game_table" ng-class = "{checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
-    <td class = "game_table" ng-class = "{checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
+    <td class = "game_table" ng-class = "{filtered:team_filtered(team, filter_team), checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
+    <td class = "game_table" ng-class = "{filtered:team_filtered(team, filter_team), checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
 </tr>
 </table>

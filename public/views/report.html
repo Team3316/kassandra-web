@@ -18,13 +18,25 @@
     <p class="pReport">Missed gears: {{mg}}</p>
     
     <h3 class="comments-types">Teleop</h3>
-    <p class="pReport">Gears collected from HP: {{tgcfh}}</p>
-    <p class="pReport">Gears collected from floor: {{tgcff}}</p>
+    <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Gears collected from:</i></p>
+        <table align="center" class = "stats_table">
+            <th ng-style="{background:get_color(tgcfh,1,0.4,0.8)}">HP</th>
+            <th ng-style="{background:get_color(tgcff,1,0.2,0.5)}">floor</th>
+            <tr><td ng-style="{background:get_color(tgcfh,1,0.4,0.8)}">{{tgcfh}}</td>
+            <td ng-style="{background:get_color(tgcff,1,0.2,0.5)}">{{tgcff}}</td></tr>
+        </table>
     <p class="pReport">Successfully planted gears: {{tspg}}</p>
     <p class="pReport">Missed gears: {{tmg}}</p>
-    <p class="pReport">Fuel collecected from floor: {{tfcff}}</p>
-    <p class="pReport">Fuel collecected from HP: {{tfcfh}}</p>
-    <p class="pReport">Fuel collecected from hopper: {{tfcfho}}</p>
+    <p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Fuel collected from: </i></p>
+    
+    <table align="center" class = "stats_table">
+        <th ng-style="{background:get_color(tfcff,1,0.5,0.5)}">floor</th>
+        <th ng-style="{background:get_color(tfcfho,1,0.5,0.5)}">hoppers</th>
+        <th ng-style="{background:get_color(tfcfh,1,0.5,0.5)}">HP</th>
+        <tr><td ng-style="{background:get_color(tfcff,1,0.5,0.5)}">{{tfcff}}</td>
+        <td ng-style="{background:get_color(tfcfho,1,0.5,0.5)}">{{tfcfho}}</td>
+        <td ng-style="{background:get_color(tfcfh,1,0.5,0.5)}">{{tfcfh}}</td></tr>
+    </table>
     <p class="pReport">Estimated points: {{tep}}</p>
     <p class="pReport">Climbing: {{tcs}}</p>
     <h3 class="comments-types">Defense</h3>
