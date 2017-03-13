@@ -27,13 +27,14 @@
     <th>HP</th><th>floor</th><th>hoppers</th>
     <tr><td>{{o_tfcff | number : 0}}/{{o_nom}}</td><td>{{o_tfcfh | number : 0}}/{{o_nom}}</td><td>{{o_tfcfho | number : 0}}/{{o_nom}}</td></tr>
     </table>
-    <p class="pReport"><i>Successfully planted gears:</i> {{o_tspg/o_nom | number : 1}}</p>
-    <p class="pReport"><i>Missed gears:</i> {{o_tmg/o_nom | number : 1}}</p>
-    <p class="pReport"><i>Estimated points:</i> {{o_tep/o_nom | number : 1}}</p>
+    <p class="pReport" ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}"><i>Successfully planted gears:</i> {{o_tspg/o_nom | number : 1}}</p>
+    <p class="pReport" ng-style="{background:get_color(-{{o_tspg}},{{o_nom}},-1.4,-0.35)}"><i>Missed gears:</i> {{o_tmg/o_nom | number : 1}}</p>
+    <p class="pReport" ng-style="{background:get_color({{o_tep}},{{o_nom}},1,25)}"><i>Estimated points:</i> {{o_tep/o_nom | number : 1}}</p>
     <p class="pReport"><i>Climbing:</i></p>
-    <table align="center" class = "stats_table">
+    <table align="center" class = "stats_table" ng-style="{background:get_color({{o_tcs}},{{o_nom}},0.3,0.75)}">
     <th>Did not try</th><th>Failed</th><th>Succeeded</th>
-    <tr><td>{{o_dc}}/{{o_nom}}</td><td>{{o_tctaf}}/{{o_nom}}</td><td>{{o_tcs}}/{{o_nom}}</td></tr>
+    <tr><td>{{o_dc}}/{{o_nom}}</td><td>{{o_tctaf}}/{{o_nom}}</td>
+    <td>{{o_tcs}}/{{o_nom}}</td></tr>
     </table>
 
     <h3 class="comments-types">Defense</h6>

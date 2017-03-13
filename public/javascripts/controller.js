@@ -579,4 +579,15 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
 
+    $scope.get_color=function(numerator,denominator,lower,upper) {
+        var num = numerator/denominator;
+        if (num > upper) {
+            return "#80ff80"; //green
+        }
+        if (num < lower) {
+            return "#ff8080"; //red
+        }
+        return "#ffff80"; //yellow
+    }
+
   });
