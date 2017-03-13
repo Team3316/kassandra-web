@@ -22,7 +22,6 @@ var cycle = new mongoose.Schema({
     auto:{
         triedAndFailed: Boolean,
         crosedBaseline:Boolean,
-        fuelCollectedFromHopper:Boolean,
         estimatedPoints:Number,
         succeessfullyPlantedGears:Number,
         missedGears:Number,

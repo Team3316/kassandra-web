@@ -4,7 +4,6 @@
     "auto":{
         "triedAndFailed":false,
         "crosedBaseline":false,
-        "fuelCollectedFromHopper":false,
         "estimatedPoints":0,
         "succeessfullyPlantedGears":0,
         "missedGears":0,

@@ -72,7 +72,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.team = 0;
         $scope.allData.auto.triedAndFailed = false;
         $scope.allData.auto.crosedBaseline = false;
-        $scope.allData.auto.fuelCollectedFromHopper = false;
         $scope.allData.auto.estimatedPoints = 0;
         $scope.allData.auto.succeessfullyPlantedGears = 0;
         $scope.allData.auto.missedGears = 0;
@@ -314,7 +313,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
 
         $scope.triedAndFailed = $scope.allData.auto.triedAndFailed;
         $scope.crosedBaseline = $scope.allData.auto.crosedBaseline;
-        $scope.fuelCollectedFromHopper = $scope.allData.auto.fuelCollectedFromHopper;
         $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
         $scope.succeessfullyPlantedGears = $scope.allData.auto.succeessfullyPlantedGears;
         $scope.missedGears = $scope.allData.auto.missedGears;
@@ -342,8 +340,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.generalComments = $scope.allData.generalComments;
     }
 
-    $scope.updateAuto = function (triedAndFailed, crosedBaseline,
-        fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears) {
+    $scope.updateAuto = function (triedAndFailed, crosedBaseline, estimatedPoints, succeessfullyPlantedGears, missedGears) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -351,7 +348,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         }
         $scope.allData.auto.triedAndFailed = triedAndFailed;
         $scope.allData.auto.crosedBaseline = crosedBaseline;
-        $scope.allData.auto.fuelCollectedFromHopper = fuelCollectedFromHopper;
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
         $scope.allData.auto.missedGears = missedGears;
@@ -426,7 +422,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.team = data.data[0].team;
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
-            $scope.cff = data.data[0].auto.fuelCollectedFromHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
             $scope.ep = data.data[0].auto.estimatedPoints;
