@@ -2,13 +2,16 @@ var mongoose = require('mongoose');
 var exports = module.exports = {};
 
 var MONGO_URL;
+
 if(process.env.DEBUG == "localhost"){
   MONGO_URL = "localhost:27017/DATA" 
 }
 else{
   MONGO_URL = process.env.MONGODB_URI;
 }
-var DB_TABLE  = "cycles_" + process.env.EVENT_NAME;
+
+
+var DB_TABLE  = "cycles_" + process.env.EVENTNAME;
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
