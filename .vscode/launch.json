@@ -12,7 +12,7 @@
             "program": "${workspaceRoot}/bin/www",
             "cwd": "${workspaceRoot}",
             "env": {
-                "EVENTNAME": "pawch",
+                "EVENTNAME": "isde1",
                 "DEBUG":"localhost"
             }
         },

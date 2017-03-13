@@ -10,7 +10,7 @@
     </md-select>
 </md-input-container>
 <div class="center">
-    <button onclick="get_overall();">OVERALL</button>
+    <button class="overallBtn" onclick="get_overall();" ng-show="db_team">OVERALL</button>
     <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
 </div>
 

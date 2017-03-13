@@ -471,6 +471,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.overall_organize = function (obj) {
+        $scope.matches = obj;
         $scope.o_nom = 0;
         $scope.o_tf = 0;
         $scope.o_cb = 0;
@@ -581,6 +582,15 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             return "#ffb3b3"; //red
         }
         return "#ffffb3"; //yellow
+    }
+
+    $scope.emptyDefense = function(item){
+        return !(item.defense.defenseOn === 0)
+    }
+
+    
+    $scope.emptyGeneralComments = function(item){
+        return !(item.generalComments === "" || item.generalComments.length <= 0);
     }
 
   });
