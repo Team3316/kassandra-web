@@ -14,6 +14,10 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         console.log(err);
     });
 
+    $http.get('/eventname').then(function (response) {
+        $scope.eventname = response.data;
+    })
+
     //canvas for field
     var canvas = null;
     var context = null;
@@ -176,8 +180,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     //these matches are a test only
-    $scope.get_matches = function () {
-        var url = "https://www.thebluealliance.com/api/v2/event/2017isde1/matches";
+    $scope.get_matches = function () { 
+        var url = "https://www.thebluealliance.com/api/v2/event/2017" + $scope.eventname + "/matches";
         $http.get(url, config).then(function (data) {
             var jdata = data[Object.keys(data)[0]];
             jdata.sort(function (a, b) {
@@ -197,7 +201,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
 
     //gets teams of the current match
     $scope.get_teams = function (match) {
-        var ending = "2017isde1_" + match.toLowerCase();
+        var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
             // console.log(JSON.stringify(data));
@@ -216,8 +220,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         });
     }
 
-    $scope.get_opposing_teams = function (match,team) {
-        var ending = "2017isde1_" + match.toLowerCase();
+    $scope.get_opposing_teams = function (match, team) {
+        var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
             //console.log(JSON.stringify(data));

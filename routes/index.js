@@ -70,6 +70,10 @@ router.post('/new_cycle',function(req,res,next){
   res.send("Success!");
 });
 
+router.get('/eventname', function(req, res, next) {
+  res.send(process.env.EVENTNAME);
+});
+
 router.post('/check_pass', function(req, res, next){
   console.log("try!");
   var pass = req.param('password');

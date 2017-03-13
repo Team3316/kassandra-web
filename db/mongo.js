@@ -1,8 +1,17 @@
 var mongoose = require('mongoose');
 var exports = module.exports = {};
 
-//var MONGO_URL = process.env.MONGODB_URI;
-var MONGO_URL = "localhost:27017/DATA" 
+var MONGO_URL;
+
+if(process.env.DEBUG == "localhost"){
+  MONGO_URL = "localhost:27017/DATA" 
+}
+else{
+  MONGO_URL = process.env.MONGODB_URI;
+}
+
+
+var DB_TABLE  = "cycles_" + process.env.EVENTNAME;
 mongoose.connect(MONGO_URL);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -42,7 +51,7 @@ var cycle = new mongoose.Schema({
     generalComments:String,
     is_visible:{type:Boolean,default:true}
 
-}); 
+},{collection:DB_TABLE}); 
 
 var Cycle = mongoose.model("Cycle", cycle);
 
