@@ -552,6 +552,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 }, this);
             }
         }, this);
+        $scope.tf_cb = $scope.o_tf + $scope.o_cb;
     }
 
     $scope.insertAuto = function () {
@@ -591,6 +592,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     
     $scope.emptyGeneralComments = function(item){
         return !(item.generalComments === "" || item.generalComments.length <= 0);
-    }
+    }    
 
   });
