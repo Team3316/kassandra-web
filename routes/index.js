@@ -21,25 +21,16 @@ router.get('/get_cycles', function(req, res, next) {
   console.log("called");
 });
 
-router.get('/get_cycle/:id/:match', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  var id = req.params.id;
-  var match = req.params.match;
-  console.log("called");
-  mongo.getCycle(res, id, match);
-  console.log("called");
+router.get('/get_cycle/:id', function(req, res, next) {
+  mongo.getCycle(res, req.params.id);
 });
 
-router.get('/hide_cycle/:id/:match', function(req, res, next) {
-  var id = req.params.id;
-  var match = req.params.match;
-  mongo.hideCycle(res, id, match);
+router.get('/hide_cycle/:id', function(req, res, next) {
+  mongo.hideCycle(res, req.params.id);
 });
 
-router.get('/unhide_cycle/:id/:match', function(req, res, next) {
-  var id = req.params.id;
-  var match = req.params.match;
-  mongo.unhideCycle(res, id, match);
+router.get('/unhide_cycle/:id', function(req, res, next) {
+  mongo.unhideCycle(res, req.params.id);
 });
 
 router.get('/get_cycles_by_team/:id', function(req, res, next) {

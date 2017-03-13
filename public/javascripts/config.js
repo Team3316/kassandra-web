@@ -64,12 +64,11 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
     $stateProvider.state({
         name: 'report',
-        url: '/report/:team/:match',
+        url: '/report/:id',
         templateUrl: '/views/report.html',
         controller: function ($scope, $stateParams) {
-            var team = $stateParams.team;
-            var match = $stateParams.match;
-            $scope.make_call(team, match);
+            var id = $stateParams.id;
+            $scope.make_call(id);
         }
     });
 

@@ -83,7 +83,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.fuelCollectedFromFloor = false;
         $scope.allData.teleop.fuelCollectedFromHP = false;
         $scope.allData.teleop.estimatedPoints = 0;
-        $scope.allData.teleop.climbingStatus = "";
+        $scope.allData.teleop.climbingStatus = "Did not try to climb"; // do not change!
         $scope.allData.teleop.coordinates.coords = [];
         $scope.allData.defense.defenseComments = "";
         $scope.allData.defense.defenseOn = 0;
@@ -287,18 +287,16 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         }
     }
 
-    $scope.hideCycle = function (team, match) {
-        // TODO: Handle Errors
-        $http.get("/hide_cycle/" + team + "/"+ match).then(function(data){
+    $scope.hideCycle = function (id) {
+        $http.get("/hide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
                 $scope.is_visible = false;
             }
         });
     }
 
-    $scope.unhideCycle = function (team, match) {
-        // TODO: Handle Errors
-        $http.get("/unhide_cycle/" + team + "/"+ match).then(function(data){
+    $scope.unhideCycle = function (id) {
+        $http.get("/unhide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
                 $scope.is_visible = true;
             }
@@ -390,10 +388,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     window.get_single_match = function (btn) {
-        var team = parseInt($scope.db_team);
-        var match = btn.value;
-        console.log("avad!!!");
-        $location.path('/report/' + team + '/' + match);
+        $location.path('/report/' + btn.value);
         $scope.$apply();
     }
 
@@ -427,12 +422,11 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         });
     }
 
-    $scope.make_call = function (team, match) {
-        console.log(team + ", " + match);
-        $scope.team = team;
-        $scope.match = match;
-        $http.get("/get_cycle/" + team + "/" + match).then(function (data) {
-            console.log(JSON.stringify(data.data));
+    $scope.make_call = function (id) {
+        $http.get("/get_cycle/" + id).then(function (data) {
+            $scope.id = data.data[0]._id;
+            $scope.match = data.data[0].match;
+            $scope.team = data.data[0].team;
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromHopper;
@@ -482,21 +476,20 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.overall_organize = function (obj) {
+        $scope.o_nom = 0;
         $scope.o_tf = 0;
         $scope.o_cb = 0;
-        $scope.o_cfh = false;
-        $scope.o_rh = 0;
         $scope.o_spg = 0;
         $scope.o_mg = 0;
         $scope.o_ep = 0;
         $scope.o_trh = 0;
-        $scope.o_tgcfh = false;
-        $scope.o_tgcff = false;
+        $scope.o_tgcfh = 0;
+        $scope.o_tgcff = 0;
         $scope.o_tspg = 0;
         $scope.o_tmg = 0;
-        $scope.o_tfcff = false;
-        $scope.o_tfcfh = false;
-        $scope.o_tfcfho = false;
+        $scope.o_tfcff = 0;
+        $scope.o_tfcfh = 0; 
+        $scope.o_tfcfho = 0; 
         $scope.o_tep = 0;
         $scope.o_tctaf = 0;
         $scope.o_tcs = 0;
@@ -512,50 +505,59 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 ctx = canv.getContext('2d');
             }
         }
+        $scope.o_nom = 0;
         obj.forEach(function (element) {
-            $scope.o_tf += element.auto.triedAndFailed / obj.length; //auto tf
-            $scope.o_cb += element.auto.crosedBaseline / obj.length; //auto cb
-            $scope.o_cfh = $scope.o_cfh || element.auto.fuelCollectedFromHopper; //auto fuel hopper
-            $scope.o_rh += element.auto.releasedHopper / obj.length; //auto rh
-            $scope.o_spg += element.auto.succeessfullyPlantedGears / obj.length; //auto planted gears
-            $scope.o_mg += element.auto.missedGears / obj.length; // auto missedGears
-            $scope.o_ep += element.auto.estimatedPoints / obj.length; //auto etimated points
-            $scope.o_trh += element.teleop.releasedHopper / obj.length; //teleop releasedHoppers
-            $scope.o_tgcfh = $scope.o_tgcfh || element.teleop.gearsCollectedFromHP; //teleop gears collected hp
-            $scope.o_tgcff = $scope.o_tgcff || element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
-            $scope.o_tspg += element.teleop.plantedGears / obj.length; //teleop planted gears
-            $scope.o_tmg += element.teleop.missedGears / obj.length; //teleop missedGears
-            $scope.o_tfcff = $scope.o_tfcff || (element.teleop.fuelCollectedFromFloor == true); //teleop collect fuel floor
-            $scope.o_tfcfh = $scope.o_tfcfh || (element.teleop.fuelCollectedFromHP == true); //teleop collect fuel hp
-            $scope.o_tfcfho = $scope.o_tfcfho || (element.teleop.fuelCollectedFromHopper == true); //teleop collect fuel hopper
-            $scope.o_tep += $scope.o_tep / obj.length; //teleop estimated points
-            $scope.o_tctaf += (element.teleop.climbingStatus.localeCompare("Climbing failed")==0) / obj.length; //climb tried and failed
-            $scope.o_tcs += (element.teleop.climbingStatus.localeCompare("Climbing succeeded")==0) / obj.length; //climb success
-            $scope.o_ddo.push(element.match + ":" + element.defense.defenseOn);
-            $scope.o_ddc.push(element.match + ":" + element.defense.defenseComments);
-            $scope.o_ggc.push(element.match + ":" + element.generalComments);
-            element.auto.coordinates.coords.forEach(function (e) {
-                if (e) {
-                    var x = e.x;
-                    var y = e.y;
-                    ctx.beginPath();
-                    ctx.strokeStyle = "#e74c3c";
-                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                    ctx.stroke();
+            if (element.is_visible) {
+                $scope.o_nom++;
+                $scope.o_tf += element.auto.triedAndFailed; //auto tf
+                $scope.o_cb += element.auto.crosedBaseline; //auto cb
+                $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
+                $scope.o_mg += element.auto.missedGears; // auto missedGears
+                $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
+                $scope.o_trh += element.teleop.releasedHopper; //teleop releasedHoppers
+                $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
+                $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
+                $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears
+                $scope.o_tmg += element.teleop.missedGears; //teleop missedGears
+                $scope.o_tfcff += element.teleop.fuelCollectedFromFloor; //teleop collect fuel floor
+                $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
+                $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
+                $scope.o_tep += element.teleop.estimatedPoints; //teleop estimated points
+                $scope.o_tctaf += element.teleop.climbingStatus == "Climbing failed"; //climb tried and failed
+                $scope.o_tcs += element.teleop.climbingStatus == "Climbing succeeded"; //climb success
+                $scope.o_dc += (element.teleop.climbingStatus != "Climbing succeeded") &&
+                                (element.teleop.climbingStatus != "Climbing failed");
+                if (element.defense.defenseOn != 0) {
+                    $scope.o_ddo.push(element.match + ": " + element.defense.defenseOn);
                 }
-            }, this);
-            element.teleop.coordinates.coords.forEach(function (e) {
-                if (e) {
-                    var x = e.x;
-                    var y = e.y;
-                    ctx.beginPath();
-                    ctx.strokeStyle = "#3498db";
-                    ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                    ctx.stroke();
+                if (element.defense.defenseComments != "") {
+                    $scope.o_ddc.push(element.match + ": " + element.defense.defenseComments);
                 }
-            }, this);
+                if (element.generalComments != "") {
+                    $scope.o_ggc.push(element.match + ": " + element.generalComments);
+                }
+                element.auto.coordinates.coords.forEach(function (e) {
+                    if (e) {
+                        var x = e.x;
+                        var y = e.y;
+                        ctx.beginPath();
+                        ctx.strokeStyle = "#e74c3c";
+                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                        ctx.stroke();
+                    }
+                }, this);
+                element.teleop.coordinates.coords.forEach(function (e) {
+                    if (e) {
+                        var x = e.x;
+                        var y = e.y;
+                        ctx.beginPath();
+                        ctx.strokeStyle = "#3498db";
+                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
+                        ctx.stroke();
+                    }
+                }, this);
+            }
         }, this);
-        $scope.o_dc = (1 - $scope.o_tctaf - $scope.o_tcs);
     }
 
     $scope.insertAuto = function () {
@@ -577,4 +579,15 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
 
-});
+    $scope.get_color=function(numerator,denominator,lower,upper) {
+        var num = numerator/denominator;
+        if (num > upper) {
+            return "#b3ffb3"; //green
+        }
+        if (num < lower) {
+            return "#ffb3b3"; //red
+        }
+        return "#ffffb3"; //yellow
+    }
+
+  });

@@ -108,20 +108,20 @@ exports.getCycles = function (res){
   });
 };
 
-exports.getCycle = function (res, id, match){
-  Cycle.find({team:id, match:match}, function(err, doc){
+exports.getCycle = function (res, id){
+  Cycle.find({_id:id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.hideCycle = function (res, id, match){
-  Cycle.update({team:id, match:match}, {is_visible:false}, function(err, doc){
+exports.hideCycle = function (res, id){
+  Cycle.update({_id:id}, {is_visible:false}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.unhideCycle = function (res, id, match){
-  Cycle.update({team:id, match:match}, {is_visible:true}, function(err, doc){
+exports.unhideCycle = function (res, id){
+  Cycle.update({_id:id}, {is_visible:true}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };
