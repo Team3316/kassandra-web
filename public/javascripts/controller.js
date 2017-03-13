@@ -466,6 +466,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.overall_organize = function (obj) {
+        $scope.team = obj[0].team;
         $scope.matches = obj;
         $scope.o_nom = 0;
         $scope.o_tf = 0;
