@@ -10,26 +10,32 @@
 </div>
 
     <h3 class="comments-types">Autonomous</h3>
-    <p class="pReport"><i>Tried and failed:</i> {{o_tf | number : 0}}/{{o_nom}}</p>
-    <p class="pReport"><i>Crossed baseline:</i> {{o_cb | number : 0}}/{{o_nom}}</p>
-    <p class="pReport"><i>Successfully planted gears:</i> {{o_spg/o_nom | number : 1}}</p>
-    <p class="pReport"><i>Estimated points:</i> {{o_ep/o_nom | number : 1}}</p>
-    <p class="pReport"><i>Missed gears:</i> {{o_mg/o_nom | number : 1}}</p>
+    <p class="pReport"><i>Tried and failed: </i><span ng-style="{background:get_color(-{{o_tf}},{{o_nom}},-0.3,-0.15)}">{{o_tf | number : 0}}/{{o_nom}}</span></p>
+    <p class="pReport"><i>Crossed baseline: </i><span ng-style="{background:get_color({{o_cb}},{{o_nom}},0.5,0.8)}">{{o_cb | number : 0}}/{{o_nom}}</span></p>
+    <p class="pReport"><i>Successfully planted gears: </i><span ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</span></p>
+    <p class="pReport"><i>Missed gears: </i><span ng-style="{background:get_color(-{{o_mg}},{{o_nom}},-0.55,-0.2)}">{{o_mg/o_nom | number : 1}}</span></p>
+    <p class="pReport"><i>Estimated points: </i><span ng-style="{background:get_color({{o_ep}},{{o_nom}},5,20)}">{{o_ep/o_nom | number : 1}}</span></p>
     <h3 class="comments-types">Teleop</h6>
-    <p class="pReport"><i>Released hoppers:</i> {{o_trh | number : 0}}/{{o_nom}}</p>
+    <p class="pReport"><i>Released hoppers: </i><span ng-style="{background:get_color({{o_trh}},{{o_nom}},0.05,0.22)}">{{o_trh | number : 0}}/{{o_nom}}</span></p>
     <p class="pReport"><i>Gears collected from:</i></p>
     <table align="center" class = "stats_table">
-    <th>HP</th><th>floor</th>
-    <tr><td>{{o_tgcfh | number : 0}}/{{o_nom}}</td><td>{{o_tgcff | number : 0}}/{{o_nom}}</td></tr>
+    <th ng-style="{background:get_color({{o_tgcfh}},{{o_nom}},0.4,0.8)}">HP</th>
+    <th ng-style="{background:get_color({{o_tgcff}},{{o_nom}},0.2,0.5)}">floor</th>
+    <tr><td ng-style="{background:get_color({{o_tgcfh}},{{o_nom}},0.4,0.8)}">{{o_tgcfh | number : 0}}/{{o_nom}}</td>
+    <td ng-style="{background:get_color({{o_tgcff}},{{o_nom}},0.2,0.5)}">{{o_tgcff | number : 0}}/{{o_nom}}</td></tr>
     </table>
     <p class="pReport"><i>Fuel collecected from:</i></p>
     <table align="center" class = "stats_table">
-    <th>HP</th><th>floor</th><th>hoppers</th>
-    <tr><td>{{o_tfcff | number : 0}}/{{o_nom}}</td><td>{{o_tfcfh | number : 0}}/{{o_nom}}</td><td>{{o_tfcfho | number : 0}}/{{o_nom}}</td></tr>
+    <th ng-style="{background:get_color({{o_tfcff}},{{o_nom}},0.3,0.6)}">floor</th>
+    <th ng-style="{background:get_color({{o_tfcfho}},{{o_nom}},0.25,0.5)}">hoppers</th>
+    <th ng-style="{background:get_color({{o_tfcfh}},{{o_nom}},0.15,0.3)}">HP</th>
+    <tr><td ng-style="{background:get_color({{o_tfcff}},{{o_nom}},0.3,0.6)}">{{o_tfcff | number : 0}}/{{o_nom}}</td>
+    <td ng-style="{background:get_color({{o_tfcfho}},{{o_nom}},0.25,0.5)}">{{o_tfcfho | number : 0}}/{{o_nom}}</td>
+    <td ng-style="{background:get_color({{o_tfcfh}},{{o_nom}},0.15,0.3)}">{{o_tfcfh | number : 0}}/{{o_nom}}</td></tr>
     </table>
-    <p class="pReport" ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}"><i>Successfully planted gears:</i> {{o_tspg/o_nom | number : 1}}</p>
-    <p class="pReport" ng-style="{background:get_color(-{{o_tspg}},{{o_nom}},-1.4,-0.35)}"><i>Missed gears:</i> {{o_tmg/o_nom | number : 1}}</p>
-    <p class="pReport" ng-style="{background:get_color({{o_tep}},{{o_nom}},1,25)}"><i>Estimated points:</i> {{o_tep/o_nom | number : 1}}</p>
+    <p class="pReport"><i>Successfully planted gears: </i><span ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}">{{o_tspg/o_nom | number : 1}}</span></p>
+    <p class="pReport"><i>Missed gears: </i><span ng-style="{background:get_color(-{{o_tmg}},{{o_nom}},-1.1,-0.35)}">{{o_tmg/o_nom | number : 1}}</span></p>
+    <p class="pReport"><i>Estimated points: </i><span ng-style="{background:get_color({{o_tep}},{{o_nom}},2,6)}">{{o_tep/o_nom | number : 1}}</span></p>
     <p class="pReport"><i>Climbing:</i></p>
     <table align="center" class = "stats_table" ng-style="{background:get_color({{o_tcs}},{{o_nom}},0.3,0.75)}">
     <th>Did not try</th><th>Failed</th><th>Succeeded</th>

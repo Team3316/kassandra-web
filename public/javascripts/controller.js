@@ -582,12 +582,12 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.get_color=function(numerator,denominator,lower,upper) {
         var num = numerator/denominator;
         if (num > upper) {
-            return "#80ff80"; //green
+            return "#b3ffb3"; //green
         }
         if (num < lower) {
-            return "#ff8080"; //red
+            return "#ffb3b3"; //red
         }
-        return "#ffff80"; //yellow
+        return "#ffffb3"; //yellow
     }
 
   });
