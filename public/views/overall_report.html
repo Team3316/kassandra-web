@@ -4,15 +4,31 @@
 
 <div class="match-content">
 
-<div><h3>  Team Overall</h3></div>
+<div>
+    <h3>Team Overall</h3>
+</div>
 
     <h3 class="comments-types">Autonomous</h3>
 
     <p class="pReport"><i>Movement </i><span ng-style="{background:get_color(-{{o_tf}},{{o_nom}},-0.3,-0.15)}">{{o_cb | number : 0}}/{{tf_cb | number : 0}}/{{o_nom}}</span></p>
-    <!--<p class="pReport"><i>Crossed baseline: </i><span ng-style="{background:get_color({{o_cb}},{{o_nom}},0.5,0.8)}">{{o_cb | number : 0}}/{{o_nom}}</span></p>
-    -->
-    <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Successfully planted gears: </i><span ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</span></p>
-    <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Missed gears: </i><span ng-style="{background:get_color(-{{o_mg}},{{o_nom}},-0.55,-0.2)}">{{o_mg/o_nom | number : 1}}</span></p>
+    <!--<p class="pReport"></p>-->
+    <table align="center" class = "stats_table">
+        <tbody>
+            <th>Match</th>
+            <th>Success</th>
+            <th>Tried</th>
+            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.auto.succeessfullyPlantedGears}}<td>{{match.auto.missedGears + match.auto.succeessfullyPlantedGears}}</td></tr>
+        </tbody>
+        <tfoot>
+            <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_spg+o_mg}},{{o_nom}},-0.55,-0.2)}">{{(o_spg+o_mg)/o_nom | number : 1}}</td></tr>
+        </tfoot>
+            <!--<tfoot>
+                <tr><td colspan="3"><p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Missed gears: </i><span ng-style="{background:get_color(-{{o_mg}},{{o_nom}},-0.55,-0.2)}">{{o_mg/o_nom | number : 1}}</span></p></td></tr>
+                <tr><td colspan="3"><p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Successfully planted gears: </i><span ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</span></p></td></tr>
+            </tfoot>-->
+    </table>
+
+    <p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_ep}},{{o_nom}},5,20)}">{{o_ep/o_nom | number : 1}}</span></p>
     
     <!--<p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_ep}},{{o_nom}},5,20)}">{{o_ep/o_nom | number : 1}}</span></p>-->
     
