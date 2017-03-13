@@ -3,12 +3,6 @@
 </div>
 
 <div class="empty"></div>
-<md-input-container ng-init="pull_matches()">
-    <label>Match</label>
-    <md-select ng-model="db_match" ng-change="match_selected(db_match)" class="matches">
-        <md-option ng-repeat="match in db_matches" value="{{match}}">{{match}}</md-option>
-    </md-select>
-</md-input-container>
 <md-input-container ng-init="pull_teams()">
     <label>Team</label>
     <md-select ng-model="db_team" ng-change="team_selected(db_team)" class="teams">
