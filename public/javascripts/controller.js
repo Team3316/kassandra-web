@@ -594,4 +594,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return !(item.generalComments === "" || item.generalComments.length <= 0);
     }    
 
+    $scope.emptyMatch = function(item){
+        return !(item.match === "");
+    }
+
   });

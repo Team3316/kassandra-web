@@ -4,10 +4,7 @@
 
 <div class="match-content">
 
-<div>
-    
-    <h3>  Team Overall</h3>
-</div>
+<div><h3>  Team Overall</h3></div>
 
     <h3 class="comments-types">Autonomous</h3>
 
@@ -16,8 +13,17 @@
     -->
     <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Successfully planted gears: </i><span ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</span></p>
     <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Missed gears: </i><span ng-style="{background:get_color(-{{o_mg}},{{o_nom}},-0.55,-0.2)}">{{o_mg/o_nom | number : 1}}</span></p>
-    <p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_ep}},{{o_nom}},5,20)}">{{o_ep/o_nom | number : 1}}</span></p>
     
+    <!--<p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_ep}},{{o_nom}},5,20)}">{{o_ep/o_nom | number : 1}}</span></p>-->
+    
+    <img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i>
+    <table align="center" class = "stats_table">
+        <tbody ng-repeat="match in matches">
+            <tr><td><b>{{match.match}}</b></td><td><i>{{match.auto.estimatedPoints}}</i></td></tr>
+        </tbody>
+             <tr ng-style="{background:get_color({{o_ep}},{{o_nom}},2,6)}"><td><b>Average</b></td><td><i>{{o_ep/o_nom | number : 1}}</i></td></tr>  
+    </table>
+
     <h3 class="comments-types">Teleop</h6>
     
     <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Gears collected from:</i></p>
@@ -41,8 +47,17 @@
 
     <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Successfully planted gears: </i><span ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}">{{o_tspg/o_nom | number : 1}}</span></p>
     <p class="pReport"><img src="../images/Gear.PNG" style="width:25px;height:25px;"><i> Missed gears: </i><span ng-style="{background:get_color(-{{o_tmg}},{{o_nom}},-1.1,-0.35)}">{{o_tmg/o_nom | number : 1}}</span></p>
-    <p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_tep}},{{o_nom}},2,6)}">{{o_tep/o_nom | number : 1}}</span></p>
     
+    <!--<p class="pReport"><img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i><span ng-style="{background:get_color({{o_tep}},{{o_nom}},2,6)}">{{o_tep/o_nom | number : 1}}</span></p>-->
+
+    <img src="../images/Fuel.PNG" style="width:25px;height:25px;"><i> Estimated points: </i>   
+    <table align="center" class = "stats_table">
+        <tbody ng-repeat="match in matches">
+            <tr><td><b>{{match.match}}</b></td><td><i>{{match.teleop.estimatedPoints}}</i></td></tr>
+        </tbody>
+            <tr ng-style="{background:get_color({{o_tep}},{{o_nom}},2,6)}"><td><b>Average</b></td><td><i>{{o_tep/o_nom | number : 1}}</i></td></tr>
+    </table>
+
     <p class="pReport"><i>Climbing:</i></p>
     
     <table align="center" class = "stats_table" ng-style="{background:get_color({{o_tcs}},{{o_nom}},0.3,0.75)}">
