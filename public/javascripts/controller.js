@@ -72,9 +72,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.estimatedPoints = 0;
         $scope.allData.auto.succeessfullyPlantedGears = 0;
         $scope.allData.auto.missedGears = 0;
-        $scope.allData.auto.releasedHopper = 0;
         $scope.allData.auto.coordinates.coords = [];
-        $scope.allData.teleop.releasedHopper = 0;
         $scope.allData.teleop.gearsCollectedFromHP = false;
         $scope.allData.teleop.gearsCollectedFromFloor = false;
         $scope.allData.teleop.plantedGears = 0;
@@ -316,13 +314,10 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
         $scope.succeessfullyPlantedGears = $scope.allData.auto.succeessfullyPlantedGears;
         $scope.missedGears = $scope.allData.auto.missedGears;
-        $scope.releasedHopper = $scope.allData.auto.releasedHopper;
-
     }
 
     $scope.initTeleop = function () {
 
-        $scope.releasedHopper2 = $scope.allData.teleop.releasedHopper;
         $scope.gearsCollectedFromHP2 = $scope.allData.teleop.gearsCollectedFromHP;
         $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor;
         $scope.plantedGears2 = $scope.allData.teleop.plantedGears;
@@ -344,7 +339,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.updateAuto = function (triedAndFailed, crosedBaseline,
-        fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears, releasedHopper) {
+        fuelCollectedFromHopper, estimatedPoints, succeessfullyPlantedGears, missedGears) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -356,18 +351,16 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
         $scope.allData.auto.missedGears = missedGears;
-        $scope.allData.auto.releasedHopper = releasedHopper;
         $scope.allData.auto.coordinates.coords = coordinates;
     }
 
-    $scope.updateTeleop = function (releasedHopper2, gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
+    $scope.updateTeleop = function (gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
         plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climbingStatus2) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
             }
         }
-        $scope.allData.teleop.releasedHopper = releasedHopper2;
         $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP2;
         $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor2;
         $scope.allData.teleop.plantedGears = plantedGears2;
@@ -430,11 +423,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.cff = data.data[0].auto.fuelCollectedFromHopper;
-            $scope.rh = data.data[0].auto.releasedHopper;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
             $scope.mg = data.data[0].auto.missedGears;
             $scope.ep = data.data[0].auto.estimatedPoints;
-            $scope.trh = data.data[0].teleop.releasedHopper;
             $scope.tgcfh = data.data[0].teleop.gearsCollectedFromHP;
             $scope.tgcff = data.data[0].teleop.gearsCollectedFromFloor;
             $scope.tspg = data.data[0].teleop.plantedGears;
@@ -482,7 +473,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.o_spg = 0;
         $scope.o_mg = 0;
         $scope.o_ep = 0;
-        $scope.o_trh = 0;
         $scope.o_tgcfh = 0;
         $scope.o_tgcff = 0;
         $scope.o_tspg = 0;
@@ -514,7 +504,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
                 $scope.o_mg += element.auto.missedGears; // auto missedGears
                 $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
-                $scope.o_trh += element.teleop.releasedHopper; //teleop releasedHoppers
                 $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
                 $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
                 $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears

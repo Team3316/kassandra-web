@@ -17,13 +17,11 @@ var cycle = new mongoose.Schema({
         estimatedPoints:Number,
         succeessfullyPlantedGears:Number,
         missedGears:Number,
-        releasedHopper:Number,
         coordinates:{
             coords:Array
         }
     },
     teleop:{
-        releasedHopper:Number,
         gearsCollectedFromHP:Boolean,
         gearsCollectedFromFloor:Boolean,
         plantedGears:Number,

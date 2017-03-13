@@ -356,3 +356,7 @@ h3{
 .invisible {
   background-color: #303030;
 }
+
+button:hover{
+  opacity: 0.5;
+}

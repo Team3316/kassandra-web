@@ -8,13 +8,11 @@
         "estimatedPoints":0,
         "succeessfullyPlantedGears":0,
         "missedGears":0,
-        "releasedHopper":0,
         "coordinates":{
             "coords": []
         }
     },
     "teleop":{
-        "releasedHopper":0,
         "gearsCollectedFromHP":false,
         "gearsCollectedFromFloor":false,
         "plantedGears":0,
