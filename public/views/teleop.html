@@ -6,29 +6,22 @@
 </div>
 <div class="content" ng-init="initTeleop();">
     
-    <p class= "comments-types">Fuel</p>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper2" /> Collected fuel from hopper</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromFloor2" /> Collected fuel from floor</label>
-    <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHP2"/> Collected fuel from HP </label>    
-    <label>Estimated points: <input type="number" ng-model = "estimatedPoints2" /><br></label>
+    <p class="comments-types">Fuel</p>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHopper2" />Fuel from Hopper</label>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromFloor2" />Fuel from Floor</label>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHP2"/>Fuel from HP</label>    
+    <label>Points: {{estimatedPoints2}}<br /><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 1)" class="small">+1</button><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 5)" class="small">+5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 5)" class="small">-5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 1)" class="small">-1</button></label>
 
-	<p class= "comments-types">Gears</p>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromHP2"/> Collected gears from HP</label>
-    <label><input type="checkbox" value="0" ng-model = "gearsCollectedFromFloor2"/> Collected gears from floor</label>
-    <label>Successfully planted gears: <input type="number" ng-model = "plantedGears2"/><br></label>
-    <label>Missed gears:  <input type="number" ng-model = "missedGears2"/><br></label>
+	<p class="comments-types">Gears</p>
+    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromFloor2"/>Gears from floor</label>
+    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromHP2"/>Gears from HP</label>
+    <label>Planted: {{plantedGears2}}<button ng-click="plantedGears2=inc_counter(plantedGears2, 1)" class="small">+1</button><button ng-click="plantedGears2=dec_counter(plantedGears2, 1)" class="small">-1</button></label>
+    <label>Missed: {{missedGears2}}<button ng-click="missedGears2=inc_counter(missedGears2, 1)" class="small">+1</button><button ng-click="missedGears2=dec_counter(missedGears2, 1)" class="small">-1</button></label>
 	
-    <p class= "comments-types">Climbing</p>
-    <md-input-container>
-    <label>Climbing</label>
-    <md-select ng-model="climbingStatus2"> 
-        <md-option value="Did not try to climb"> Did not try to climb</md-option> <!--do not change!-->
-        <md-option value="Climbing failed"> Climbing failed</md-option>
-        <md-option value="Climbing succeeded"> Climbing succeeded</md-option>
-    </md-select>
-    </md-input-container>
-
-    <div class = "empty"></div>
+    <p class="comments-types">Climbing</p>
+    <label><input type="radio" name="climb" ng-click="climbingStatus2='Did not try to climb'" checked />Nothing</label>
+    <label><input type="radio" name="climb" ng-click="climbingStatus2='Climbing failed'" />Failed</label>
+    <label><input type="radio" name="climb" ng-click="climbingStatus2='Climbing succeeded'" />Climbed</label>
 
 </div> 
 

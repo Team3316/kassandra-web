@@ -209,6 +209,11 @@ button {
     cursor: pointer;
 }
 
+button.small {
+    width: fit-content;
+    padding: 16px;
+}
+
 .toAdmin{
   background-color: #008CBA;
   opacity:0.5;

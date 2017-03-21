@@ -418,4 +418,12 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return !(item.match === "");
     }
 
+    $scope.dec_counter = function(number, step) { 
+        return Math.max(0, number - step);
+    }
+
+    $scope.inc_counter = function(number, step) {
+        return number + step;
+    }
+
   });
