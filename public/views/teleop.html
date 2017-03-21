@@ -4,7 +4,7 @@
 <div class="center" >
     <h3>Teleoperated</h3>
 </div>
-<div class="content" ng-init="find_canvas2(); initTeleop();">
+<div class="content" ng-init="initTeleop();">
     
     <p class= "comments-types">Fuel</p>
     <label><input type="checkbox" value="0" ng-model = "fuelCollectedFromHopper2" /> Collected fuel from hopper</label>
@@ -29,11 +29,6 @@
     </md-input-container>
 
     <div class = "empty"></div>
-    <div class = "center">
-        <button class = "btn" ng-click="clear2()">Clear</button>
-        <button class = "btn" ng-click="undo2()">Undo</button>
-    </div>
-    <canvas id="myCanvas2" class="field" ng-click="addOnClick2($event)" width="300" height="279"></canvas>
 
 </div> 
 

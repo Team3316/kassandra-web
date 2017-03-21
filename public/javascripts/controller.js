@@ -5,8 +5,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.matches = [];
     $scope.teams = [];
     $scope.opposingTeams = [];
-    //to delete
-    //$cookies.remove("access_token");
 
     $http.get('javascripts/data.json').then(function (response) {
         $scope.allData = response.data;
@@ -18,39 +16,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.eventname = response.data;
     })
 
-    //canvas for field
-    var canvas = null;
-    var context = null;
-    var canvas2 = null;
-    var context2 = null;
-    var coordinates = [];
-    var coordinates2 = [];
-
-
-    $scope.find_canvas = function () {
-        canvas = null;
-        context = null;
-        //coordinates = [];
-
-        while (canvas === null) {
-            canvas = document.getElementById('myCanvas');
-            if (canvas) {
-                context = canvas.getContext('2d');
-            }
-        }
-    };
-    $scope.find_canvas2 = function () {
-        canvas2 = null;
-        context2 = null;
-        //coordinates2 = [];
-        while (canvas2 === null) {
-            canvas2 = document.getElementById('myCanvas2');
-            if (canvas2) {
-                context2 = canvas2.getContext('2d');
-            }
-        }
-    }
-
     //headers for api calls
     var config = {
         headers: {
@@ -61,13 +26,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
 
     
     function clear_all() {
-        canvas = null;
-        context = null;
-        canvas2 = null;
-        context2 = null;
-        //coordinates = [];
-        //coordinates2 = [];
-
         $scope.allData.match = "";
         $scope.allData.team = 0;
         $scope.allData.auto.triedAndFailed = false;
@@ -75,7 +33,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.estimatedPoints = 0;
         $scope.allData.auto.succeessfullyPlantedGears = 0;
         $scope.allData.auto.missedGears = 0;
-        $scope.allData.auto.coordinates.coords = [];
         $scope.allData.teleop.gearsCollectedFromHP = false;
         $scope.allData.teleop.gearsCollectedFromFloor = false;
         $scope.allData.teleop.plantedGears = 0;
@@ -85,94 +42,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.fuelCollectedFromHP = false;
         $scope.allData.teleop.estimatedPoints = 0;
         $scope.allData.teleop.climbingStatus = "Did not try to climb"; // do not change!
-        $scope.allData.teleop.coordinates.coords = [];
         $scope.allData.defense.defenseComments = "";
         $scope.allData.defense.defenseOn = 0;
         $scope.allData.generalComments = "";
     }
 
-    $scope.addOnClick = function (event) {
-        if (canvas.getContext) {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            //console.log("x: " + x + ", y: " + y);
-            coordinates.push({ x, y });
-            console.log(coordinates);
-            context.beginPath();
-            context.strokeStyle = "#e74c3c";
-            context.arc(x, y, 10, 0, 2 * Math.PI, false);
-            context.stroke();
-        }
-        else {
-            find_canvas();
-        }
-    }
-
-    $scope.addOnClick2 = function (event) {
-        if (canvas2.getContext) {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            //console.log("x: " + x + ", y: " + y);
-            coordinates2.push({ x, y });
-            console.log(coordinates2);
-            context2.beginPath();
-            context2.strokeStyle = "#e74c3c";
-            context2.arc(x, y, 10, 0, 2 * Math.PI, false);
-            context2.stroke();
-        }
-        else {
-            find_canvas2();
-        }
-    }
-
-
-
-    $scope.clear = function () {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        coordinates = [];
-    }
-
-    $scope.clear2 = function () {
-        context2.clearRect(0, 0, canvas2.width, canvas2.height);
-        coordinates2 = [];
-    }
-
-    $scope.undo = function () {
-        coordinates.pop();
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        coordinates.forEach(function (element) {
-            console.log(element.x + "," + element.y)
-            context.beginPath();
-            context.strokeStyle = "#e74c3c";
-            context.arc(element.x, element.y, 10, 0, 2 * Math.PI, false);
-            context.stroke();
-        }, this);
-    }
-
-    $scope.undo2 = function () {
-        coordinates2.pop();
-        context2.clearRect(0, 0, canvas2.width, canvas2.height);
-        coordinates2.forEach(function (element) {
-            console.log(element.x + "," + element.y)
-            context2.beginPath();
-            context2.strokeStyle = "#e74c3c";
-            context2.arc(element.x, element.y, 10, 0, 2 * Math.PI, false);
-            context2.stroke();
-        }, this);
-    }
-
-    // $scope.init = function () {
-    //     console.log("init!");
-    //     var accessToken = $cookies.get("access_token");
-    //     if (accessToken !== 'OMRI_GRANTED') {
-    //         window.location.href = '#/login';
-    //     }
-    // }
-
     $scope.admin = function () {
         console.log("make admin cookie");
     }
-
 
     $scope.format_team = function (team_str) {
        return team_str.replace('frc', '');
@@ -256,7 +133,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.pull_matches = function () {
-        // $scope.db_teams = ["0002", "1232", "3232"];
         $http.get("/get_all_matches").then(function (data) {
             console.log(data);
             $scope.db_matches = data.data;
@@ -264,8 +140,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.pull_teams = function () {
-
-        // $scope.db_teams = ["0002", "1232", "3232"];
         $http.get("/get_all_teams").then(function (data) {
             console.log(data);
             $scope.db_teams = data.data;
@@ -351,7 +225,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
         $scope.allData.auto.missedGears = missedGears;
-        $scope.allData.auto.coordinates.coords = coordinates;
     }
 
     $scope.updateTeleop = function (gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
@@ -370,7 +243,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
         $scope.allData.teleop.estimatedPoints = estimatedPoints2;
         $scope.allData.teleop.climbingStatus = climbingStatus2;
-        $scope.allData.teleop.coordinates.coords = coordinates2;
     }
 
     $scope.updateDefense = function (defenseOn) {
@@ -438,30 +310,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
             $scope.is_visible = data.data[0].is_visible;
-            var canv;
-            var ctx;
-            while (canv == null) {
-                canv = document.getElementById("reportauto");
-                if (canv.getContext) {
-                    ctx = canv.getContext('2d');
-                }
-            }
-            data.data[0].auto.coordinates.coords.forEach(function (element) {
-                var x = element.x;
-                var y = element.y;
-                ctx.beginPath();
-                ctx.strokeStyle = "#e74c3c";
-                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                ctx.stroke();
-            }, this);
-            data.data[0].teleop.coordinates.coords.forEach(function (element) {
-                var x = element.x;
-                var y = element.y;
-                ctx.beginPath();
-                ctx.strokeStyle = "#3498db";
-                ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                ctx.stroke();
-            }, this);
         });
     }
 
@@ -488,14 +336,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.o_ddo = []
         $scope.o_ddc = [];
         $scope.o_ggc = [];
-        var canv;
-        var ctx;
-        while (canv == null) {
-            canv = document.getElementById("reportauto2");
-            if (canv.getContext) {
-                ctx = canv.getContext('2d');
-            }
-        }
         $scope.o_nom = 0;
         obj.forEach(function (element) {
             if (element.is_visible) {
@@ -526,26 +366,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 if (element.generalComments != "") {
                     $scope.o_ggc.push(element.match + ": " + element.generalComments);
                 }
-                element.auto.coordinates.coords.forEach(function (e) {
-                    if (e) {
-                        var x = e.x;
-                        var y = e.y;
-                        ctx.beginPath();
-                        ctx.strokeStyle = "#e74c3c";
-                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                        ctx.stroke();
-                    }
-                }, this);
-                element.teleop.coordinates.coords.forEach(function (e) {
-                    if (e) {
-                        var x = e.x;
-                        var y = e.y;
-                        ctx.beginPath();
-                        ctx.strokeStyle = "#3498db";
-                        ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-                        ctx.stroke();
-                    }
-                }, this);
             }
         }, this);
         $scope.tf_cb = $scope.o_tf + $scope.o_cb;

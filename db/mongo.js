@@ -56,10 +56,6 @@ var Cycle = mongoose.model("Cycle", cycle);
 
 db.once('open', function() {
   console.log("connected!");
-  //newTask("Feed the cat!");
-  //newTask("Feed the pigeon!");
-  //newTask("Feed the dog!");
-  //getTasks();
 });
 
 
