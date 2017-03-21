@@ -5,14 +5,16 @@
 
 <div class = "text-comment">
     <p class = "comments-types">Additional Comments</p>
-    <textarea rows="10" cols="70" name="FinalComments" ng-model="generalComments" placeholder="Didn't work, Human player foul ...">
-
-    </textarea>
-
- <div class = "empty"></div>
-
+    <textarea rows="5" cols="35" name="FinalComments" ng-model="generalComments"></textarea>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Bad Driver')" class="small">Bad Driver</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Bad Pilot')" class="small">Bad Pilot</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'HP Foul')" class="small">HP Foul</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Stopped Working')" class="small">Stopped Working</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Slow Collection')" class="small">Slow Collection</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Slow Plant')" class="small">Slow Plant</button>
+    <button ng-click="generalComments = concat_comment(generalComments, 'Slow Climb')" class="small">Slow Climb</button>
 <div class="center">
-    <button class="btn btn-default blue-circle-button" ng-click="update_final(generalComments); finalButton()">Submit</button>
+    <button ng-click="update_final(generalComments); finalButton()">Submit</button>
 </div>
 
 </div>

@@ -426,4 +426,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return number + step;
     }
 
+    $scope.concat_comment = function(main, comment) {
+        if (!main) return comment;
+        else return main.concat(', ', comment);
+    }
+
   });
