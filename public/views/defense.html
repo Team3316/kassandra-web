@@ -1,4 +1,4 @@
-<button class="leftArrow" ui-sref="teleop" ng-click="updateDefense(defenseOn)" ng-init="initDefense()"><</button>
+<button class="leftArrow" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)" ng-init="initDefense()"><</button>
 <div class="center">
     <h3>Defense </h3>
 </div>
@@ -6,8 +6,9 @@
         
     <md-input-container>
         <label>Defense on</label>
-        <md-select ng-model="defenseOn" id="team" > 
-            <md-option ng-class="{ablueteam:teams.indexOf(team)<3, aredteam:teams.indexOf(team)>=3}" ng-repeat="team in opposingTeams" value="{{team}}">{{team}}</md-option>
+        <md-select ng-model="defenseOn" id="team"> 
+            <md-option value="0" ng-selected="defenseOn==='0'">General</md-option>
+            <md-option ng-class="{ablueteam:teams.indexOf(team)<3, aredteam:teams.indexOf(team)>=3}" ng-selected="defenseOn===team" ng-repeat="team in opposingTeams" value="{{team}}">{{team}}</md-option>
         </md-select>
     </md-input-container>
 
@@ -15,12 +16,15 @@
 
 <div class = "text-comment">
     <p class = "comments-types">Defense Comments </p>
-    <textarea id="defensecomment" rows="8" cols="50" placeholder=" T-Bone, Lift, Blocking, Defense on boiler ..." ng-model = "defenseComments"></textarea>
+    <textarea id="defensecomment" rows="5" cols="35" ng-model="defenseComments"></textarea>
+    <button ng-click="defenseComments = concat_comment(defenseComments, 'Personal Defence')" class="small">Personal Defence</button>
+    <button ng-click="defenseComments = concat_comment(defenseComments, 'Zone Defence')" class="small">Zone Defence</button>
+    <button ng-click="defenseComments = concat_comment(defenseComments, 'Released Hoppers')" class="small">Released Hoppers</button>
 
  <div class = "empty"></div>
 
 <div class="center">
-    <button ui-sref= "final_page" ng-click="updateDefense(defenseOn)" >Continue</button>
+    <button ui-sref= "final_page" ng-click="updateDefense(defenseOn, defenseComments)" >Continue</button>
 </div>
 
 </div>

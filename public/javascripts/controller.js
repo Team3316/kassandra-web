@@ -245,10 +245,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.climbingStatus = climbingStatus2;
     }
 
-    $scope.updateDefense = function (defenseOn) {
-        var dc = document.getElementById("defensecomment").value;
-        if (defenseComments = "" || !defenseOn) { defenseOn = 0 }
-        $scope.allData.defense.defenseComments = dc;
+    $scope.updateDefense = function (defenseOn, updateDefense) {
+        $scope.allData.defense.defenseComments = updateDefense;
         $scope.allData.defense.defenseOn = defenseOn;
     }
 
@@ -406,7 +404,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.emptyDefense = function(item){
-        return !(item.defense.defenseOn === 0)
+        return !(item.defense.defenseComments === "")
     }
 
     
