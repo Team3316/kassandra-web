@@ -8,7 +8,7 @@
         <md-option ng-repeat="match in matches | filter:emptyMatch" value="{{match.name}}">{{match.name}}</md-option>
     </md-select>
 </md-input-container>
-<md-input-container>
+<md-input-container ng-show="matchSelected">
     <label>Team</label>
     <md-select ng-model="teamSelected" ng-change="get_opposing_teams(matchSelected, teamSelected);" id="team"> 
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
@@ -16,7 +16,7 @@
 </md-input-container>
 <div class="empty"></div>
 <div class="center">
-    <button ng-click="submit_team_match(teamSelected, matchSelected);" >Continue</button>
+    <button ng-click="submit_team_match(teamSelected, matchSelected);" ng-show="matchSelected && teamSelected">Continue</button>
 </div>
 <div class="empty"></div>
 <div class="empty"></div>
