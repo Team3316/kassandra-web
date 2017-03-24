@@ -144,3 +144,55 @@ exports.getCycleByMatch = function (res, id){
     res.send(JSON.stringify(doc));
   });
 };
+
+exports.getTopClimbers = function (res){
+  Cycle.aggregate([
+		{
+			$match: {
+				$and: [
+					{is_visible: true},
+					{$or: [
+						{"teleop.climbingStatus": "Climbing failed"},
+						{"teleop.climbingStatus": "Climbing succeeded"}
+					]}
+				]
+			}
+		},
+		{
+			$group: {
+				_id: "$team",
+				attempts: {$sum: 1},
+				successes: {$sum: { $cond: [ { $eq: [ "$teleop.climbingStatus", "Climbing succeeded" ] }, 1, 0 ] }}
+			}
+		},
+		{ $project: { _id: 1, climb_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
+		{ $sort: { climb_pct: -1 } },
+		{ $limit: 24 }
+	], function (err, doc) {
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getTopPlanters = function (res){
+  Cycle.aggregate([
+		{
+			$match: {
+				$and: [
+					{is_visible: true}
+				]
+			}
+		},
+		{
+			$group: {
+				_id: "$team",
+				attempts: {$sum: { $add : ["$teleop.plantedGears", "$teleop.missedGears", "$auto.succeessfullyPlantedGears", "$auto.missedGears"] } },
+				successes: {$sum: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } },
+			}
+		},
+		{ $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
+		{ $sort: { plant_pct: -1 } },
+		{ $limit: 24 }
+	], function (err, doc) {
+    res.send(JSON.stringify(doc));
+  });
+};

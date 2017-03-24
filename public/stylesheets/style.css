@@ -161,7 +161,7 @@ table, th, td {
 table.game_table {
     width: 100%;
 }
-td.game_table, td.game_table {
+.game_table td, .game_table th {
     font-size: 14px;
 }
 

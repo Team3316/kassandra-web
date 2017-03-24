@@ -89,4 +89,12 @@ router.post('/check_pass', function(req, res, next){
   res.send(JSON.stringify({ message : msg }));
 });
 
+router.get('/get_top_climbers', function(req, res, next) {
+  mongo.getTopClimbers(res);
+})
+
+router.get('/get_top_planters', function(req, res, next) {
+  mongo.getTopPlanters(res);
+})
+
 module.exports = router;

@@ -331,7 +331,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.o_tctaf = 0;
         $scope.o_tcs = 0;
         $scope.o_dc = 0;
-        $scope.o_ddo = []
+        $scope.o_ddo = [];
         $scope.o_ddc = [];
         $scope.o_ggc = [];
         $scope.o_nom = 0;
@@ -392,7 +392,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return filter_team && team.includes(filter_team);
     }
 
-    $scope.get_color=function(numerator,denominator,lower,upper) {
+    $scope.get_color = function (numerator, denominator, lower, upper) {
         var num = numerator/denominator;
         if (num > upper) {
             return "#b3ffb3"; //green
@@ -407,7 +407,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return !(item.defense.defenseComments === "")
     }
 
-    
     $scope.emptyGeneralComments = function(item){
         return !(item.generalComments === "" || item.generalComments.length <= 0);
     }    
@@ -427,6 +426,18 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.concat_comment = function(main, comment) {
         if (!main) return comment;
         else return main.concat(', ', comment);
+    }
+
+    $scope.get_top_climbers = function() {
+        $http.get('/get_top_climbers').then(function (data) {
+            $scope.top_climbers = data.data;
+        })
+    }
+
+    $scope.get_top_planters = function() {
+        $http.get('/get_top_planters').then(function (data) {
+            $scope.top_planters = data.data;
+        })
     }
 
   });
