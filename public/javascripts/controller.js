@@ -429,4 +429,8 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         else return main.concat(', ', comment);
     }
 
+    $scope.get_match_string = function() {
+        return $scope.allData.match + " / " + $scope.allData.team;
+    }
+
   });
