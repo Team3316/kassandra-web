@@ -80,7 +80,6 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         controller: function ($scope, $stateParams) {
             var obj = $stateParams.obj;
             $scope.overall_organize(obj);
-            console.log(obj);
         }
     });
 
@@ -88,6 +87,12 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         name: 'table',
         url: '/table',
         templateUrl: '/views/table.html'
+    });
+
+    $stateProvider.state({
+        name: 'top',
+        url: '/top',
+        templateUrl: '/views/top.html',
     });
 
     $urlRouterProvider.otherwise('/');

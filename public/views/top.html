@@ -1,0 +1,35 @@
+<button class="leftArrow small" ui-sref="admin" ><</button>
+<div class="center">
+    <h3>Top Teams</h3>
+    <input type="text" ng-model="filter_team" size="4" placeholder="team"/>
+</div>
+<h3>Climbers</h3>
+<table class="game_table" ng-init="get_top_climbers();">
+    <th>#</th>
+    <th>Team</th>
+    <th>%</th>
+    <th>Succ</th>
+    <th>Atte</th>
+<tr ng-repeat="climber in top_climbers | filter:filter_team">
+    <td>{{$index + 1}}</td>
+    <td>{{climber._id}}</td>
+    <td>{{climber.climb_pct * 100 | number : 0}}%</td>
+    <td>{{climber.successes}}</td>
+    <td>{{climber.attempts}}</td>
+</tr>
+</table>
+<h3>Planters</h3>
+<table class="game_table" ng-init="get_top_planters();">
+    <th>#</th>
+    <th>Team</th>
+    <th>%</th>
+    <th>Succ</th>
+    <th>Atte</th>
+<tr ng-repeat="planter in top_planters | filter:filter_team">
+    <td>{{$index + 1}}</td>
+    <td>{{planter._id}}</td>
+    <td>{{planter.plant_pct * 100 | number : 0}}%</td>
+    <td>{{planter.successes}}</td>
+    <td>{{planter.attempts}}</td>
+</tr>
+</table>
