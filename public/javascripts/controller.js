@@ -431,6 +431,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.get_match_string = function() {
         return $scope.allData.match + " / " + $scope.allData.team;
     }
+
+    $scope.get_match_team_color = function() {
+        res = "header-"
+        if ($scope.teams.indexOf($scope.allData.team) <= 2)
+            return res + "blue";
+        else
+            return res + "red";
+    }
     
     $scope.get_top_climbers = function() {
         $http.get('/get_top_climbers').then(function (data) {

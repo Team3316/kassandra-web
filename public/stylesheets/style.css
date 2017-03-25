@@ -283,22 +283,25 @@ input[type="number"]{
 }
 
 .header{
-  background-color: #14a5ff;
   position: absolute;
   width: 100%;
   right: 0px;
-  height: 3em;
-}
-
-.header-text{
+  padding: 0.5em;
+  text-align: center;
   color: white;
   font-weight: bold;
-  text-align: center; 
-  margin-top: 1em;
+}
+
+.header-blue{
+  background-color: #3498db;
+}
+
+.header-red{
+  background-color: #e74c3c;
 }
 
 .page-title{
-  padding-top: 3em; /* pushes down the title so it won't be under the floaty thing */
+  padding-top: 2em; /* pushes down the title so it won't be under the floaty thing */
 }
 
 #content{
@@ -325,12 +328,12 @@ h3{
 }
 
 button.leftArrow{
-  /*background-color:#f7fffb!important;*/
   z-index: 100;
-  position:absolute;
-  opacity: 0.5;
+  position: absolute;
+  opacity: 1;
   text-align: center;
   top:0;
+  padding: 0.5em;
   margin:0;
 }
 
@@ -352,7 +355,6 @@ button.leftArrow{
   padding-left: 10px;
   bottom: 0;
   overflow-y: scroll;
-
 }
 
 .match-content > p{

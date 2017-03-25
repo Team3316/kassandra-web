@@ -1,9 +1,7 @@
 <button class="leftArrow small" ui-sref="autonomous" ng-click="updateTeleop(gearsCollectedFromHP2,
     gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, missedGears2, fuelCollectedFromFloor2,
     fuelCollectedFromHP2,estimatedPoints2,climbingStatus2);"><</button>
-<div class="header">
-    <h4 class="header-text">{{get_match_string()}}</h4>
-</div>
+<div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
 <div class="center page-title">
     <h3>Teleoperated</h3>
 </div>
