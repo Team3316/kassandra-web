@@ -41,14 +41,10 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.fuelCollectedFromFloor = false;
         $scope.allData.teleop.fuelCollectedFromHP = false;
         $scope.allData.teleop.estimatedPoints = 0;
-        $scope.allData.teleop.climbingStatus = "Did not try to climb"; // do not change!
+        $scope.allData.teleop.climbingStatus = 0;
         $scope.allData.defense.defenseComments = "";
         $scope.allData.defense.defenseOn = 0;
         $scope.allData.generalComments = "";
-    }
-
-    $scope.admin = function () {
-        console.log("make admin cookie");
     }
 
     $scope.format_team = function (team_str) {
@@ -80,13 +76,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
-            // console.log(JSON.stringify(data));
-            //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
             var red = jdata.alliances.red.teams;
             var blue = jdata.alliances.blue.teams;
-            console.log(JSON.stringify(red));
-            console.log(JSON.stringify(blue));
             var teams = blue.concat(red);
             var final = [];
             teams.forEach(function (element) {
@@ -100,13 +92,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
         var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
         $http.get(url, config).then(function (data) {
-            //console.log(JSON.stringify(data));
-            //Why I did the shit down there
             var jdata = data[Object.keys(data)[0]];
             var red = jdata.alliances.red.teams;
             var blue = jdata.alliances.blue.teams;
-            console.log(JSON.stringify(red));
-            console.log(JSON.stringify(blue));
             var opposingTeams = [];
             var teamstr = "frc".concat(team);
             if (red.includes(teamstr)) {
@@ -134,14 +122,12 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
 
     $scope.pull_matches = function () {
         $http.get("/get_all_matches").then(function (data) {
-            console.log(data);
             $scope.db_matches = data.data;
         });
     }
 
     $scope.pull_teams = function () {
         $http.get("/get_all_teams").then(function (data) {
-            console.log(data);
             $scope.db_teams = data.data;
             $scope.db_teams.sort();
         });
@@ -184,12 +170,21 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.initAuto = function () {
+        $scope.movement = 0;
+        if ($scope.allData.auto.triedAndFailed) {
+            $scope.movement = 1;
+        } else if ($scope.allData.auto.crosedBaseline) {
+            $scope.movement = 2;
+        }
 
-        $scope.triedAndFailed = $scope.allData.auto.triedAndFailed;
-        $scope.crosedBaseline = $scope.allData.auto.crosedBaseline;
         $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
-        $scope.succeessfullyPlantedGears = $scope.allData.auto.succeessfullyPlantedGears;
-        $scope.missedGears = $scope.allData.auto.missedGears;
+
+        $scope.gears = 0;
+        if ($scope.allData.auto.missedGears) {
+            $scope.gears = 1;
+        } else if ($scope.allData.auto.succeessfullyPlantedGears) {
+            $scope.gears = 2;
+        }
     }
 
     $scope.initTeleop = function () {
@@ -202,7 +197,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
         $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
         $scope.estimatedPoints2 = $scope.allData.teleop.estimatedPoints;
-        $scope.climbingStatus2 = $scope.allData.teleop.climbingStatus;
+        $scope.climb = $scope.allData.teleop.climbingStatus;
     }
 
     $scope.initDefense = function () {
@@ -214,21 +209,21 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.generalComments = $scope.allData.generalComments;
     }
 
-    $scope.updateAuto = function (triedAndFailed, crosedBaseline, estimatedPoints, succeessfullyPlantedGears, missedGears) {
+    $scope.updateAuto = function (movement, estimatedPoints, gears) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
             }
         }
-        $scope.allData.auto.triedAndFailed = triedAndFailed;
-        $scope.allData.auto.crosedBaseline = crosedBaseline;
+        $scope.allData.auto.triedAndFailed = (movement == 1);
+        $scope.allData.auto.crosedBaseline = (movement == 2);
         $scope.allData.auto.estimatedPoints = estimatedPoints;
-        $scope.allData.auto.succeessfullyPlantedGears = succeessfullyPlantedGears;
-        $scope.allData.auto.missedGears = missedGears;
+        $scope.allData.auto.missedGears = (gears == 1) ? 1 : 0;
+        $scope.allData.auto.succeessfullyPlantedGears = (gears == 2) ? 1 : 0;
     }
 
     $scope.updateTeleop = function (gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
-        plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climbingStatus2) {
+        plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climb) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -242,7 +237,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper2;
         $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
         $scope.allData.teleop.estimatedPoints = estimatedPoints2;
-        $scope.allData.teleop.climbingStatus = climbingStatus2;
+        $scope.allData.teleop.climbingStatus = climb;
     }
 
     $scope.updateDefense = function (defenseOn, updateDefense) {
@@ -303,7 +298,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.tfcfh = data.data[0].teleop.fuelCollectedFromHP;
             $scope.tfcfho = data.data[0].teleop.fuelCollectedFromHopper;
             $scope.tep = data.data[0].teleop.estimatedPoints;
-            $scope.tcs = data.data[0].teleop.climbingStatus;
+            
+            $scope.tcs = "Didn't try";
+            if (data.data[0].teleop.climbingStatus == 1) {
+                $scope.tcs = "Tried and Failed";
+            } else if (data.data[0].teleop.climbingStatus == 2) {
+                $scope.tcs = "Successfully";
+            }
+            
             $scope.ddo = data.data[0].defense.defenseOn;
             $scope.ddc = data.data[0].defense.defenseComments;
             $scope.ggc = data.data[0].generalComments;
@@ -351,10 +353,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
                 $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
                 $scope.o_tep += element.teleop.estimatedPoints; //teleop estimated points
-                $scope.o_tctaf += element.teleop.climbingStatus == "Climbing failed"; //climb tried and failed
-                $scope.o_tcs += element.teleop.climbingStatus == "Climbing succeeded"; //climb success
-                $scope.o_dc += (element.teleop.climbingStatus != "Climbing succeeded") &&
-                                (element.teleop.climbingStatus != "Climbing failed");
+                $scope.o_tctaf += element.teleop.climbingStatus == 1; //climb tried and failed
+                $scope.o_tcs += element.teleop.climbingStatus == 2; //climb success
+                $scope.o_dc += element.teleop.climbingStatus == 0; //didn't try to climb
                 if (element.defense.defenseOn != 0) {
                     $scope.o_ddo.push(element.match + ": " + element.defense.defenseOn);
                 }

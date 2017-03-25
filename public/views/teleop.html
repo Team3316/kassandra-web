@@ -1,6 +1,6 @@
 <button class="leftArrow small" ui-sref="autonomous" ng-click="updateTeleop(gearsCollectedFromHP2,
     gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, missedGears2, fuelCollectedFromFloor2,
-    fuelCollectedFromHP2,estimatedPoints2,climbingStatus2);"><</button>
+    fuelCollectedFromHP2,estimatedPoints2,climb);"><</button>
 <div class="center" >
     <h3>Teleoperated</h3>
 </div>
@@ -19,14 +19,14 @@
     <label>Missed: {{missedGears2}}<button ng-click="missedGears2=inc_counter(missedGears2, 1)" class="small">+1</button><button ng-click="missedGears2=dec_counter(missedGears2, 1)" class="small">-1</button></label>
 	
     <p class="comments-types">Climbing</p>
-    <label><input type="radio" name="climb" ng-click="climbingStatus2='Did not try to climb'" checked />Nothing</label>
-    <label><input type="radio" name="climb" ng-click="climbingStatus2='Climbing failed'" />Failed</label>
-    <label><input type="radio" name="climb" ng-click="climbingStatus2='Climbing succeeded'" />Climbed</label>
+    <label><input type="radio" name="climb" ng-model="climb" value="0" />Nothing</label>
+    <label><input type="radio" name="climb" ng-model="climb" value="1" />Failed</label>
+    <label><input type="radio" name="climb" ng-model="climb" value="2" />Climbed</label>
 
 </div> 
 
 <div class="center">
     <button ui-sref= "defense" ng-click="updateTeleop(gearsCollectedFromHP2,
     gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, missedGears2, fuelCollectedFromFloor2,
-    fuelCollectedFromHP2,estimatedPoints2,climbingStatus2);">Continue</button>
+    fuelCollectedFromHP2,estimatedPoints2,climb);">Continue</button>
 </div>

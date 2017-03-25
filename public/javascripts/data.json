@@ -20,7 +20,7 @@
         "fuelCollectedFromHP":false,
         "fuelCollectedFromHopper": false,
         "estimatedPoints":0,
-        "climbingStatus":"",
+        "climbingStatus":0,
         "coordinates":{
             "coords": []
         }

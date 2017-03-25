@@ -38,7 +38,7 @@ var cycle = new mongoose.Schema({
         fuelCollectedFromHP:Boolean,
         fuelCollectedFromHopper: Boolean,
         estimatedPoints:Number,
-        climbingStatus:String,
+        climbingStatus:Number,
         coordinates:{
             coords:Array
         }
@@ -145,16 +145,13 @@ exports.getCycleByMatch = function (res, id){
   });
 };
 
-exports.getTopClimbers = function (res){
+exports.getTopClimbers = function (res) {
   Cycle.aggregate([
 		{
 			$match: {
 				$and: [
 					{is_visible: true},
-					{$or: [
-						{"teleop.climbingStatus": "Climbing failed"},
-						{"teleop.climbingStatus": "Climbing succeeded"}
-					]}
+					{"teleop.climbingStatus": {$gte: 1}}
 				]
 			}
 		},
@@ -162,7 +159,7 @@ exports.getTopClimbers = function (res){
 			$group: {
 				_id: "$team",
 				attempts: {$sum: 1},
-				successes: {$sum: { $cond: [ { $eq: [ "$teleop.climbingStatus", "Climbing succeeded" ] }, 1, 0 ] }}
+				successes: {$sum: { $cond: [ { $eq: [ "$teleop.climbingStatus", 2 ] }, 1, 0 ] }}
 			}
 		},
 		{ $project: { _id: 1, climb_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
@@ -175,13 +172,7 @@ exports.getTopClimbers = function (res){
 
 exports.getTopPlanters = function (res){
   Cycle.aggregate([
-		{
-			$match: {
-				$and: [
-					{is_visible: true}
-				]
-			}
-		},
+		{ $match: { is_visible: true } },
 		{
 			$group: {
 				_id: "$team",
@@ -189,6 +180,7 @@ exports.getTopPlanters = function (res){
 				successes: {$sum: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } },
 			}
 		},
+    { $match: { attempts: { $gt: 0 } } },
 		{ $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
 		{ $sort: { plant_pct: -1 } },
 		{ $limit: 24 }
