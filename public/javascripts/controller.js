@@ -155,20 +155,20 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.initAuto = function () {
-        $scope.movement = 0;
+        $scope.movement = "0";
         if ($scope.allData.auto.triedAndFailed) {
-            $scope.movement = 1;
+            $scope.movement = "1";
         } else if ($scope.allData.auto.crosedBaseline) {
-            $scope.movement = 2;
+            $scope.movement = "2";
         }
 
         $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
 
-        $scope.gears = 0;
+        $scope.gears = "0";
         if ($scope.allData.auto.missedGears) {
-            $scope.gears = 1;
+            $scope.gears = "1";
         } else if ($scope.allData.auto.succeessfullyPlantedGears) {
-            $scope.gears = 2;
+            $scope.gears = "2";
         }
     }
 
@@ -416,6 +416,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
 
     $scope.get_match_string = function() {
         return $scope.allData.match + " / " + $scope.allData.team;
+    }
+
+    $scope.get_match_team_color = function() {
+        res = "header-"
+        if ($scope.teams.indexOf($scope.allData.team) <= 2)
+            return res + "blue";
+        else
+            return res + "red";
     }
     
     $scope.get_top_climbers = function() {

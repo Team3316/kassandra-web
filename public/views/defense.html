@@ -1,7 +1,5 @@
 <button class="leftArrow small" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)" ng-init="initDefense()"><</button>
-<div class="header">
-    <h4 span class="header-text">{{get_match_string()}}</h4>
-</div>
+<div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
 <div class="center">
     <h3>Defense </h3>
 </div>
