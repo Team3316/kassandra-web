@@ -389,3 +389,8 @@ button:hover{
 .overallBtn{
   background-color:#ef9739;
 }
+
+.image_icon{
+  width:25px;
+  height:25px;
+}
