@@ -71,52 +71,37 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         });
     }
 
-    //gets teams of the current match
-    $scope.get_teams = function (match) {
-        var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
-        var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
-        $http.get(url, config).then(function (data) {
-            var jdata = data[Object.keys(data)[0]];
-            var red = jdata.alliances.red.teams;
-            var blue = jdata.alliances.blue.teams;
-            var teams = blue.concat(red);
-            var final = [];
-            teams.forEach(function (element) {
-                final.push(element.replace('frc', ''));
-            }, this);
-            $scope.teams = final;
-        });
+    // gets teams of the current match. first 3 are blue alliance and last 3 are red alliance.
+    $scope.get_teams = function (match_name) {
+        var match = $scope.matches.find(function (match) { return match.name == match_name } );
+        if (!match) return [];
+        return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
 
     $scope.get_opposing_teams = function (match, team) {
-        var ending = "2017" + $scope.eventname + "_" + match.toLowerCase();
-        var url = "https://www.thebluealliance.com/api/v2/match/" + ending;
-        $http.get(url, config).then(function (data) {
-            var jdata = data[Object.keys(data)[0]];
-            var red = jdata.alliances.red.teams;
-            var blue = jdata.alliances.blue.teams;
-            var opposingTeams = [];
-            var teamstr = "frc".concat(team);
-            if (red.includes(teamstr)) {
-                blue.forEach(function (element) {
-                    opposingTeams.push(element.replace('frc', ''));
-                }, this);
-            }
-            else {
-                red.forEach(function (element) {
-                    opposingTeams.push(element.replace('frc', ''));
-                }, this);
-            }
-            $scope.opposingTeams = opposingTeams;
-        });
+        if (!$scope.teams) return [];
+
+        switch($scope.teams.findIndex(function(t) { return t == team })) {
+            case -1: // Team not in teams
+                return $scope.teams.slice();
+            case 0: // Team is on Blue aliance
+            case 1:
+            case 2:
+                return $scope.teams.slice(3, 6);
+            case 3: // Team is on Red aliance
+            case 4:
+            case 5:
+                return $scope.teams.slice(0, 3);
+        }
     }
 
-    $scope.submit_team_match = function (t, m) {
+    $scope.submit_team_match = function (team, match) {
         clear_all();
-        if (t != undefined && m != undefined) {
-            $location.url('/autonomous/' + m + '/' + t);
-            $scope.allData.team = t;
-            $scope.allData.match = m;
+        if (team != undefined && match != undefined) {
+            $location.url('/autonomous/' + match + '/' + team);
+            $scope.allData.team = team;
+            $scope.allData.match = match;
+            $scope.opposingTeams = $scope.get_opposing_teams(team, match);
         }
     }
 

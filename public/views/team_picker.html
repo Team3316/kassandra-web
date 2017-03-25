@@ -1,30 +1,27 @@
 <div class="center">
     <h3>Team Picker</h3>
 </div>
-<div class="empty"></div>
+
 <md-input-container ng-init="get_matches();">
     <label>Match</label>
-    <md-select ng-model="matchSelected" ng-change="get_teams(matchSelected);" class="matches">
-        <md-option ng-repeat="match in matches | filter:emptyMatch" value="{{match.name}}">{{match.name}}</md-option>
-    </md-select>
+    <input ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" list="matches">
+    <datalist id="matches">
+        <option ng-repeat="match in matches | filter:emptyMatch" value="{{match.name}}">{{match.name}}</option>
+    </datalist>
 </md-input-container>
+
 <md-input-container ng-show="matchSelected">
     <label>Team</label>
-    <md-select ng-model="teamSelected" ng-change="get_opposing_teams(matchSelected, teamSelected);" id="team"> 
-        <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
-    </md-select>
+    <input ng-model="teamSelected" list="teams"> 
+    <datalist id="teams">
+        <option ng-repeat="team in teams" value="{{team}}">{{ $index < 3 ? 'Blue' : 'Red' }}</option>
+    </datalist>
 </md-input-container>
-<div class="empty"></div>
+
 <div class="center">
     <button ng-click="submit_team_match(teamSelected, matchSelected);" ng-show="matchSelected && teamSelected">Continue</button>
 </div>
-<div class="empty"></div>
-<div class="empty"></div>
-<div class="empty"></div>
-<div class="empty"></div>
 
 <div class="center">
-    
-    <button class = "toAdmin" ui-sref = "admin" >Admin &#8618</button>
-
+    <button class = "toAdmin" ui-sref = "admin">Admin &#8618</button>
 </div>    

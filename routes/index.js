@@ -15,10 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get_cycles', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  console.log("called");
   mongo.getCycles(res);
-  console.log("called");
 });
 
 router.get('/get_cycle/:id', function(req, res, next) {
@@ -34,13 +31,11 @@ router.get('/unhide_cycle/:id', function(req, res, next) {
 });
 
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id; 
   mongo.getCycleByTeam(res, id, false);
 });
 
 router.get('/get_all_cycles_by_team/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id; 
   mongo.getCycleByTeam(res, id, true);
 });
@@ -50,18 +45,12 @@ router.get('/get_all_teams', function(req, res, next) {
 });
 
 router.get('/get_all_matches', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json'); 
-  console.log("called");
   mongo.getAllMatches(res);
-  console.log("called");
 });
 
 router.get('/get_cycles_by_match/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
   var id = req.params.id;   
-  console.log("called");
   mongo.getCycleByMatch(res, id);
-  console.log("called");
 });
 
 router.post('/new_cycle',function(req,res,next){
@@ -72,21 +61,6 @@ router.post('/new_cycle',function(req,res,next){
 
 router.get('/eventname', function(req, res, next) {
   res.send(process.env.EVENTNAME);
-});
-
-router.post('/check_pass', function(req, res, next){
-  console.log("try!");
-  var pass = req.param('password');
-  console.log("pass = " + pass)
-  var msg = "";
-  res.setHeader('Content-Type', 'application/json');
-  if(pass === "pass"){
-    msg="OMRI_GRANTED";
-  }
-  else{
-      msg = "failed!!";
-  }
-  res.send(JSON.stringify({ message : msg }));
 });
 
 router.get('/get_top_climbers', function(req, res, next) {
