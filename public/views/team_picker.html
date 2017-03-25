@@ -14,7 +14,7 @@
     <label>Team</label>
     <input ng-model="teamSelected" list="teams"> 
     <datalist id="teams">
-        <option ng-repeat="team in teams" value="{{team}}">{{ $index < 3 ? 'Blue' : 'Red' }}</option>
+        <option ng-repeat="team in teams" value="{{team}}">{{ $index < 3 ? 'Blue '+($index+1) : 'Red '+($index-2) }}</option>
     </datalist>
 </md-input-container>
 
