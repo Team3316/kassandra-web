@@ -2,27 +2,19 @@
     <h3>Admin</h3>
 </div>
 
-<div class="empty"></div>
 <md-input-container ng-init="pull_teams()">
     <label>Team</label>
     <md-select ng-model="db_team" ng-change="team_selected(db_team)" class="teams">
         <md-option ng-repeat="team in db_teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
-<div class="center">
+<div class="center" ng-init="db_team && team_selected(db_team);">
     <button class="overallBtn" onclick="get_overall();" ng-show="db_team">OVERALL</button>
     <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
 </div>
 
-<div class="empty"></div>
-<div class="empty"></div>
-<div class="empty"></div>
-
-
 <div class="center">
-    
-    <button class = "toAdmin" ui-sref = "team_picker" >Team Picker &#8618</button>
-    <button class = "toAdmin" ui-sref = "table" >Table &#8618</button>
-    <button class = "toAdmin" ui-sref = "top" >Top &#8618</button>
-
+    <button class="toAdmin" ui-sref="team_picker">Team Picker &#8618</button>
+    <button class="toAdmin" ui-sref="table">Table &#8618</button>
+    <button class="toAdmin" ui-sref="top">Top &#8618</button>
 </div>    
