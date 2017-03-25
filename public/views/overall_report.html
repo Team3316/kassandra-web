@@ -60,7 +60,7 @@
             <th>Match</th>
             <th>Success</th>
             <th>Tried</th>
-            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.teleop.succeessfullyPlantedGears}}<td>{{match.teleop.missedGears + match.teleop.succeessfullyPlantedGears}}</td></tr>
+            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.teleop.plantedGears}}<td>{{match.teleop.missedGears + match.teleop.plantedGears}}</td></tr>
         </tbody>
         <tfoot>
             <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}">{{o_tspg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_tmg}},{{o_nom}},-0.55,-0.2)}">{{(o_tspg+o_tmg)/o_nom | number : 1}}</td></tr>
