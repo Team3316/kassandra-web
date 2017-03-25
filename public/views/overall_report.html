@@ -12,7 +12,7 @@
 
     <p class="pReport"><i>Movement </i><span ng-style="{background:get_color(-{{o_tf}},{{o_nom}},-0.3,-0.15)}">{{o_cb | number : 0}}/{{tf_cb | number : 0}}/{{o_nom}}</span></p>
     
-    <p class="pReport"><img src="../images/Gear.png" class=image_icon><i> Gears: </i>
+    <p class="pReport"><img src="../images/Gear.png" class="image_icon"><i> Gears: </i>
     <table align="center" class = "stats_table">
         <tbody>
             <th>Match</th>
@@ -25,7 +25,7 @@
         </tfoot>
     </table>
     
-    <img src="../images/Fuel.png" class=image_icon><i> Estimated points: </i>
+    <img src="../images/Fuel.png" class="image_icon"><i> Estimated points: </i>
     <table align="center" class = "stats_table">
         <tbody ng-repeat="match in matches">
             <tr><td><b>{{match.match}}</b></td><td><i>{{match.auto.estimatedPoints}}</i></td></tr>
@@ -35,7 +35,7 @@
 
     <h3 class="comments-types">Teleop</h6>
     
-    <p class="pReport"><img src="../images/Gear.png" class=image_icon><i> Gears collected from:</i></p>
+    <p class="pReport"><img src="../images/Gear.png" class="image_icon"><i> Gears collected from:</i></p>
     <table align="center" class = "stats_table">
         <th ng-style="{background:get_color(o_tgcfh,o_nom,0.4,0.8)}">HP</th>
         <th ng-style="{background:get_color(o_tgcff,o_nom,0.2,0.5)}">floor</th>
@@ -43,7 +43,7 @@
         <td ng-style="{background:get_color(o_tgcff,o_nom,0.2,0.5)}">{{o_tgcff | number : 0}}/{{o_nom}}</td></tr>
     </table>
 
-    <p class="pReport"><img src="../images/Fuel.png" class=image_icon><i> Fuel collected from: </i></p>
+    <p class="pReport"><img src="../images/Fuel.png" class="image_icon"><i> Fuel collected from: </i></p>
     
     <table align="center" class = "stats_table">
         <th ng-style="{background:get_color(o_tfcff,o_nom,0.3,0.6)}">floor</th>
@@ -54,7 +54,7 @@
         <td ng-style="{background:get_color(o_tfcfh,o_nom,0.15,0.3)}">{{o_tfcfh | number : 0}}/{{o_nom}}</td></tr>
     </table>
 
-    <p class="pReport"><img src="../images/Gear.png" class=image_icon><i> Gears: </i>
+    <p class="pReport"><img src="../images/Gear.png" class="image_icon"><i> Gears: </i>
     <table align="center" class = "stats_table">
         <tbody>
             <th>Match</th>
@@ -67,7 +67,7 @@
         </tfoot>
     </table>
 
-    <img src="../images/Fuel.png" class=image_icon><i> Estimated points: </i>   
+    <img src="../images/Fuel.png" class="image_icon"><i> Estimated points: </i>   
     <table align="center" class = "stats_table">
         <tbody ng-repeat="match in matches">
             <tr><td><b>{{match.match}}</b></td><td><i>{{match.teleop.estimatedPoints}}</i></td></tr>
@@ -75,7 +75,7 @@
             <tr ng-style="{background:get_color({{o_tep}},{{o_nom}},2,6)}"><td><b>Average</b></td><td><i>{{o_tep/o_nom | number : 1}}</i></td></tr>
     </table>
 
-    <p class="pReport"><img src="../images/Touchpad.png" class=image_icon><i> Climbing:</i></p>
+    <p class="pReport"><img src="../images/Touchpad.png" class="image_icon"><i> Climbing:</i></p>
     
     <table align="center" class = "stats_table" ng-style="{background:get_color(o_tcs,o_nom,0.3,0.75)}">
         <th>Did not try</th><th>Failed</th><th>Succeeded</th>
