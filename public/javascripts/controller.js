@@ -78,20 +78,21 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
 
-    $scope.get_opposing_teams = function (match, team) {
-        if (!$scope.teams) return [];
+    $scope.get_opposing_teams = function (team, match) {
+        var teams = $scope.get_teams(match);
+        if (!teams) return [];
 
-        switch($scope.teams.findIndex(function(t) { return t == team })) {
+        switch(teams.findIndex(function(t) { return t == team })) {
             case -1: // Team not in teams
-                return $scope.teams.slice();
+                return teams.slice();
             case 0: // Team is on Blue aliance
             case 1:
             case 2:
-                return $scope.teams.slice(3, 6);
+                return teams.slice(3, 6);
             case 3: // Team is on Red aliance
             case 4:
             case 5:
-                return $scope.teams.slice(0, 3);
+                return teams.slice(0, 3);
         }
     }
 
@@ -419,8 +420,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
 
     $scope.get_match_team_color = function() {
-        res = "header-"
-        if ($scope.teams.indexOf($scope.allData.team) <= 2)
+        var res = "header-"
+        var teams = $scope.get_teams($scope.allData.match);
+        if (teams.indexOf($scope.allData.team) <= 2)
             return res + "blue";
         else
             return res + "red";

@@ -9,14 +9,14 @@
 <div class="content" ng-init="initTeleop();">
 
     <p class="comments-types"><img src="../images/Fuel.png" class="image_icon"> Fuel</p>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHopper2" />Fuel from hoppers</label>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromFloor2" />Fuel from floor</label>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHP2"/>Fuel from HP</label>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHopper2" />Hoppers</label>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromFloor2" />Floor</label>
+    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHP2"/>HP</label>
     <label>Points: {{estimatedPoints2}}<br /><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 1)" class="small">+1</button><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 5)" class="small">+5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 5)" class="small">-5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 1)" class="small">-1</button></label>
 
     <p class="comments-types"><img src="../images/Gear.png" class="image_icon"> Gears</p>
-    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromFloor2"/>Gears from floor</label>
-    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromHP2"/>Gears from HP</label>
+    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromFloor2"/>Floor</label>
+    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromHP2"/>HP</label>
     <label>Planted: {{plantedGears2}} <button ng-click="plantedGears2=inc_counter(plantedGears2, 1)" class="small">+1</button><button ng-click="plantedGears2=dec_counter(plantedGears2, 1)" class="small">-1</button></label>
     <label>Missed: {{missedGears2}} <button ng-click="missedGears2=inc_counter(missedGears2, 1)" class="small">+1</button><button ng-click="missedGears2=dec_counter(missedGears2, 1)" class="small">-1</button></label>
 
