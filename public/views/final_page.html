@@ -1,11 +1,14 @@
 <button class="leftArrow small" ui-sref="defense" ng-click="update_final(generalComments)" ng-init="initFinal()"><</button>
-<div class="center">
+<div class="header">
+    <h4 class="header-text">{{get_match_string()}}</h4>
+</div>
+<div class="center page-title">
     <h3>Comments</h3>
 </div>
-
 <div class = "text-comment">
     <p class = "comments-types">Additional Comments</p>
     <textarea rows="5" cols="35" name="FinalComments" ng-model="generalComments"></textarea>
+    <br>
     <button ng-click="generalComments = concat_comment(generalComments, 'Bad Driver')" class="small">Bad Driver</button>
     <button ng-click="generalComments = concat_comment(generalComments, 'Bad Pilot')" class="small">Bad Pilot</button>
     <button ng-click="generalComments = concat_comment(generalComments, 'HP Foul')" class="small">HP Foul</button>
@@ -13,6 +16,9 @@
     <button ng-click="generalComments = concat_comment(generalComments, 'Slow Collection')" class="small">Slow Collection</button>
     <button ng-click="generalComments = concat_comment(generalComments, 'Slow Plant')" class="small">Slow Plant</button>
     <button ng-click="generalComments = concat_comment(generalComments, 'Slow Climb')" class="small">Slow Climb</button>
+
+    <div class = "empty"></div>
+
 <div class="center">
     <button ng-click="update_final(generalComments); finalButton()">Submit</button>
 </div>

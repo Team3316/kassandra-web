@@ -40,7 +40,7 @@ md-input-container{
   vertical-align: middle;
   font-size: 20px;
   text-align: center;
-  margin:auto;
+  margin: auto;
 }
 
 .left{
@@ -66,7 +66,7 @@ body {
  font-size: 18px;   
 }
 
-.blue-circle-button {
+.blue-circle-button { /* Please don't */
 	box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
 	border: .3em solid #ebf1f6;
 	font-size: 1em;
@@ -80,7 +80,7 @@ body {
 	width: 7em;
 	position: relative;
 }
-.blue-circle-button {
+.blue-circle-button { /* Please don't */
   color:#ffffff;
   background: #cedbe9;
   background: -moz-linear-gradient(top, #cedbe9 0%, #aac5de 17%, #6199c7 50%, #3a84c3 51%, #419ad6 59%, #4bb8f0 71%, #3a8bc2 84%, #26558b 100%);
@@ -265,7 +265,7 @@ input[type="number"]{
 
 .comments-types{
   color:#9CB3BA;
-  font-size: 14px;
+  font-size: 16px;
   font-style: italic;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -280,6 +280,25 @@ input[type="number"]{
 .field{
   background-image: url("../images/Shooting.png");
   background-size: 100% 100%;
+}
+
+.header{
+  background-color: #14a5ff;
+  position: absolute;
+  width: 100%;
+  right: 0px;
+  height: 3em;
+}
+
+.header-text{
+  color: white;
+  font-weight: bold;
+  text-align: center; 
+  margin-top: 1em;
+}
+
+.page-title{
+  padding-top: 3em; /* pushes down the title so it won't be under the floaty thing */
 }
 
 #content{
@@ -333,7 +352,7 @@ button.leftArrow{
   padding-left: 10px;
   bottom: 0;
   overflow-y: scroll;
-  
+
 }
 
 .match-content > p{
@@ -370,4 +389,9 @@ button:hover{
 
 .overallBtn{
   background-color:#ef9739;
+}
+
+.image_icon{
+  width: 24px;
+  height: 24px;
 }
