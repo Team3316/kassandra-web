@@ -1,7 +1,5 @@
 <button class="leftArrow small" ui-sref="defense" ng-click="update_final(generalComments)" ng-init="initFinal()"><</button>
-<div class="header">
-    <h4 class="header-text">{{get_match_string()}}</h4>
-</div>
+<div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
 <div class="center page-title">
     <h3>Comments</h3>
 </div>
