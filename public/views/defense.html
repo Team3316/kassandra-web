@@ -1,4 +1,7 @@
 <button class="leftArrow small" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)" ng-init="initDefense()"><</button>
+<div class="header">
+    <h4 span class="header-text">{{get_match_string()}}</h4>
+</div>
 <div class="center">
     <h3>Defense </h3>
 </div>
@@ -15,8 +18,9 @@
 </div>
 
 <div class = "text-comment">
-    <p class = "comments-types">Defense Comments </p>
+    <p class = "comments-types">Defense Comments</p>
     <textarea id="defensecomment" rows="5" cols="35" ng-model="defenseComments"></textarea>
+    <br>
     <button ng-click="defenseComments = concat_comment(defenseComments, 'Personal Defence')" class="small">Personal Defence</button>
     <button ng-click="defenseComments = concat_comment(defenseComments, 'Zone Defence')" class="small">Zone Defence</button>
     <button ng-click="defenseComments = concat_comment(defenseComments, 'Released Hoppers')" class="small">Released Hoppers</button>

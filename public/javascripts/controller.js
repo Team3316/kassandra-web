@@ -429,6 +429,10 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         else return main.concat(', ', comment);
     }
 
+    $scope.get_match_string = function() {
+        return $scope.allData.match + " / " + $scope.allData.team;
+    }
+    
     $scope.get_top_climbers = function() {
         $http.get('/get_top_climbers').then(function (data) {
             $scope.top_climbers = data.data;
@@ -440,5 +444,4 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.top_planters = data.data;
         })
     }
-
   });
