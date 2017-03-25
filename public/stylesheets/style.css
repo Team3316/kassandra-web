@@ -265,7 +265,7 @@ input[type="number"]{
 
 .comments-types{
   color:#9CB3BA;
-  font-size: 14px;
+  font-size: 16px;
   font-style: italic;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -287,13 +287,14 @@ input[type="number"]{
   position: absolute;
   width: 100%;
   right: 0px;
-  height: 3em
+  height: 3em;
 }
 
 .header-text{
   color: white;
   font-weight: bold;
   text-align: center; 
+  margin-top: 1em;
 }
 
 .page-title{
@@ -391,6 +392,6 @@ button:hover{
 }
 
 .image_icon{
-  width:25px;
-  height:25px;
+  width: 24px;
+  height: 24px;
 }
