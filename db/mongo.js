@@ -163,7 +163,7 @@ exports.getTopClimbers = function (res) {
 			}
 		},
 		{ $project: { _id: 1, climb_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
-		{ $sort: { successes: -1, climb_pct: -1 } },
+		{ $sort: { successes: -1, attempts: 1 } },
 		{ $limit: 24 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
@@ -178,11 +178,12 @@ exports.getTopPlanters = function (res){
 				_id: "$team",
 				attempts: {$sum: { $add : ["$teleop.plantedGears", "$teleop.missedGears", "$auto.succeessfullyPlantedGears", "$auto.missedGears"] } },
 				successes: {$sum: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } },
-			}
+        plants_per_game: {$avg: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } }
+      }
 		},
     { $match: { attempts: { $gt: 0 } } },
-		{ $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1 } },
-		{ $sort: { successes: -1, plant_pct: -1 } },
+    { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
+		{ $sort: { plants_per_game: -1 } },
 		{ $limit: 24 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
