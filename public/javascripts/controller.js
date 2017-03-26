@@ -67,18 +67,18 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 element.alliances.red.teams = element.alliances.red.teams.map($scope.format_team);
                 element.alliances.blue.teams = element.alliances.blue.teams.map($scope.format_team);
             }, this);
-            $scope.matches = jdata;
+            $scope.matches = jdata.filter($scope.emptyMatch);
         });
     }
 
-    // gets teams of the current match. first 3 are blue alliance and last 3 are red alliance.
-    $scope.get_teams = function (match_name) {
-        var match = $scope.matches.find(function (match) { return match.name == match_name } );
+    //gets teams of the current match
+    $scope.get_teams = function (match) {
+        var match = $scope.matches.find(function(m) { return m.name == match });
         if (!match) return [];
         return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
 
-    $scope.get_opposing_teams = function (team, match) {
+     $scope.get_opposing_teams = function (team, match) {
         var teams = $scope.get_teams(match);
         if (!teams) return [];
 
@@ -99,10 +99,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.submit_team_match = function (team, match) {
         clear_all();
         if (team != undefined && match != undefined) {
-            $location.url('/autonomous/' + match + '/' + team);
+            $location.url('/autonomous/');
             $scope.allData.team = team;
             $scope.allData.match = match;
-            $scope.opposingTeams = $scope.get_opposing_teams(team, match);
         }
     }
 
@@ -439,4 +438,23 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.top_planters = data.data;
         })
     }
+  });
+
+app.directive('capitalize', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, modelCtrl) {
+        var capitalize = function(inputValue) {
+          if (inputValue == undefined) inputValue = '';
+          var capitalized = inputValue.toUpperCase();
+          if (capitalized !== inputValue) {
+            modelCtrl.$setViewValue(capitalized);
+            modelCtrl.$render();
+          }
+          return capitalized;
+        }
+        modelCtrl.$parsers.push(capitalize);
+        capitalize(scope[attrs.ngModel]); // capitalize initial value
+      }
+    };
   });

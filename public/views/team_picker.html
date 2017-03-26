@@ -2,21 +2,21 @@
     <h3>Team Picker</h3>
 </div>
 
-<md-input-container ng-init="get_matches();">
+<div ng-init="get_matches();">
     <label>Match</label>
-    <input ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" list="matches">
-    <datalist id="matches">
-        <option ng-repeat="match in matches | filter:emptyMatch" value="{{match.name}}">{{match.name}}</option>
-    </datalist>
-</md-input-container>
+    <md-select ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" ng-show="!customMatch">
+        <md-option ng-repeat="match in matches" value="{{match.name}}">{{match.name}}</md-option>
+    </md-select>
+    <input type="checkbox" ng-model="customMatch"> Custom Match <input ng-model="matchSelected" ng-show="customMatch" ng-change="teams=get_teams(matchSelected);" capitalize/>
+</div>
 
-<md-input-container ng-show="matchSelected">
+<div ng-show="matchSelected">
     <label>Team</label>
-    <input ng-model="teamSelected" list="teams" type="number" pattern="\d*" inputmode="numeric"> 
-    <datalist id="teams">
-        <option ng-repeat="team in teams" value="{{team}}">{{ $index < 3 ? 'Blue '+($index+1) : 'Red '+($index-2) }}</option>
-    </datalist>
-</md-input-container>
+    <md-select ng-model="teamSelected" ng-show="!customMatch"> 
+        <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+    </md-select>
+    <input ng-model="teamSelected" ng-show="customMatch" />
+</div>
 
 <div class="center">
     <button ng-click="submit_team_match(teamSelected, matchSelected);" ng-show="matchSelected && teamSelected">Continue</button>
@@ -24,4 +24,4 @@
 
 <div class="center">
     <button class="toAdmin" ui-sref="admin">Admin &#8618</button>
-</div>    
+</div>

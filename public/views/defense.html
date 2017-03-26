@@ -1,9 +1,9 @@
-<button class="leftArrow small" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)" ng-init="initDefense()"><</button>
+<button class="leftArrow small" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)"><</button>
 <div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
-<div class="center">
+<div class="center"  ng-init="initDefense();teams=get_teams(allData.match);opposingTeams=get_opposing_teams(allData.team, allData.match);">
     <h3>Defense </h3>
 </div>
-<div class = "content-defense">
+<div class="content-defense">
         
     <md-input-container>
         <label>Defense on</label>
@@ -15,8 +15,8 @@
 
 </div>
 
-<div class = "text-comment">
-    <p class = "comments-types">Defense Comments</p>
+<div class="text-comment">
+    <p class="comments-types">Defense Comments</p>
     <textarea id="defensecomment" rows="5" cols="35" ng-model="defenseComments"></textarea>
     <br>
     <button ng-click="defenseComments = concat_comment(defenseComments, 'Personal Defence')" class="small">Personal Defence</button>
