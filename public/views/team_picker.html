@@ -12,7 +12,7 @@
 
 <md-input-container ng-show="matchSelected">
     <label>Team</label>
-    <input ng-model="teamSelected" list="teams"> 
+    <input ng-model="teamSelected" list="teams" type="number" pattern="\d*" inputmode="numeric"> 
     <datalist id="teams">
         <option ng-repeat="team in teams" value="{{team}}">{{ $index < 3 ? 'Blue '+($index+1) : 'Red '+($index-2) }}</option>
     </datalist>
