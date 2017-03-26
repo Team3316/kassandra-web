@@ -183,7 +183,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
         $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
         $scope.estimatedPoints2 = $scope.allData.teleop.estimatedPoints;
-        $scope.climb = $scope.allData.teleop.climbingStatus;
+        $scope.climb = $scope.allData.teleop.climbingStatus.toString();
     }
 
     $scope.initDefense = function () {
