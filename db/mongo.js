@@ -150,7 +150,8 @@ exports.getTopClimbers = function (res) {
 		{
 			$match: {
 				$and: [
-					{is_visible: true}
+					{is_visible: true},
+          {attempts: {$gte: 0}}
 				]
 			}
 		},
