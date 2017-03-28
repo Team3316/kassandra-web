@@ -157,9 +157,9 @@ exports.getTopClimbers = function (res) {
 		{
 			$group: {
 				_id: "$team",
-				attempts: {$sum: { $cond: [ { $ne: [ "$teleop.climbingStatus", 0 ] }, 1, 0 ] }},
+				attempts: {$sum: 1},
 				successes: {$sum: { $cond: [ { $eq: [ "$teleop.climbingStatus", 2 ] }, 1, 0 ] }},
-        climbs_per_game: { $cond: [ { $eq: [attempts,0] }, 0, {$avg: { $cond: [ { $eq: [ "$teleop.climbingStatus", 2 ] }, 1, 0 ] } } ] } 
+        climbs_per_game: { $cond: [ { $ne: [attempts,0] }, {$avg: {successes}}, 0 ] }  
 			}
 		},
 		{ $project: { _id: 1, climb_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, climbs_per_game: 1 } },
