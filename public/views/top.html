@@ -8,12 +8,14 @@
     <th>#</th>
     <th>Team</th>
     <th>%</th>
+    <th>CPG</th>
     <th>Succ</th>
     <th>Atte</th>
 <tr ng-repeat="climber in top_climbers | filter:filter_team">
     <td>{{$index + 1}}</td>
     <td>{{climber._id}}</td>
     <td>{{climber.climb_pct * 100 | number : 0}}%</td>
+    <td>{{climber.climbs_per_game | number : 1}}</td>
     <td>{{climber.successes}}</td>
     <td>{{climber.attempts}}</td>
 </tr>
