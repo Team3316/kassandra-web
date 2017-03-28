@@ -150,8 +150,7 @@ exports.getTopClimbers = function (res) {
 		{
 			$match: {
 				$and: [
-					{is_visible: true},
-					{"teleop.climbingStatus": {$gte: 1}}
+					{is_visible: true}
 				]
 			}
 		},
@@ -164,7 +163,7 @@ exports.getTopClimbers = function (res) {
 			}
 		},
 		{ $project: { _id: 1, climb_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, climbs_per_game: 1 } },
-		{ $sort: { climbs_per_game: -1, successes: -1 } },
+		{ $sort: { climbs_per_game: -1, climb_pct: -1 } },
 		{ $limit: 24 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
