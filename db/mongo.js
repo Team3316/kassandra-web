@@ -165,7 +165,7 @@ exports.getTopClimbers = function (res) {
 		{ $project: { _id: 1, climbs_per_game: { $divide: ["$successes", "$games"] }, successes: 1, attempts: 1,
                           climb_pct: { $cond: [ { $ne: [ "$attempts", 0 ] }, {$divide: ["$successes", "$attempts"]}, 0 ] } } },
 		{ $sort: { climbs_per_game: -1, climb_pct: -1, successes: -1 } },
-		{ $limit: 24 }
+		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
   });
@@ -185,7 +185,7 @@ exports.getTopPlanters = function (res){
     { $match: { attempts: { $gt: 0 } } },
     { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
 		{ $sort: { plants_per_game: -1, successes: -1} },
-		{ $limit: 24 }
+		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
   });
