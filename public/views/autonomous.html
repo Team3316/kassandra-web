@@ -19,6 +19,7 @@
     <label><input type="radio" name="gears" ng-model="gears" value="2" />Dropped</label>
     <label><input type="radio" name="gears" ng-model="gears" value="3" />Planted</label>
 
+    <p class="comments-types">Position</p>
     <label><input type="radio" name="position" ng-model="position" value="0" />None</label>
     <label><input type="radio" name="position" ng-model="position" value="1" />Left</label>
     <label><input type="radio" name="position" ng-model="position" value="2" />Middle</label>
@@ -27,5 +28,5 @@
 </div>
 
 <div class="center">
-    <button ng-click="updateAuto(movement,estimatedPoints,gears); " ui-sref="teleop" autoscroll="false">Continue</button>
+    <button ng-click="updateAuto(movement,estimatedPoints,gears,position); " ui-sref="teleop" autoscroll="false">Continue</button>
 </div>

@@ -32,12 +32,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.crosedBaseline = false;
         $scope.allData.auto.estimatedPoints = 0;
         $scope.allData.auto.succeessfullyPlantedGears = 0;
+        $scope.allData.auto.droppedGears = 0;
         $scope.allData.auto.missedGears = 0;
+        $scope.allData.auto.position = 0;
         $scope.allData.teleop.gearsCollectedFromHP = false;
         $scope.allData.teleop.gearsCollectedFromFloor = false;
         $scope.allData.teleop.plantedGears = 0;
         $scope.allData.teleop.fuelCollectedFromHopper = false;
-        $scope.allData.teleop.missedGears = 0;
+        $scope.allData.teleop.droppedGears = 0;
         $scope.allData.teleop.fuelCollectedFromFloor = false;
         $scope.allData.teleop.fuelCollectedFromHP = false;
         $scope.allData.teleop.estimatedPoints = 0;
@@ -167,9 +169,13 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.gears = "0";
         if ($scope.allData.auto.missedGears) {
             $scope.gears = "1";
-        } else if ($scope.allData.auto.succeessfullyPlantedGears) {
+        } else if ($scope.allData.auto.droppedGears) {
             $scope.gears = "2";
+        } else if ($scope.allData.auto.succeessfullyPlantedGears) {
+            $scope.gears = "3";
         }
+
+        $scope.position = $scope.allData.auto.position.toString();
     }
 
     $scope.initTeleop = function () {
@@ -177,7 +183,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.gearsCollectedFromHP2 = $scope.allData.teleop.gearsCollectedFromHP;
         $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor;
         $scope.plantedGears2 = $scope.allData.teleop.plantedGears;
-        $scope.missedGears2 = $scope.allData.teleop.missedGears;
+        $scope.droppedGears2 = $scope.allData.teleop.droppedGears;
         $scope.fuelCollectedFromFloor2 = $scope.allData.teleop.fuelCollectedFromFloor;
         $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
         $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
@@ -194,7 +200,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.generalComments = $scope.allData.generalComments;
     }
 
-    $scope.updateAuto = function (movement, estimatedPoints, gears) {
+    $scope.updateAuto = function (movement, estimatedPoints, gears, position) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -204,11 +210,13 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.auto.crosedBaseline = (movement == 2);
         $scope.allData.auto.estimatedPoints = estimatedPoints;
         $scope.allData.auto.missedGears = (gears == 1) ? 1 : 0;
-        $scope.allData.auto.succeessfullyPlantedGears = (gears == 2) ? 1 : 0;
+        $scope.allData.auto.droppedGears = (gears == 2) ? 1 : 0;
+        $scope.allData.auto.succeessfullyPlantedGears = (gears == 3) ? 1 : 0;
+        $scope.allData.auto.position = position;
     }
 
     $scope.updateTeleop = function (gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
-        plantedGears2, missedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climb) {
+        plantedGears2, droppedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climb) {
         for (var i = 0, j = arguments.length; i < j; i++) {
             if (arguments[i] == undefined || arguments[i] == "") {
                 arguments[i] = 0;
@@ -217,7 +225,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP2;
         $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor2;
         $scope.allData.teleop.plantedGears = plantedGears2;
-        $scope.allData.teleop.missedGears = missedGears2;
+        $scope.allData.teleop.droppedGears = droppedGears2;
         $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor2;
         $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper2;
         $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
@@ -273,12 +281,14 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.tf = data.data[0].auto.triedAndFailed;
             $scope.cb = data.data[0].auto.crosedBaseline;
             $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
+            $scope.dg = data.data[0].auto.droppedGears;
             $scope.mg = data.data[0].auto.missedGears;
+            $scope.pos = data.data[0].auto.position;
             $scope.ep = data.data[0].auto.estimatedPoints;
             $scope.tgcfh = data.data[0].teleop.gearsCollectedFromHP;
             $scope.tgcff = data.data[0].teleop.gearsCollectedFromFloor;
             $scope.tspg = data.data[0].teleop.plantedGears;
-            $scope.tmg = data.data[0].teleop.missedGears;
+            $scope.tdg = data.data[0].teleop.droppedGears;
             $scope.tfcff = data.data[0].teleop.fuelCollectedFromFloor;
             $scope.tfcfh = data.data[0].teleop.fuelCollectedFromHP;
             $scope.tfcfho = data.data[0].teleop.fuelCollectedFromHopper;
@@ -305,12 +315,17 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.o_tf = 0;
         $scope.o_cb = 0;
         $scope.o_spg = 0;
+        $scope.o_dg = 0;
         $scope.o_mg = 0;
+        $scope.o_npos = 0;
+        $scope.o_lpos = 0;
+        $scope.o_mpos = 0;
+        $scope.o_rpos = 0;
         $scope.o_ep = 0;
         $scope.o_tgcfh = 0;
         $scope.o_tgcff = 0;
         $scope.o_tspg = 0;
-        $scope.o_tmg = 0;
+        $scope.o_tdg = 0;
         $scope.o_tfcff = 0;
         $scope.o_tfcfh = 0; 
         $scope.o_tfcfho = 0; 
@@ -328,12 +343,17 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 $scope.o_tf += element.auto.triedAndFailed; //auto tf
                 $scope.o_cb += element.auto.crosedBaseline; //auto cb
                 $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
+                $scope.o_dg += element.auto.droppedGears; // auto droppedGears
                 $scope.o_mg += element.auto.missedGears; // auto missedGears
+                $scope.o_npos += element.auto.position == 0;
+                $scope.o_lpos = element.auto.position == 1;
+                $scope.o_mpos = element.auto.position == 2;
+                $scope.o_rpos = element.auto.position == 3;
                 $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
                 $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
                 $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
                 $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears
-                $scope.o_tmg += element.teleop.missedGears; //teleop missedGears
+                $scope.o_tdg += element.teleop.droppedGears; //teleop droppedGears
                 $scope.o_tfcff += element.teleop.fuelCollectedFromFloor; //teleop collect fuel floor
                 $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
                 $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
@@ -353,6 +373,19 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             }
         }, this);
         $scope.tf_cb = $scope.o_tf + $scope.o_cb;
+    }
+
+    $scope.translatePosition = function (pos) {
+        switch (pos){
+            case 0:
+                return "None";
+            case 1:
+                return "Left";
+            case 2:
+                return "Middle";
+            case 3:
+                return "Right";
+        }
     }
 
     $scope.insertAuto = function () {

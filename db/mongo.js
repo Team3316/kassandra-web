@@ -25,6 +25,8 @@ var cycle = new mongoose.Schema({
         estimatedPoints:Number,
         succeessfullyPlantedGears:Number,
         missedGears:Number,
+        droppedGears:Number,
+        position:Number,
         coordinates:{
             coords:Array
         }
@@ -33,7 +35,7 @@ var cycle = new mongoose.Schema({
         gearsCollectedFromHP:Boolean,
         gearsCollectedFromFloor:Boolean,
         plantedGears:Number,
-        missedGears:Number,
+        droppedGears:Number,
         fuelCollectedFromFloor:Boolean,
         fuelCollectedFromHP:Boolean,
         fuelCollectedFromHopper: Boolean,
@@ -177,7 +179,7 @@ exports.getTopPlanters = function (res){
 		{
 			$group: {
 				_id: "$team",
-				attempts: {$sum: { $add : ["$teleop.plantedGears", "$teleop.missedGears", "$auto.succeessfullyPlantedGears", "$auto.missedGears"] } },
+				attempts: {$sum: { $add : ["$teleop.plantedGears", "$teleop.droppedGears", "$auto.succeessfullyPlantedGears", "$auto.missedGears", "$auto.droppedGears"] } },
 				successes: {$sum: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } },
         plants_per_game: {$avg: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } }
       }

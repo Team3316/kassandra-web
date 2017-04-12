@@ -7,6 +7,8 @@
         "estimatedPoints":0,
         "succeessfullyPlantedGears":0,
         "missedGears":0,
+        "droppedGears":0,
+        "position":0,
         "coordinates":{
             "coords": []
         }
@@ -15,7 +17,7 @@
         "gearsCollectedFromHP":false,
         "gearsCollectedFromFloor":false,
         "plantedGears":0,
-        "missedGears":0,
+        "droppedGears":0,
         "fuelCollectedFromFloor":false,
         "fuelCollectedFromHP":false,
         "fuelCollectedFromHopper": false,

@@ -18,10 +18,11 @@
             <th>Match</th>
             <th>Success</th>
             <th>Tried</th>
-            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.auto.succeessfullyPlantedGears}}<td>{{match.auto.missedGears + match.auto.succeessfullyPlantedGears}}</td></tr>
+            <th>Position</th>
+            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.auto.succeessfullyPlantedGears}}<td>{{match.auto.missedGears + match.auto.droppedGears + match.auto.succeessfullyPlantedGears}}</td><td>{{translatePosition(match.auto.position)}}</td></tr>
         </tbody>
         <tfoot>
-            <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_spg+o_mg}},{{o_nom}},-0.55,-0.2)}">{{(o_spg+o_mg)/o_nom | number : 1}}</td></tr>
+            <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_spg}},{{o_nom}},0.25,0.5)}">{{o_spg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_spg+o_dg}},{{o_nom}},-0.55,-0.2)}">{{(o_spg+o_dg)/o_nom | number : 1}}</td></tr>
         </tfoot>
     </table>
     
@@ -60,10 +61,10 @@
             <th>Match</th>
             <th>Success</th>
             <th>Tried</th>
-            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.teleop.plantedGears}}<td>{{match.teleop.missedGears + match.teleop.plantedGears}}</td></tr>
+            <tr ng-repeat="match in matches"><td><b>{{match.match}}</b></td><td>{{match.teleop.plantedGears}}<td>{{match.teleop.droppedGears + match.teleop.plantedGears}}</td></tr>
         </tbody>
         <tfoot>
-            <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}">{{o_tspg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_tmg}},{{o_nom}},-0.55,-0.2)}">{{(o_tspg+o_tmg)/o_nom | number : 1}}</td></tr>
+            <tr><td><b>Average</b></td><td ng-style="{background:get_color({{o_tspg}},{{o_nom}},1.5,2.5)}">{{o_tspg/o_nom | number : 1}}</td><td ng-style="{background:get_color(-{{o_tdg}},{{o_nom}},-0.55,-0.2)}">{{(o_tspg+o_tdg)/o_nom | number : 1}}</td></tr>
         </tfoot>
     </table>
 
