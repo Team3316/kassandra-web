@@ -97,4 +97,12 @@ router.get('/get_top_planters', function(req, res, next) {
   mongo.getTopPlanters(res);
 })
 
+router.get('/get_top_auto_planters', function(req, res, next) {
+  mongo.getTopAutoPlanters(res);
+})
+
+router.get('/get_top_shooters', function(req, res, next) {
+  mongo.getTopShooters(res);
+})
+
 module.exports = router;

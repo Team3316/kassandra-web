@@ -471,6 +471,18 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             $scope.top_planters = data.data;
         })
     }
+
+    $scope.get_top_auto_planters = function() {
+        $http.get('/get_top_auto_planters').then(function (data) {
+            $scope.top_auto_planters = data.data;
+        })
+    }
+
+    $scope.get_top_shooters = function() {
+        $http.get('/get_top_shooters').then(function (data) {
+            $scope.top_shooters = data.data;
+        })
+    }
   });
 
 app.directive('capitalize', function() {

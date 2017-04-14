@@ -37,3 +37,37 @@
     <td>{{planter.attempts}}</td>
 </tr>
 </table>
+<h3>Auto Planters</h3>
+<table class="game_table" ng-init="get_top_auto_planters();">
+    <th>#</th>
+    <th>Team</th>
+    <th>%</th>
+    <th>PPG</th>
+    <th>Succ</th>
+    <th>Atte</th>
+<tr ng-repeat="planter in top_auto_planters | filter:filter_team">
+    <td>{{$index + 1}}</td>
+    <td>{{planter._id}}</td>
+    <td>{{planter.plant_pct * 100 | number : 0}}%</td>
+    <td>{{planter.plants_per_game | number : 1}}</td>
+    <td>{{planter.successes}}</td>
+    <td>{{planter.attempts}}</td>
+</tr>
+</table>
+<h3>Shooters</h3>
+<table class="game_table" ng-init="get_top_shooters();">
+    <th>#</th>
+    <th>Team</th>
+    <th>Auto Avg</th>
+    <th>Auto Max</th>
+    <th>Avg</th>
+    <th>Max</th>
+<tr ng-repeat="shooter in top_shooters | filter:filter_team">
+    <td>{{$index + 1}}</td>
+    <td>{{shooter._id}}</td>
+    <td>{{shooter.average_kpa_auto | number : 1}}</td>
+    <td>{{shooter.max_kpa_auto}}</td>
+    <td>{{shooter.average_kpa | number : 1}}</td>
+    <td>{{shooter.max_kpa}}</td>
+</tr>
+</table>

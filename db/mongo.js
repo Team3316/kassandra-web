@@ -192,3 +192,44 @@ exports.getTopPlanters = function (res){
     res.send(JSON.stringify(doc));
   });
 };
+
+exports.getTopAutoPlanters = function (res){
+  Cycle.aggregate([
+		{ $match: { is_visible: true } },
+		{
+			$group: {
+				_id: "$team",
+				attempts: {$sum: { $add : ["$auto.succeessfullyPlantedGears", "$auto.missedGears", "$auto.droppedGears"] } },
+				successes: {$sum: { $add : ["$auto.succeessfullyPlantedGears"] } },
+        plants_per_game: {$avg: { $add : ["$auto.succeessfullyPlantedGears"] } }
+      }
+		},
+    { $match: { attempts: { $gt: 0 } } },
+    { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
+		{ $sort: { plants_per_game: -1, successes: -1} },
+		{ $limit: 32 }
+	], function (err, doc) {
+    res.send(JSON.stringify(doc));
+  });
+};
+
+exports.getTopShooters = function (res){
+  Cycle.aggregate([
+		{ $match: { is_visible: true } },
+		{
+			$group: {
+				_id: "$team",
+        average_kpa_auto: { $avg : ["$auto.estimatedPoints"] } ,
+        max_kpa_auto: { $max : ["$auto.estimatedPoints"] } ,
+        average_kpa: { $avg : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } } ,
+        max_kpa: { $max : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } }
+      }
+		},
+    { $match: { max_kpa: { $gt: 0 } } },
+    { $project: { _id: 1, average_kpa_auto : 1, max_kpa_auto: 1, average_kpa: 1, max_kpa: 1 } },
+		{ $sort: { average_kpa: -1, max_kpa: -1} },
+		{ $limit: 32 }
+	], function (err, doc) {
+    res.send(JSON.stringify(doc));
+  });
+};
