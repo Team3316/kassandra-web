@@ -8,10 +8,7 @@
         "succeessfullyPlantedGears":0,
         "missedGears":0,
         "droppedGears":0,
-        "position":0,
-        "coordinates":{
-            "coords": []
-        }
+        "position":0
     },
     "teleop":{
         "gearsCollectedFromHP":false,
@@ -22,10 +19,7 @@
         "fuelCollectedFromHP":false,
         "fuelCollectedFromHopper": false,
         "estimatedPoints":0,
-        "climbingStatus":0,
-        "coordinates":{
-            "coords": []
-        }
+        "climbingStatus":0
     },
     "defense":{
         "defenseOn":0,

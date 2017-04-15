@@ -27,9 +27,6 @@ var cycle = new mongoose.Schema({
         missedGears:Number,
         droppedGears:Number,
         position:Number,
-        coordinates:{
-            coords:Array
-        }
     },
     teleop:{
         gearsCollectedFromHP:Boolean,
@@ -41,9 +38,6 @@ var cycle = new mongoose.Schema({
         fuelCollectedFromHopper: Boolean,
         estimatedPoints:Number,
         climbingStatus:Number,
-        coordinates:{
-            coords:Array
-        }
     },
     defense:{
         defenseOn:Number,
