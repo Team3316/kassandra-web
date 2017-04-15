@@ -180,7 +180,7 @@ exports.getTopPlanters = function (res){
 		},
     { $match: { attempts: { $gt: 0 } } },
     { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
-		{ $sort: { plants_per_game: -1, successes: -1} },
+		{ $sort: { plants_per_game: -1, plant_pct: -1} },
 		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
@@ -200,7 +200,7 @@ exports.getTopAutoPlanters = function (res){
 		},
     { $match: { attempts: { $gt: 0 } } },
     { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
-		{ $sort: { plants_per_game: -1, successes: -1} },
+		{ $sort: { plants_per_game: -1, plant_pct: -1} },
 		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
