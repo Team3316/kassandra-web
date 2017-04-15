@@ -213,8 +213,8 @@ exports.getTopShooters = function (res){
 		{
 			$group: {
 				_id: "$team",
-        average_kpa_auto: { $avg : ["$auto.estimatedPoints"] } ,
-        max_kpa_auto: { $max : ["$auto.estimatedPoints"] } ,
+        average_kpa_auto: { $avg : "$auto.estimatedPoints" } ,
+        max_kpa_auto: { $max : "$auto.estimatedPoints" } ,
         average_kpa: { $avg : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } } ,
         max_kpa: { $max : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } }
       }
