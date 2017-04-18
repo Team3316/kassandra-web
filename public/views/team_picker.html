@@ -4,12 +4,14 @@
 
 <div class="team_picker_dialogues">
 <div ng-init="get_matches();">
-    <label>Match</label>
+    <h4><label style="display: inline;">Match (</label>
+    <label for="customMatch" style="display: inline; padding-left: 0px">Custom?</label>
+    <input type="checkbox" id="customMatch" ng-model="customMatch">
+    <label for="customMatch" style="display: inline; padding-left: 0px">)</label>
+    </h4>
     <md-select ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" ng-show="!customMatch">
         <md-option ng-repeat="match in matches" value="{{match.name}}">{{match.name}}</md-option>
     </md-select>
-    <input type="checkbox" id="customMatch" ng-model="customMatch">
-    <label for="customMatch" style="display: inline; padding-left: 0px">Custom Match</label>
     <input ng-model="matchSelected" ng-show="customMatch" ng-change="teams=get_teams(matchSelected);" style="width: 60%;" capitalize/>
 </div>
 
@@ -18,7 +20,7 @@
     <md-select ng-model="teamSelected" ng-show="!customMatch">
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
-    <input type="number" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="teamSelected" ng-show="customMatch" style="width: 60%;" />
+    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="teamSelected" ng-show="customMatch" style="width: 60%;" maxlength="4" />
 </div>
 
 <div class="center">
