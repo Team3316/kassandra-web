@@ -243,8 +243,8 @@ input[type="number"]{
 .header{
   position: absolute;
   width: 100%;
-  right: 0px;
   padding: 0.5em;
+  height: 2em;
   text-align: center;
   color: white;
   font-weight: bold;
@@ -292,7 +292,8 @@ button.leftArrow{
   opacity: 1;
   text-align: center;
   top:0;
-  padding: 0.6945em;
+  padding: 0.5em;
+  height: 2.345em;
   margin:0;
 }
 
