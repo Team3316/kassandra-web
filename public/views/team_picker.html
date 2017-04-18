@@ -18,7 +18,7 @@
     <md-select ng-model="teamSelected" ng-show="!customMatch">
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
-    <input type="number" ng-model="teamSelected" ng-show="customMatch" style="width: 60%;" />
+    <input type="number" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="teamSelected" ng-show="customMatch" style="width: 60%;" />
 </div>
 
 <div class="center">
