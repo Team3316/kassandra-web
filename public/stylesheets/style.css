@@ -119,15 +119,8 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
-    font-size: 14.5px;
+    font-size: 13px;
     table-layout: fixed;
-}
-
-table.game_table {
-    width: 100%;
-}
-.game_table td, .game_table th {
-    font-size: 14px;
 }
 
 .checked {
@@ -363,5 +356,9 @@ button:hover{
 }
 
 .team_picker_dialogues {
+  padding: 0.5em;
+}
+
+.top_tables {
   padding: 0.5em;
 }
