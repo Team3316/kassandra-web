@@ -1,7 +1,7 @@
 <button class="leftArrow small" ui-sref="admin" ><</button>
 <div class="center">
     <h3>Table</h3>
-    <input type="text" ng-model="filter_team" size="4" placeholder="team"/>
+    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="filter_team" size="4" placeholder="Team" maxlength="4"/>
 </div>
 <table class="table table-striped table-condensed table-bordered" align="center" ng-init="get_matches();pull_matches();pull_match_team();">
     <th>Match</th>
