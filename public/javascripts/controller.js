@@ -116,7 +116,12 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.pull_teams = function () {
         $http.get("/get_all_teams").then(function (data) {
             $scope.db_teams = data.data;
-            $scope.db_teams.sort();
+            $scope.db_teams.sort(function(a,b) {
+                a_int = parseInt(a, 10);
+                b_int = parseInt(b, 10);
+
+                return a_int - b_int;
+            });
         });
     }
 
