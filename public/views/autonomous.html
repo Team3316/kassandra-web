@@ -5,6 +5,12 @@
 </div>
 <div class="content" ng-init="initAuto()">
 
+    <p class="comments-types">Position</p>
+    <label><input type="radio" name="position" ng-model="position" value="0" />None</label>
+    <label><input type="radio" name="position" ng-model="position" value="1" />Left</label>
+    <label><input type="radio" name="position" ng-model="position" value="2" />Middle</label>
+    <label><input type="radio" name="position" ng-model="position" value="3" />Right</label>
+
     <p class="comments-types">Movement</p>
     <label><input type="radio" name="movement" ng-model="movement" value="0" />Nothing</label>
     <label><input type="radio" name="movement" ng-model="movement" value="1" />Failed</label>
@@ -18,12 +24,6 @@
     <label><input type="radio" name="gears" ng-model="gears" value="1" />Missed</label>
     <label><input type="radio" name="gears" ng-model="gears" value="2" />Dropped</label>
     <label><input type="radio" name="gears" ng-model="gears" value="3" />Planted</label>
-
-    <p class="comments-types">Position</p>
-    <label><input type="radio" name="position" ng-model="position" value="0" />None</label>
-    <label><input type="radio" name="position" ng-model="position" value="1" />Left</label>
-    <label><input type="radio" name="position" ng-model="position" value="2" />Middle</label>
-    <label><input type="radio" name="position" ng-model="position" value="3" />Right</label>
 
 </div>
 

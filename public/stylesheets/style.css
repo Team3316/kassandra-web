@@ -81,6 +81,7 @@ input[type="checkbox"]{
   margin:0;
   *overflow: hidden;
 }
+
 label {
   display: block;
   padding-left: 15px;
