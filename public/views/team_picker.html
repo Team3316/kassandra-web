@@ -8,7 +8,9 @@
     <md-select ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" ng-show="!customMatch">
         <md-option ng-repeat="match in matches" value="{{match.name}}">{{match.name}}</md-option>
     </md-select>
-    <input type="checkbox" ng-model="customMatch"> Custom Match <input ng-model="matchSelected" ng-show="customMatch" ng-change="teams=get_teams(matchSelected);" capitalize/>
+    <input type="checkbox" id="customMatch" ng-model="customMatch">
+    <label for="customMatch" style="display: inline; padding-left: 0px">Custom Match</label>
+    <input ng-model="matchSelected" ng-show="customMatch" ng-change="teams=get_teams(matchSelected);" capitalize/>
 </div>
 
 <div ng-show="matchSelected">
