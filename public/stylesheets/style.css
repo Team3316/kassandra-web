@@ -56,12 +56,6 @@ label, md-option{
   font-size: 20px;
 }
 
-footer{
-  text-align: center;
-  color: #3498db;
-  font-size:11px;
-}
-
 body {
  font-size: 18px;   
 }
@@ -264,6 +258,8 @@ input[type="number"]{
 #content{
   height:100%;
   overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .btn{
