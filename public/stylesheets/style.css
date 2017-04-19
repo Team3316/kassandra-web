@@ -234,7 +234,6 @@ input[type="number"]{
 }
 
 .header{
-  -webkit-backdrop-filter: blur(15px);
   position: fixed;
   display: block;
   width: 100%;
