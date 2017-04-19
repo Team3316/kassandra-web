@@ -234,7 +234,8 @@ input[type="number"]{
 }
 
 .header{
-  position: absolute;
+  position: fixed;
+  display: block;
   width: 100%;
   padding: 0.5em;
   height: 2em;
