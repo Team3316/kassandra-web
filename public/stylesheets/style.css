@@ -234,6 +234,7 @@ input[type="number"]{
 }
 
 .header{
+  -webkit-backdrop-filter: blur(15px);
   position: fixed;
   display: block;
   width: 100%;
@@ -284,7 +285,8 @@ h3{
 button.leftArrow{
   width: 10%;
   z-index: 100;
-  position: absolute;
+  position: fixed;
+  display: block;
   opacity: 1;
   text-align: center;
   top:0;
