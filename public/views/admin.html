@@ -9,12 +9,12 @@
     </md-select>
 </md-input-container>
 <div class="center" ng-init="db_team && team_selected(db_team);">
-    <button class="overallBtn" onclick="get_overall();" ng-show="db_team">OVERALL</button>
-    <button onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
+    <button class="btn btn-warning btn-lg" onclick="get_overall();" ng-show="db_team">OVERALL</button><br>
+    <button class="btn btn-primary btn-lg" onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
 </div>
 
 <div class="center">
-    <button class="toAdmin" ui-sref="team_picker">Team Picker &#8618</button>
-    <button class="toAdmin" ui-sref="table">Table &#8618</button>
-    <button class="toAdmin" ui-sref="top">Top &#8618</button>
+    <button class="btn btn-default btn-lg" ui-sref="team_picker">Team Picker &#8618</button>
+    <button class="btn btn-default btn-lg" ui-sref="table">Table &#8618</button>
+    <button class="btn btn-default btn-lg" ui-sref="top">Top &#8618</button>
 </div>    

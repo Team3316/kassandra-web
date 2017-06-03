@@ -146,7 +146,7 @@ table {
   transform: translate(-50%, -50%);
 }
 
-button {
+bluebutton {
     background-color: #008CBA;
     border: none;
     color: white;
@@ -154,43 +154,15 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1em;
     width: 80%;
-    margin: 4px 2px;
+    /* margin: 4px 2px; */
     cursor: pointer;
 }
 
-button.small {
-    width: fit-content;
-    padding: 16px;
+button.commentButton {
+    margin: 0.25em;
 }
-
-.toAdmin{
-  background-color: #008CBA;
-  opacity:0.5;
-  border: none;
-  text-align:center;
-  display: inline-block;
-  width:25%;
-  padding: 10px 10px 10px 10px;
-  margin: 0;
-  font-size: 16px;
-  cursor:pointer;
-}
-
-button:visited{
-    background-color: #cedbe9;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 80%;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
 
 input[type="password"] {
   padding: 10px;
@@ -216,10 +188,10 @@ input[type="number"]{
 
 .comments-types{
   color:#9CB3BA;
-  font-size: 16px;
+  font-size: 1.25em;
   font-style: italic;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
 }
 
 .text-comment{
@@ -228,20 +200,16 @@ input[type="number"]{
   margin: auto;
 }
 
-.field{
-  background-image: url("../images/Shooting.png");
-  background-size: 100% 100%;
-}
-
 .header{
   position: fixed;
   display: block;
   width: 100%;
-  padding: 0.5em;
   height: 2em;
   text-align: center;
   color: white;
   font-weight: bold;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
 .header-blue{
@@ -253,26 +221,13 @@ input[type="number"]{
 }
 
 .page-title{
-  padding-top: 2em; /* pushes down the title so it won't be under the floaty thing */
+  padding-top:2em; /* pushes down the title so it won't be under the floaty thing */
 }
 
 #content{
   height:100%;
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-.btn{
-    background-color: #99B1B7;
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 40%;
-    margin: 4px 2px;
-    cursor: pointer;
 }
 
 h3{
@@ -287,10 +242,8 @@ button.leftArrow{
   display: block;
   opacity: 1;
   text-align: center;
-  top:0;
-  padding: 0.5em;
-  height: 2.345em;
-  margin:0;
+  height: 2em;
+  font-size: 1em;
 }
 
 #link_area{
@@ -338,14 +291,6 @@ h3{
 }
 .invisible {
   background-color: #303030;
-}
-
-button:hover{
-  opacity: 0.5;
-}
-
-.overallBtn{
-  background-color:#ef9739;
 }
 
 .image_icon{

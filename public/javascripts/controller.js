@@ -80,7 +80,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
 
-     $scope.get_opposing_teams = function (team, match) {
+       $scope.get_opposing_teams = function (team, match) {
         var teams = $scope.get_teams(match);
         if (!teams) return [];
 
@@ -456,13 +456,13 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         return $scope.allData.match + " / " + $scope.allData.team;
     }
 
-    $scope.get_match_team_color = function() {
+    $scope.get_team_style_for_match = function() {
         var res = "header-"
         var teams = $scope.get_teams($scope.allData.match);
         if (teams.indexOf($scope.allData.team) <= 2)
-            return res + "blue";
+            return "header " + res + "blue";
         else
-            return res + "red";
+            return "header " + res + "red";
     }
     
     $scope.get_top_climbers = function() {

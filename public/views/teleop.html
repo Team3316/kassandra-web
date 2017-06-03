@@ -1,7 +1,7 @@
-<button class="leftArrow small" ui-sref="autonomous" ng-click="updateTeleop(gearsCollectedFromHP2,
+<button class="leftArrow" ui-sref="autonomous" ng-click="updateTeleop(gearsCollectedFromHP2,
     gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, droppedGears2, fuelCollectedFromFloor2,
-    fuelCollectedFromHP2,estimatedPoints2,climb);"><</button>
-<div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
+    fuelCollectedFromHP2,estimatedPoints2,climb);">&#129104</button>
+<div class="header" ng-class="get_team_style_for_match();">{{get_match_string()}}</div>
 
 <div class="center page-title">
     <h3>Teleoperated</h3>
@@ -12,13 +12,25 @@
     <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHopper2" /> Hoppers</label>
     <label><input type="checkbox" value="0" ng-model="fuelCollectedFromFloor2" /> Floor</label>
     <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHP2"/> HP</label>
-    <label>Points: {{estimatedPoints2}}<br /><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 1)" class="small">+1</button><button ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 5)" class="small">+5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 5)" class="small">-5</button><button ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 1)" class="small">-1</button></label>
+
+    <label>Fuel Points: {{estimatedPoints2}}<br />
+        <button class = "btn btn-success btn-lg" ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 1)">+1</button>
+        <button class = "btn btn-success btn-lg" ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 5)">+5</button>
+        <button class = "btn btn-danger btn-lg" ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 5)">−5</button>
+        <button class = "btn btn-danger btn-lg" ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 1)">−1</button>
+    </label>
 
     <p class="comments-types"><img src="../images/Gear.png" class="image_icon"> Gears</p>
     <label><input type="checkbox" value="0" ng-model="gearsCollectedFromFloor2"/> Floor</label>
     <label><input type="checkbox" value="0" ng-model="gearsCollectedFromHP2"/> HP</label>
-    <label>Planted: {{plantedGears2}} <button ng-click="plantedGears2=inc_counter(plantedGears2, 1)" class="small">+1</button><button ng-click="plantedGears2=dec_counter(plantedGears2, 1)" class="small">-1</button></label>
-    <label>Dropped: {{droppedGears2}} <button ng-click="droppedGears2=inc_counter(droppedGears2, 1)" class="small">+1</button><button ng-click="droppedGears2=dec_counter(droppedGears2, 1)" class="small">-1</button></label>
+    <label>Planted: {{plantedGears2}}
+        <button class = "btn btn-success btn-lg" ng-click="plantedGears2=inc_counter(plantedGears2, 1)">+</button>
+        <button class = "btn btn-danger btn-lg" ng-click="plantedGears2=dec_counter(plantedGears2, 1)">−</button>
+    </label>
+    <label>Dropped: {{droppedGears2}} 
+        <button class = "btn btn-success btn-lg" ng-click="droppedGears2=inc_counter(droppedGears2, 1)">+</button>
+        <button class = "btn btn-danger btn-lg" ng-click="droppedGears2=dec_counter(droppedGears2, 1)">−</button>
+    </label>
 
     <p class="comments-types"><img src="../images/Touchpad.png" class="image_icon"> Climbing</p>
     <label><input type="radio" name="climb" ng-model="climb" value="0" /> Nothing</label>

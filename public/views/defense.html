@@ -1,5 +1,5 @@
-<button class="leftArrow small" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)"><</button>
-<div class="header" ng-class="get_match_team_color();">{{get_match_string()}}</div>
+<button class="leftArrow" ui-sref="teleop" ng-click="updateDefense(defenseOn, defenseComments)">&#129104</button>
+<div class="header" ng-class="get_team_style_for_match();">{{get_match_string()}}</div>
 <div class="center"  ng-init="initDefense();teams=get_teams(allData.match);opposingTeams=get_opposing_teams(allData.team, allData.match);">
     <h3>Defense </h3>
 </div>
@@ -17,11 +17,11 @@
 
 <div class="text-comment">
     <p class="comments-types">Defense Comments</p>
-    <textarea id="defensecomment" rows="5" cols="35" ng-model="defenseComments"></textarea>
+    <textarea class="form-control" rows="5" id="defensecomment" ng-model="defenseComments"></textarea>
     <br>
-    <button ng-click="defenseComments = concat_comment(defenseComments, 'Personal Defence')" class="small">Personal Defence</button>
-    <button ng-click="defenseComments = concat_comment(defenseComments, 'Zone Defence')" class="small">Zone Defence</button>
-    <button ng-click="defenseComments = concat_comment(defenseComments, 'Released Hoppers')" class="small">Released Hoppers</button>
+    <button class="btn btn-info commentButton" ng-click="defenseComments = concat_comment(defenseComments, 'Personal Defence')">Personal Defence</button>
+    <button class="btn btn-info commentButton" ng-click="defenseComments = concat_comment(defenseComments, 'Zone Defence')">Zone Defence</button>
+    <button class="btn btn-info commentButton" ng-click="defenseComments = concat_comment(defenseComments, 'Released Hoppers')">Released Hoppers</button>
 
  <div class = "empty"></div>
 
