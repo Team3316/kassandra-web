@@ -20,31 +20,28 @@ var cycle = new mongoose.Schema({
     match:String,
     team:Number,
     auto:{
-        triedAndFailed: Boolean,
-        crosedBaseline:Boolean,
-        estimatedPoints:Number,
-        succeessfullyPlantedGears:Number,
-        missedGears:Number,
-        droppedGears:Number,
-        position:Number,
+        auto_run:Boolean,
+        switch:Number,
+        switch_fail:Number,
+        scale:Number,
+        scale_fail:Number,
     },
     teleop:{
-        gearsCollectedFromHP:Boolean,
-        gearsCollectedFromFloor:Boolean,
-        plantedGears:Number,
-        droppedGears:Number,
-        fuelCollectedFromFloor:Boolean,
-        fuelCollectedFromHP:Boolean,
-        fuelCollectedFromHopper: Boolean,
-        estimatedPoints:Number,
-        climbingStatus:Number,
+        collect_floor:Boolean,
+        collect_portal:Boolean,
+        collect_pyramid:Boolean,
+        exchange:Number,
+        exchange_fail:Number,
+        switch:Number,
+        switch_fail:Number,
+        scale:Number,
+        scale_fail:Number,
+        climb:Number,
+        partner_climb:Number,
     },
-    defense:{
-        defenseOn:Number,
-        defenseComments:String
-    },
-    generalComments:String,
-    is_visible:{type:Boolean,default:true}
+    tech_foul:Boolean,
+    comments:String,
+    is_visible:{type:Boolean, default:true}
 
 },{collection:DB_TABLE}); 
 
@@ -54,19 +51,6 @@ db.once('open', function() {
   console.log("connected!");
 });
 
-
-exports.newTeam = function (team){
-  if(!team){
-    return;
-  }
-  var team = new Team({teamNo: team});
-   team.save(function(err, task){
-        if (err) return console.error(err);
-        console.log("added!");
-  });
-};
-
-
 exports.newCycle = function (cycle){
   if(!cycle){
     return;
@@ -74,7 +58,7 @@ exports.newCycle = function (cycle){
   var cycle = new Cycle(cycle);
    cycle.save(function(err, task){
         if (err) return console.error(err);
-        console.log("Added cycle !");
+        console.log("Added cycle!");
   });
 };
 
@@ -141,87 +125,60 @@ exports.getCycleByMatch = function (res, id){
   });
 };
 
-exports.getTopClimbers = function (res) {
-  Cycle.aggregate([
-		{
-			$match: {
-				$and: [
-					{is_visible: true}
-				]
-			}
-		},
-		{
-			$group: {
-				_id: "$team",
-				games: {$sum: 1},
-				successes: {$sum: { $cond: [ { $eq: [ "$teleop.climbingStatus", 2 ] }, 1, 0 ] }},
-        attempts: {$sum: { $cond: [ { $ne: [ "$teleop.climbingStatus", 0 ] }, 1, 0 ] }}
-			}
-		},
-		{ $project: { _id: 1, climbs_per_game: { $divide: ["$successes", "$games"] }, successes: 1, attempts: 1,
-                          climb_pct: { $cond: [ { $ne: [ "$attempts", 0 ] }, {$divide: ["$successes", "$attempts"]}, 0 ] } } },
-		{ $sort: { climbs_per_game: -1, climb_pct: -1, successes: -1 } },
-		{ $limit: 32 }
-	], function (err, doc) {
-    res.send(JSON.stringify(doc));
-  });
-};
-
-exports.getTopPlanters = function (res){
+exports.getTopExchange = function (res){
   Cycle.aggregate([
 		{ $match: { is_visible: true } },
 		{
 			$group: {
 				_id: "$team",
-				attempts: {$sum: { $add : ["$teleop.plantedGears", "$teleop.droppedGears", "$auto.succeessfullyPlantedGears", "$auto.missedGears", "$auto.droppedGears"] } },
-				successes: {$sum: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } },
-        plants_per_game: {$avg: { $add : ["$teleop.plantedGears", "$auto.succeessfullyPlantedGears"] } }
-      }
+				attempts: {$sum: { $add : ["$teleop.exchange", "$teleop.exchange_fail"] } },
+				successes: {$sum: { $add : ["$teleop.exchange"] } },
+                per_game: {$avg: { $add : ["$teleop.exchange"] } }
+            }
 		},
     { $match: { attempts: { $gt: 0 } } },
-    { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
-		{ $sort: { plants_per_game: -1, plant_pct: -1, attempts: -1} },
+    { $project: { _id: 1, pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, per_game: 1 } },
+		{ $sort: { per_game: -1, pct: -1, attempts: -1} },
 		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getTopAutoPlanters = function (res){
+exports.getTopSwitch = function (res){
   Cycle.aggregate([
 		{ $match: { is_visible: true } },
 		{
 			$group: {
 				_id: "$team",
-				attempts: {$sum: { $add : ["$auto.succeessfullyPlantedGears", "$auto.missedGears", "$auto.droppedGears"] } },
-				successes: {$sum: { $add : ["$auto.succeessfullyPlantedGears"] } },
-        plants_per_game: {$avg: { $add : ["$auto.succeessfullyPlantedGears"] } }
-      }
+				attempts: {$sum: { $add : ["$auto.switch", "$auto.switch_fail", "$teleop.switch", "$teleop.switch_fail"] } },
+				successes: {$sum: { $add : ["$auto.switch", "$teleop.switch"] } },
+                per_game: {$avg: { $add : ["$auto.switch", "$teleop.switch"] } }
+            }
 		},
     { $match: { attempts: { $gt: 0 } } },
-    { $project: { _id: 1, plant_pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, plants_per_game: 1 } },
-		{ $sort: { plants_per_game: -1, plant_pct: -1, attempts: -1} },
+    { $project: { _id: 1, pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, per_game: 1 } },
+		{ $sort: { per_game: -1, pct: -1, attempts: -1} },
 		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));
   });
 };
 
-exports.getTopShooters = function (res){
+exports.getTopScale = function (res){
   Cycle.aggregate([
 		{ $match: { is_visible: true } },
 		{
 			$group: {
 				_id: "$team",
-        average_kpa_auto: { $avg : "$auto.estimatedPoints" } ,
-        max_kpa_auto: { $max : "$auto.estimatedPoints" } ,
-        average_kpa: { $avg : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } } ,
-        max_kpa: { $max : { $add : ["$teleop.estimatedPoints", "$auto.estimatedPoints"] } }
-      }
+				attempts: {$sum: { $add : ["$auto.scale", "$auto.scale_fail", "$teleop.scale", "$teleop.scale_fail"] } },
+				successes: {$sum: { $add : ["$auto.scale", "$teleop.scale"] } },
+                per_game: {$avg: { $add : ["$auto.scale", "$teleop.scale"] } }
+            }
 		},
-    { $match: { max_kpa: { $gt: 0 } } },
-    { $project: { _id: 1, average_kpa_auto : 1, max_kpa_auto: 1, average_kpa: 1, max_kpa: 1 } },
-		{ $sort: { average_kpa: -1, max_kpa: -1} },
+    { $match: { attempts: { $gt: 0 } } },
+    { $project: { _id: 1, pct: { $divide: ["$successes", "$attempts"] }, successes: 1, attempts: 1, per_game: 1 } },
+		{ $sort: { per_game: -1, pct: -1, attempts: -1} },
 		{ $limit: 32 }
 	], function (err, doc) {
     res.send(JSON.stringify(doc));

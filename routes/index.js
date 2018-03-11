@@ -5,7 +5,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  //Might be needed to delete!
   res.header('Keep-Alive', 'timeout=15, max=100');
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -15,11 +14,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get_cycles', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  console.log("called");
   mongo.getCycles(res);
-  console.log("called");
-});
+  });
 
 router.get('/get_cycle/:id', function(req, res, next) {
   mongo.getCycle(res, req.params.id);
@@ -34,15 +30,11 @@ router.get('/unhide_cycle/:id', function(req, res, next) {
 });
 
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  var id = req.params.id; 
-  mongo.getCycleByTeam(res, id, false);
+  mongo.getCycleByTeam(res, req.params.id, false);
 });
 
 router.get('/get_all_cycles_by_team/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  var id = req.params.id; 
-  mongo.getCycleByTeam(res, id, true);
+  mongo.getCycleByTeam(res, req.params.id, true);
 });
 
 router.get('/get_all_teams', function(req, res, next) {
@@ -50,59 +42,32 @@ router.get('/get_all_teams', function(req, res, next) {
 });
 
 router.get('/get_all_matches', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json'); 
-  console.log("called");
   mongo.getAllMatches(res);
-  console.log("called");
 });
 
 router.get('/get_cycles_by_match/:id', function(req, res, next) {
-  //res.setHeader('Content-Type', 'application/json');
-  var id = req.params.id;   
-  console.log("called");
-  mongo.getCycleByMatch(res, id);
-  console.log("called");
+  mongo.getCycleByMatch(res, req.params.id);
 });
 
 router.post('/new_cycle',function(req,res,next){
   var cycle = req.param('allData');  
   mongo.newCycle(cycle);
-  res.send("Success!");
 });
 
 router.get('/eventname', function(req, res, next) {
   res.send(process.env.EVENTNAME);
 });
 
-router.post('/check_pass', function(req, res, next){
-  console.log("try!");
-  var pass = req.param('password');
-  console.log("pass = " + pass)
-  var msg = "";
-  res.setHeader('Content-Type', 'application/json');
-  if(pass === "pass"){
-    msg="OMRI_GRANTED";
-  }
-  else{
-      msg = "failed!!";
-  }
-  res.send(JSON.stringify({ message : msg }));
-});
-
-router.get('/get_top_climbers', function(req, res, next) {
-  mongo.getTopClimbers(res);
+router.get('/top_exchange', function(req, res, next) {
+  mongo.getTopExchange(res);
 })
 
-router.get('/get_top_planters', function(req, res, next) {
-  mongo.getTopPlanters(res);
+router.get('/top_switch', function(req, res, next) {
+  mongo.getTopSwitch(res);
 })
 
-router.get('/get_top_auto_planters', function(req, res, next) {
-  mongo.getTopAutoPlanters(res);
-})
-
-router.get('/get_top_shooters', function(req, res, next) {
-  mongo.getTopShooters(res);
+router.get('/top_scale', function(req, res, next) {
+  mongo.getTopScale(res);
 })
 
 module.exports = router;
