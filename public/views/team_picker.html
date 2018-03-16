@@ -3,7 +3,7 @@
 </div>
 
 <div class="team_picker_dialogues">
-<div ng-init="get_matches();">
+<div ng-init="pull_matches_from_tba();">
     <label style="display: inline;">Match (</label>
     <label for="customMatch" style="display: inline; padding-left: 0px">Custom?</label>
     <input type="checkbox" id="customMatch" ng-model="customMatch">
@@ -11,9 +11,9 @@
 
     
 <md-input-container>
-    <md-select ng-model="matchSelected" ng-change="teams=get_teams(matchSelected);" ng-show="!customMatch">
+    <md-select ng-model="cycle_data.match" ng-change="teams=get_teams_in_match(cycle_data.match);" ng-show="!customMatch">
         <md-select-header>
-            <input ng-model="matches_filter" type="text" class="form-control input-lg" ng-keydown = "$event.stopPropagation()">
+            <input ng-model="matches_filter" type="text" class="form-control input-lg" ng-keydown="$event.stopPropagation()">
         </md-select-header>
         <md-optgroup>
             <md-option ng-repeat="match in matches | filter: {name:matches_filter}" value="{{match.name}}">{{match.name}}</md-option>
@@ -21,19 +21,19 @@
     </md-select>
 </md-input-container>
 
-    <input ng-model="matchSelected" ng-show="customMatch" ng-change="teams=get_teams(matchSelected);" style="width: 60%;" capitalize/>
+    <input ng-model="cycle_data.match" ng-show="customMatch" ng-change="teams=get_teams_in_match(cycle_data.match);" style="width: 60%;" capitalize/>
 </div>
 
-<div ng-show="matchSelected">
+<div ng-show="cycle_data.match">
     <label>Team</label>
-    <md-select ng-model="teamSelected" ng-show="!customMatch">
+    <md-select ng-model="cycle_data.team" ng-show="!customMatch">
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
-    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="teamSelected" ng-show="customMatch" style="width: 60%;" maxlength="4" />
+    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="cycle_data.team" ng-show="customMatch" style="width: 60%;" maxlength="4" />
 </div>
 
 <div class="center">
-    <button ng-click="submit_team_match(teamSelected, matchSelected);" ng-show="matchSelected && teamSelected">Continue</button>
+    <button ui-sref="autonomous" ng-show="cycle_data.match && cycle_data.team">Continue</button>
 </div>
 </div>
 

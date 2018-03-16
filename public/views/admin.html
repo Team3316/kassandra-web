@@ -2,7 +2,7 @@
     <h3>Admin</h3>
 </div>
 
-<md-input-container ng-init="pull_teams()">
+<md-input-container>
     <label>Team</label>
     <md-select ng-model="db_team" ng-change="team_selected(db_team)" class="teams">
         <md-option ng-repeat="team in db_teams" value="{{team}}">{{team}}</md-option>
@@ -11,7 +11,7 @@
 <div class="center" ng-init="db_team && team_selected(db_team);">
     <button class="btn btn-warning btn-lg" onclick="get_overall();" ng-show="db_team">OVERALL</button><br>
     <div class="btn-group-vertical">
-    <button class="btn btn-primary btn-lg" onclick="get_single_match(this);" ng-repeat="match in _match" value="{{match._id}}" ng-style="set_color(match)">{{match.match}}</button>
+    <button class="btn btn-primary btn-lg" onclick="get_single_match(this);" ng-repeat="cycle in team_cycles" value="{{cycle._id}}" ng-style="set_color(cycle)">{{cycle.match}}</button>
     </div>
 </div>
 

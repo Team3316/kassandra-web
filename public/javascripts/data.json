@@ -2,29 +2,25 @@
     "match":"",
     "team":0,
     "auto":{
-        "triedAndFailed":false,
-        "crosedBaseline":false,
-        "estimatedPoints":0,
-        "succeessfullyPlantedGears":0,
-        "missedGears":0,
-        "droppedGears":0,
-        "position":0
+        "auto_run":false,
+        "switch":0,
+        "switch_fail":0,
+        "scale":0,
+        "scale_fail":0
     },
     "teleop":{
-        "gearsCollectedFromHP":false,
-        "gearsCollectedFromFloor":false,
-        "plantedGears":0,
-        "droppedGears":0,
-        "fuelCollectedFromFloor":false,
-        "fuelCollectedFromHP":false,
-        "fuelCollectedFromHopper": false,
-        "estimatedPoints":0,
-        "climbingStatus":0
+        "collect_floor":false,
+        "collect_portal":false,
+        "collect_pyramid":false,
+        "exchange":0,
+        "exchange_fail":0,
+        "switch":0,
+        "switch_fail":0,
+        "scale":0,
+        "scale_fail":0,
+        "climb":0,
+        "partner_climb":0
     },
-    "defense":{
-        "defenseOn":0,
-        "defenseComments":""
-    },
-    "generalComments":""
-
+    "tech_foul":false,
+    "comments":""
 }

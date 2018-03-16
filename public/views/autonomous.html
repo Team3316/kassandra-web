@@ -1,39 +1,25 @@
 <button class="leftArrow" ui-sref="team_picker"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header" ng-class="get_team_style_for_match();">{{get_match_string()}}</div>
+<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
 <div class="center page-title">
     <h3>Autonomous</h3>
 </div>
-<div class="content" ng-init="initAuto()">
+<div class="content">
+    <label><input type="checkbox" ng-model="cycle_data.auto.auto_run" value="0" />Auto Run</label>
 
-    <p class="comments-types">Position</p>
-    <label><input type="radio" name="position" ng-model="position" value="0" /> None</label>
-    <label><input type="radio" name="position" ng-model="position" value="1" /> Left</label>
-    <label><input type="radio" name="position" ng-model="position" value="2" /> Middle</label>
-    <label><input type="radio" name="position" ng-model="position" value="3" /> Right</label>
-
-    <p class="comments-types">Movement</p>
-    <label><input type="radio" name="movement" ng-model="movement" value="0" /> Nothing</label>
-    <label><input type="radio" name="movement" ng-model="movement" value="1" /> Failed</label>
-    <label><input type="radio" name="movement" ng-model="movement" value="2" /> Crossed</label>
-
-    <p class="comments-types"><img src="../images/Fuel.png" class="image_icon"> Fuel</p>
-
-    <label>Fuel Points: {{estimatedPoints}}<label><br>
+    <p class="comments-types">Power Cubes</p>
+    <label>Switch: {{cycle_data.auto.switch}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="estimatedPoints=inc_counter(estimatedPoints, 1)">+1</button>
-            <button class="btn btn-success btn-lg" ng-click="estimatedPoints=inc_counter(estimatedPoints, 5)">+5</button>
-            <button class="btn btn-danger btn-lg" ng-click="estimatedPoints=dec_counter(estimatedPoints, 5)">−5</button>
-            <button class="btn btn-danger btn-lg" ng-click="estimatedPoints=dec_counter(estimatedPoints, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycle_data.auto.switch=inc_counter(cycle_data.auto.switch, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycle_data.auto.switch=dec_counter(cycle_data.auto.switch, 1)">−1</button>
     </div>
-
-    <p class="comments-types"><img src="../images/Gear.png" class=image_icon> Gears</p>
-    <label><input type="radio" name="gears" ng-model="gears" value="0" /> Nothing</label>
-    <label><input type="radio" name="gears" ng-model="gears" value="1" /> Missed</label>
-    <label><input type="radio" name="gears" ng-model="gears" value="2" /> Dropped</label>
-    <label><input type="radio" name="gears" ng-model="gears" value="3" /> Planted</label>
-
+    
+    <label>Scale: {{cycle_data.auto.scale}}<label><br>
+    <div class="btn-group">
+            <button class="btn btn-success btn-lg" ng-click="cycle_data.auto.scale=inc_counter(cycle_data.auto.scale, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycle_data.auto.scale=dec_counter(cycle_data.auto.scale, 1)">−1</button>
+    </div>
 </div>
 
 <div class="center">
-    <button ng-click="updateAuto(movement,estimatedPoints,gears,position); " ui-sref="teleop" autoscroll="false">Continue</button>
+    <button ui-sref="teleop" autoscroll="false">Continue</button>
 </div>

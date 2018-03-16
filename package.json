@@ -1,6 +1,6 @@
 {
   "name": "myapp",
-   "keywords": [
+  "keywords": [
     "express",
     "mongoose",
     "mongodb",
@@ -26,7 +26,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "^1.0.0",
-    "express": "~4.14.0",
+    "express": "^4.14.1",
     "express-session": "^1.7.6",
     "jade": "~1.11.0",
     "jquery": "^3.1.1",

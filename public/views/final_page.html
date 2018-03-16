@@ -1,24 +1,22 @@
-<button class="leftArrow" ui-sref="defense" ng-click="update_final(generalComments)" ng-init="initFinal()"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header" ng-class="get_team_style_for_match();">{{get_match_string()}}</div>
+<button class="leftArrow" ui-sref="teleop"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
 <div class="center page-title">
     <h3>Comments</h3>
 </div>
 <div class = "text-comment">
-    <p class = "comments-types">Additional Comments</p>
-    <textarea class="form-control" rows="5" name="FinalComments" ng-model="generalComments"></textarea>
-    <br>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Bad Driver')">Bad Driver</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Bad Pilot')">Bad Pilot</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'HP Foul')">HP Foul</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Stopped Working')">Stopped Working</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Slow Collection')">Slow Collection</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Slow Plant')">Slow Plant</button>
-    <button class="btn btn-info commentButton" ng-click="generalComments = concat_comment(generalComments, 'Slow Climb')">Slow Climb</button>
-
-    <div class = "empty"></div>
+    <label><input type="checkbox" value="0" ng-model="cycle_data.tech_foul" />Commited a Tech Foul</label>
+    <p class = "comments-types">Comments</p>
+    <textarea class="form-control" rows="5" ng-model="cycle_data.comments"></textarea>
+    <br />
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Bad Driver')">Bad Driver</button>
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Null Zone Foul')">Null Zone Foul</button>
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Launching Foul')">Launching Foul</button>
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Stopped Working')">Stopped Working</button>
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Slow Collection')">Slow Collection</button>
+    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Slow Climb')">Slow Climb</button>
 
 <div class="center">
-    <button ng-click="update_final(generalComments); finalButton()">Submit <span class="glyphicon glyphicon-ok"></span></button>
+    <button ng-click="submit_data(cycle_data)">Submit<span class="glyphicon glyphicon-ok"></span></button>
 </div>
 
 </div>

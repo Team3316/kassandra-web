@@ -36,7 +36,10 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state({
         name: 'admin',
         url: '/admin',
-        templateUrl: '/views/admin.html'
+        templateUrl: '/views/admin.html',
+        controller: function($scope, $stateParams) {
+            $scope.pull_teams_from_db();
+        }
     });
 
     $stateProvider.state({

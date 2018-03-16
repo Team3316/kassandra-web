@@ -42,7 +42,6 @@ var cycle = new mongoose.Schema({
     tech_foul:Boolean,
     comments:String,
     is_visible:{type:Boolean, default:true}
-
 },{collection:DB_TABLE}); 
 
 var Cycle = mongoose.model("Cycle", cycle);
@@ -108,7 +107,7 @@ exports.unhideCycle = function (res, id){
   });
 };
 
-exports.getCycleByTeam = function (res, id, get_all){
+exports.getCyclesByTeam = function (res, id, get_all){
   if (get_all) {
     query = {team: id};
   } else {

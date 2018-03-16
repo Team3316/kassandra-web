@@ -210,14 +210,7 @@ input[type="number"]{
   font-weight: bold;
   padding: 0.5em;
   font-size: 1em;
-}
-
-.header-blue{
-  background-color: #3498db;
-}
-
-.header-red{
-  background-color: #e74c3c;
+  background-color: #333;
 }
 
 .page-title{

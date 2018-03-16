@@ -30,11 +30,11 @@ router.get('/unhide_cycle/:id', function(req, res, next) {
 });
 
 router.get('/get_cycles_by_team/:id', function(req, res, next) {
-  mongo.getCycleByTeam(res, req.params.id, false);
+  mongo.getCyclesByTeam(res, req.params.id, false);
 });
 
 router.get('/get_all_cycles_by_team/:id', function(req, res, next) {
-  mongo.getCycleByTeam(res, req.params.id, true);
+  mongo.getCyclesByTeam(res, req.params.id, true);
 });
 
 router.get('/get_all_teams', function(req, res, next) {
@@ -50,7 +50,7 @@ router.get('/get_cycles_by_match/:id', function(req, res, next) {
 });
 
 router.post('/new_cycle',function(req,res,next){
-  var cycle = req.param('allData');  
+  var cycle = req.param('cycle_data');  
   mongo.newCycle(cycle);
 });
 

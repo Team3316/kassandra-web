@@ -1,49 +1,44 @@
-<button class="leftArrow" ui-sref="autonomous" ng-click="updateTeleop(gearsCollectedFromHP2,
-    gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, droppedGears2, fuelCollectedFromFloor2,
-    fuelCollectedFromHP2,estimatedPoints2,climb);"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header" ng-class="get_team_style_for_match();">{{get_match_string()}}</div>
-
+<button class="leftArrow" ui-sref="autonomous"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
 <div class="center page-title">
     <h3>Teleoperated</h3>
 </div>
-<div class="content" ng-init="initTeleop();">
-
-    <p class="comments-types"><img src="../images/Fuel.png" class="image_icon"> Fuel</p>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHopper2" /> Hoppers</label>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromFloor2" /> Floor</label>
-    <label><input type="checkbox" value="0" ng-model="fuelCollectedFromHP2"/> HP</label>
-
-    <label>Fuel Points: {{estimatedPoints2}}<label><br />
+<div class="content">
+    <p class="comments-types">Collection</p>
+    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_floor" />Floor</label>
+    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_pyramid" />Pyramid</label>
+    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_portal" />Portal</label>
+    
+    <p class="comments-types">Power Cubes</p>
+    <label>Exchange: {{cycle_data.teleop.exchange}}<label><br>
     <div class="btn-group">
-        <button class = "btn btn-success btn-lg" ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 1)">+1</button>
-        <button class = "btn btn-success btn-lg" ng-click="estimatedPoints2=inc_counter(estimatedPoints2, 5)">+5</button>
-        <button class = "btn btn-danger btn-lg" ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 5)">−5</button>
-        <button class = "btn btn-danger btn-lg" ng-click="estimatedPoints2=dec_counter(estimatedPoints2, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.exchange=inc_counter(cycle_data.teleop.exchange, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.exchange=dec_counter(cycle_data.teleop.exchange, 1)">−1</button>
+    </div>
+    
+    <label>Switch: {{cycle_data.teleop.switch}}<label><br>
+    <div class="btn-group">
+            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.switch=inc_counter(cycle_data.teleop.switch, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.switch=dec_counter(cycle_data.teleop.switch, 1)">−1</button>
+    </div>
+    
+    <label>Scale: {{cycle_data.teleop.scale}}<label><br>
+    <div class="btn-group">
+            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.scale=inc_counter(cycle_data.teleop.scale, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.scale=dec_counter(cycle_data.teleop.scale, 1)">−1</button>
     </div>
 
-    <p class="comments-types"><img src="../images/Gear.png" class="image_icon"> Gears</p>
-    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromFloor2"/> Floor</label>
-    <label><input type="checkbox" value="0" ng-model="gearsCollectedFromHP2"/> HP</label>
-    <label>Planted: {{plantedGears2}} </label>
-    <div class="btn-group">
-        <button class = "btn btn-success btn-lg" ng-click="plantedGears2=inc_counter(plantedGears2, 1)">+</button>
-        <button class = "btn btn-danger btn-lg" ng-click="plantedGears2=dec_counter(plantedGears2, 1)">−</button>
-    </div>
-    <label>Dropped: {{droppedGears2}} </label>
-    <div class="btn-group">
-        <button class = "btn btn-success btn-lg" ng-click="droppedGears2=inc_counter(droppedGears2, 1)">+</button>
-        <button class = "btn btn-danger btn-lg" ng-click="droppedGears2=dec_counter(droppedGears2, 1)">−</button>
-    </div>
-
-    <p class="comments-types"><img src="../images/Touchpad.png" class="image_icon"> Climbing</p>
-    <label><input type="radio" name="climb" ng-model="climb" value="0" /> Nothing</label>
-    <label><input type="radio" name="climb" ng-model="climb" value="1" /> Failed</label>
-    <label><input type="radio" name="climb" ng-model="climb" value="2" /> Climbed</label>
-
+    <p class="comments-types">Climb</p>
+    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="0" />Nothing</label>
+    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="1" />Failed</label>
+    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="2" />Climbed</label>
+    
+    <p class="comments-types">Partner Climb</p>
+    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="0" />Nothing</label>
+    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="1" />Failed</label>
+    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="2" />Climbed</label>
 </div>
 
 <div class="center">
-    <button ui-sref="defense" ng-click="updateTeleop(gearsCollectedFromHP2,
-    gearsCollectedFromFloor2, fuelCollectedFromHopper2, plantedGears2, droppedGears2, fuelCollectedFromFloor2,
-    fuelCollectedFromHP2,estimatedPoints2,climb);">Continue</button>
+    <button ui-sref="final_page" autoscroll="false">Continue</button>
 </div>

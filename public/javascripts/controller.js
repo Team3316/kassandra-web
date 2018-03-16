@@ -1,134 +1,171 @@
 var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
 app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, $state) {
-
-    $scope.match_team_dictionary = {};
-    $scope.matches = [];
-    $scope.teams = [];
-    $scope.opposingTeams = [];
-
-    $http.get('javascripts/data.json').then(function (response) {
-        $scope.allData = response.data;
-    }, function (err) {
-        console.log(err);
-    });
-
-    $http.get('/eventname').then(function (response) {
-        $scope.eventname = response.data;
-    })
-
-    //headers for api calls
-    var config = {
-        headers: {
-            'Content-Type': 'application/json; charset="utf-8"',
-            'X-TBA-App-Id': '3316:Kassandra:2.0'
-        }
-    };
-
     
-    function clear_all() {
-        $scope.allData.match = "";
-        $scope.allData.team = 0;
-        $scope.allData.auto.triedAndFailed = false;
-        $scope.allData.auto.crosedBaseline = false;
-        $scope.allData.auto.estimatedPoints = 0;
-        $scope.allData.auto.succeessfullyPlantedGears = 0;
-        $scope.allData.auto.droppedGears = 0;
-        $scope.allData.auto.missedGears = 0;
-        $scope.allData.auto.position = 0;
-        $scope.allData.teleop.gearsCollectedFromHP = false;
-        $scope.allData.teleop.gearsCollectedFromFloor = false;
-        $scope.allData.teleop.plantedGears = 0;
-        $scope.allData.teleop.fuelCollectedFromHopper = false;
-        $scope.allData.teleop.droppedGears = 0;
-        $scope.allData.teleop.fuelCollectedFromFloor = false;
-        $scope.allData.teleop.fuelCollectedFromHP = false;
-        $scope.allData.teleop.estimatedPoints = 0;
-        $scope.allData.teleop.climbingStatus = 0;
-        $scope.allData.defense.defenseComments = "";
-        $scope.allData.defense.defenseOn = 0;
-        $scope.allData.generalComments = "";
+    /*************************************************************************
+     ** Util functions                                                      **
+     *************************************************************************/
+     
+    function format_team(team_str) {
+        // Format used by TBA: frc3316 --> 3316
+        return team_str.replace('frc', '');
     }
-
-    $scope.format_team = function (team_str) {
-       return team_str.replace('frc', '');
+    
+    function format_match(element, index, arr) {
+        var match = element.key.split("_");
+        element.name = match[match.length - 1].toUpperCase();
+        element.alliances.red.teams = element.alliances.red.teams.map(format_team);
+        element.alliances.blue.teams = element.alliances.blue.teams.map(format_team);
     }
+    
+    function sort_by_time(a, b) {
+        if (a.time < b.time) return -1;
+        if (a.time > b.time) return 1;
+        return 0;
+    }
+    
+    function is_empty_match (item) {
+        return !(item.match === "");
+    }
+    
+    function sort_parse_int(a, b) {
+        a_int = parseInt(a, 10);
+        b_int = parseInt(b, 10);
 
-    //these matches are a test only
-    $scope.get_matches = function () { 
-        var url = "https://www.thebluealliance.com/api/v2/event/2017" + $scope.eventname + "/matches";
-        $http.get(url, config).then(function (data) {
-            var jdata = data[Object.keys(data)[0]];
-            jdata.sort(function (a, b) {
-                if (a.time < b.time) return -1;
-                if (a.time > b.time) return 1;
-                return 0;
+        return a_int - b_int;
+    }
+    
+    /*************************************************************************
+     ** Data pulling into local variables                                   **
+     *************************************************************************/
+    
+    // Map from match number to teams in DB
+    $scope.match_team_dictionary = {};
+    $scope.pull_match_team = function () {
+        $http.get('/get_cycles').then(function (data) {
+                data.data.forEach(function (element) {
+                    $scope.match_team_dictionary[element.match]=[];
+                });
+                data.data.forEach(function (element) {
+                    $scope.match_team_dictionary[element.match].push(element.team);
+                });
             });
-            jdata.forEach(function (element, index, arr) {
-                var match = element.key.split("_");
-                element.name = match[match.length - 1].toUpperCase();
-                element.alliances.red.teams = element.alliances.red.teams.map($scope.format_team);
-                element.alliances.blue.teams = element.alliances.blue.teams.map($scope.format_team);
-            }, this);
-            $scope.matches = jdata.filter($scope.emptyMatch);
+    }
+    
+    // clear cycle data stored.
+    $scope.cycle_data = {};
+    function clear_all() {
+        $http.get('javascripts/data.json').then(function (response) {
+            $scope.cycle_data = response.data;
+        }, function (err) {
+            $scope.cycle_data = {};
+            console.log(err);
         });
     }
+    clear_all();
+    
+    // pulls all matches from TBA into $scope.matches
+    $scope.matches = [];
+    $scope.pull_matches_from_tba = function () {
+        // Fetch current event name from server
+        $http.get('/eventname').then(function (response) {
+            var url = "https://www.thebluealliance.com/api/v2/event/2018" + response.data + "/matches";
+            
+            // Headers required by TBA API
+            var config = {
+                headers: {
+                    'Content-Type': 'application/json; charset="utf-8"',
+                    'X-TBA-App-Id': '3316:Kassandra:3.0'
+                }
+            };
+            
+            // Fetch matches of given event name from TBA
+            $http.get(url, config).then(function (response) {
+                var data = response[Object.keys(response)[0]];
+                data.sort(sort_by_time);
+                data.forEach(format_match);
+                $scope.matches = data.filter(is_empty_match);
+            }, function (err) {console.log(err)});
+        }, function (err) {console.log(err)});
+    }    
 
-    //gets teams of the current match
-    $scope.get_teams = function (match) {
+    // gets teams of the given match from $scope.matches
+    $scope.get_teams_in_match = function (match) {
         var match = $scope.matches.find(function(m) { return m.name == match });
         if (!match) return [];
         return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
-
-       $scope.get_opposing_teams = function (team, match) {
-        var teams = $scope.get_teams(match);
-        if (!teams) return [];
-
-        switch(teams.findIndex(function(t) { return t == team })) {
-            case -1: // Team not in teams
-                return teams.slice();
-            case 0: // Team is on Blue aliance
-            case 1:
-            case 2:
-                return teams.slice(3, 6);
-            case 3: // Team is on Red aliance
-            case 4:
-            case 5:
-                return teams.slice(0, 3);
-        }
+    
+    
+    
+    $scope.pull_top_exchange = function() {
+        $http.get('/top_exchange').then(function (data) {
+            $scope.top_exchange = data.data;
+        })
+    }
+    
+    $scope.pull_top_switch = function() {
+        $http.get('/top_exchange').then(function (data) {
+            $scope.top_exchange = data.data;
+        })
+    }
+    
+    $scope.pull_top_scale = function() {
+        $http.get('/top_exchange').then(function (data) {
+            $scope.top_exchange = data.data;
+        })
     }
 
-    $scope.submit_team_match = function (team, match) {
-        clear_all();
-        if (team != undefined && match != undefined) {
-            $location.url('/autonomous/');
-            $scope.allData.team = team;
-            $scope.allData.match = match;
-        }
+    /*************************************************************************
+     ** Data submiting functions                                            **
+     *************************************************************************/
+    // submit data
+    $scope.submit_data = function (cycle_data) {
+        $http.post('/new_cycle', {'cycle_data': cycle_data})
+             .then(function (response) {clear_all(); $location.url('/team_picker');},
+                   function (err) {console.log(err)});
+    }
+    
+    $scope.dec_counter = function(number, step) { 
+        return Math.max(0, number - step);
     }
 
-    $scope.pull_matches = function () {
-        $http.get("/get_all_matches").then(function (data) {
-            $scope.db_matches = data.data;
-        });
+    $scope.inc_counter = function(number, step) {
+        return number + step;
     }
 
-    $scope.pull_teams = function () {
+    $scope.concat_comment = function(main, comment) {
+        if (!main) return comment;
+        else return main.concat(', ', comment);
+    }
+
+
+    /*************************************************************************
+     ** Admin page                                                          **
+     *************************************************************************/
+    // pulls teams from DB to $scope.db_teams
+    $scope.pull_teams_from_db = function () {
         $http.get("/get_all_teams").then(function (data) {
             $scope.db_teams = data.data;
-            $scope.db_teams.sort(function(a,b) {
-                a_int = parseInt(a, 10);
-                b_int = parseInt(b, 10);
-
-                return a_int - b_int;
-            });
+            $scope.db_teams.sort(sort_parse_int);
         });
     }
-
+    
     $scope.team_selected = function (team) {
         $scope.db_team = team;
-        $http.get("/get_all_cycles_by_team/" +team).then(function(data){
-                $scope._match = data.data;
+        $http.get("/get_all_cycles_by_team/" + team).then(function(data){
+            $scope.team_cycles = data.data;
+        });
+    }
+    
+    window.get_single_match = function (btn) {
+        $location.path('/report/' + btn.value);
+        $scope.$apply();
+    }
+
+    window.get_overall = function () {
+        var team = parseInt($scope.db_team);
+        $http.get('/get_cycles_by_team/' + team).then(function (data) {
+            $state.go('overall_report', { obj: data.data });
         });
     }
 
@@ -140,6 +177,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         }
     }
 
+    /*************************************************************************
+     ** Report page                                                         **
+     *************************************************************************/
     $scope.hideCycle = function (id) {
         $http.get("/hide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
@@ -155,259 +195,11 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             }
         });
     }
-
-    $scope.updateTeam_picker = function (t, m) {
-        $scope.allData.team = t;
-        $scope.allData.match = m;
-    }
-
-    $scope.initAuto = function () {
-        $scope.movement = "0";
-        if ($scope.allData.auto.triedAndFailed) {
-            $scope.movement = "1";
-        } else if ($scope.allData.auto.crosedBaseline) {
-            $scope.movement = "2";
-        }
-
-        $scope.estimatedPoints = $scope.allData.auto.estimatedPoints;
-
-        $scope.gears = "0";
-        if ($scope.allData.auto.missedGears) {
-            $scope.gears = "1";
-        } else if ($scope.allData.auto.droppedGears) {
-            $scope.gears = "2";
-        } else if ($scope.allData.auto.succeessfullyPlantedGears) {
-            $scope.gears = "3";
-        }
-
-        $scope.position = $scope.allData.auto.position.toString();
-    }
-
-    $scope.initTeleop = function () {
-
-        $scope.gearsCollectedFromHP2 = $scope.allData.teleop.gearsCollectedFromHP;
-        $scope.gearsCollectedFromFloor2 = $scope.allData.teleop.gearsCollectedFromFloor;
-        $scope.plantedGears2 = $scope.allData.teleop.plantedGears;
-        $scope.droppedGears2 = $scope.allData.teleop.droppedGears;
-        $scope.fuelCollectedFromFloor2 = $scope.allData.teleop.fuelCollectedFromFloor;
-        $scope.fuelCollectedFromHP2 = $scope.allData.teleop.fuelCollectedFromHP;
-        $scope.fuelCollectedFromHopper2 = $scope.allData.teleop.fuelCollectedFromHopper;
-        $scope.estimatedPoints2 = $scope.allData.teleop.estimatedPoints;
-        $scope.climb = $scope.allData.teleop.climbingStatus.toString();
-    }
-
-    $scope.initDefense = function () {
-        $scope.defenseComments = $scope.allData.defense.defenseComments;
-        $scope.defenseOn = $scope.allData.defense.defenseOn;
-    }
-
-    $scope.initFinal = function () {
-        $scope.generalComments = $scope.allData.generalComments;
-    }
-
-    $scope.updateAuto = function (movement, estimatedPoints, gears, position) {
-        for (var i = 0, j = arguments.length; i < j; i++) {
-            if (arguments[i] == undefined || arguments[i] == "") {
-                arguments[i] = 0;
-            }
-        }
-        $scope.allData.auto.triedAndFailed = (movement == 1);
-        $scope.allData.auto.crosedBaseline = (movement == 2);
-        $scope.allData.auto.estimatedPoints = estimatedPoints;
-        $scope.allData.auto.missedGears = (gears == 1) ? 1 : 0;
-        $scope.allData.auto.droppedGears = (gears == 2) ? 1 : 0;
-        $scope.allData.auto.succeessfullyPlantedGears = (gears == 3) ? 1 : 0;
-        $scope.allData.auto.position = position;
-    }
-
-    $scope.updateTeleop = function (gearsCollectedFromHP2, gearsCollectedFromFloor2, fuelCollectedFromHopper2,
-        plantedGears2, droppedGears2, fuelCollectedFromFloor2, fuelCollectedFromHP2, estimatedPoints2, climb) {
-        for (var i = 0, j = arguments.length; i < j; i++) {
-            if (arguments[i] == undefined || arguments[i] == "") {
-                arguments[i] = 0;
-            }
-        }
-        $scope.allData.teleop.gearsCollectedFromHP = gearsCollectedFromHP2;
-        $scope.allData.teleop.gearsCollectedFromFloor = gearsCollectedFromFloor2;
-        $scope.allData.teleop.plantedGears = plantedGears2;
-        $scope.allData.teleop.droppedGears = droppedGears2;
-        $scope.allData.teleop.fuelCollectedFromFloor = fuelCollectedFromFloor2;
-        $scope.allData.teleop.fuelCollectedFromHopper = fuelCollectedFromHopper2;
-        $scope.allData.teleop.fuelCollectedFromHP = fuelCollectedFromHP2
-        $scope.allData.teleop.estimatedPoints = estimatedPoints2;
-        $scope.allData.teleop.climbingStatus = climb;
-    }
-
-    $scope.updateDefense = function (defenseOn, updateDefense) {
-        $scope.allData.defense.defenseComments = updateDefense;
-        $scope.allData.defense.defenseOn = defenseOn;
-    }
-
-    window.get_single_match = function (btn) {
-        $location.path('/report/' + btn.value);
-        $scope.$apply();
-    }
-
-    window.get_overall = function () {
-        var team = parseInt($scope.db_team);
-        $http.get('/get_cycles_by_team/' + team).then(function (data) {
-            $state.go('overall_report', { obj: data.data });
-        });
-    }
-
-    $scope.update_final = function (generalComments) {
-        if (generalComments == "" || generalComments == null || generalComments == undefined) { generalComments = ""; }
-        $scope.allData.generalComments = generalComments;
-    }
-
-    $scope.initFinal = function () {
-        $scope.generalComments = $scope.allData.generalComments;
-    }
-
-    $scope.finalButton = function () {
-        $http.post('/new_cycle', { 'allData': $scope.allData }).then(function (data) {
-            $http.get('javascripts/data.json').then(function (response) {
-                $scope.allData = response.data;
-                $location.url('/team_picker');
-                clear_all();
-            }, function (err) {
-                console.log(err);
-            });
-        }, function (err) {
-            console.log(err);
-        });
-    }
-
-    $scope.make_call = function (id) {
-        $http.get("/get_cycle/" + id).then(function (data) {
-            $scope.id = data.data[0]._id;
-            $scope.match = data.data[0].match;
-            $scope.team = data.data[0].team;
-            $scope.tf = data.data[0].auto.triedAndFailed;
-            $scope.cb = data.data[0].auto.crosedBaseline;
-            $scope.spg = data.data[0].auto.succeessfullyPlantedGears;
-            $scope.dg = data.data[0].auto.droppedGears;
-            $scope.mg = data.data[0].auto.missedGears;
-            $scope.pos = data.data[0].auto.position;
-            $scope.ep = data.data[0].auto.estimatedPoints;
-            $scope.tgcfh = data.data[0].teleop.gearsCollectedFromHP;
-            $scope.tgcff = data.data[0].teleop.gearsCollectedFromFloor;
-            $scope.tspg = data.data[0].teleop.plantedGears;
-            $scope.tdg = data.data[0].teleop.droppedGears;
-            $scope.tfcff = data.data[0].teleop.fuelCollectedFromFloor;
-            $scope.tfcfh = data.data[0].teleop.fuelCollectedFromHP;
-            $scope.tfcfho = data.data[0].teleop.fuelCollectedFromHopper;
-            $scope.tep = data.data[0].teleop.estimatedPoints;
-            
-            $scope.tcs = "Didn't try";
-            if (data.data[0].teleop.climbingStatus == 1) {
-                $scope.tcs = "Tried and Failed";
-            } else if (data.data[0].teleop.climbingStatus == 2) {
-                $scope.tcs = "Successfully";
-            }
-            
-            $scope.ddo = data.data[0].defense.defenseOn;
-            $scope.ddc = data.data[0].defense.defenseComments;
-            $scope.ggc = data.data[0].generalComments;
-            $scope.is_visible = data.data[0].is_visible;
-        });
-    }
-
-    $scope.overall_organize = function (obj) {
-        $scope.team = obj[0].team;
-        $scope.matches = obj;
-        $scope.o_nom = 0;
-        $scope.o_tf = 0;
-        $scope.o_cb = 0;
-        $scope.o_spg = 0;
-        $scope.o_dg = 0;
-        $scope.o_mg = 0;
-        $scope.o_npos = 0;
-        $scope.o_lpos = 0;
-        $scope.o_mpos = 0;
-        $scope.o_rpos = 0;
-        $scope.o_ep = 0;
-        $scope.o_tgcfh = 0;
-        $scope.o_tgcff = 0;
-        $scope.o_tspg = 0;
-        $scope.o_tdg = 0;
-        $scope.o_tfcff = 0;
-        $scope.o_tfcfh = 0; 
-        $scope.o_tfcfho = 0; 
-        $scope.o_tep = 0;
-        $scope.o_tctaf = 0;
-        $scope.o_tcs = 0;
-        $scope.o_dc = 0;
-        $scope.o_ddo = [];
-        $scope.o_ddc = [];
-        $scope.o_ggc = [];
-        $scope.o_nom = 0;
-        obj.forEach(function (element) {
-            if (element.is_visible) {
-                $scope.o_nom++;
-                $scope.o_tf += element.auto.triedAndFailed; //auto tf
-                $scope.o_cb += element.auto.crosedBaseline; //auto cb
-                $scope.o_spg += element.auto.succeessfullyPlantedGears; //auto planted gears
-                $scope.o_dg += element.auto.droppedGears; // auto droppedGears
-                $scope.o_mg += element.auto.missedGears; // auto missedGears
-                $scope.o_npos += element.auto.position == 0;
-                $scope.o_lpos = element.auto.position == 1;
-                $scope.o_mpos = element.auto.position == 2;
-                $scope.o_rpos = element.auto.position == 3;
-                $scope.o_ep += element.auto.estimatedPoints; //auto etimated points
-                $scope.o_tgcfh += element.teleop.gearsCollectedFromHP; //teleop gears collected hp
-                $scope.o_tgcff += element.teleop.gearsCollectedFromFloor; //teleop gears collected floor
-                $scope.o_tspg += element.teleop.plantedGears; //teleop planted gears
-                $scope.o_tdg += element.teleop.droppedGears; //teleop droppedGears
-                $scope.o_tfcff += element.teleop.fuelCollectedFromFloor; //teleop collect fuel floor
-                $scope.o_tfcfh += element.teleop.fuelCollectedFromHP; //teleop collect fuel hp
-                $scope.o_tfcfho += element.teleop.fuelCollectedFromHopper; //teleop collect fuel hopper
-                $scope.o_tep += element.teleop.estimatedPoints; //teleop estimated points
-                $scope.o_tctaf += element.teleop.climbingStatus == 1; //climb tried and failed
-                $scope.o_tcs += element.teleop.climbingStatus == 2; //climb success
-                $scope.o_dc += element.teleop.climbingStatus == 0; //didn't try to climb
-                if (element.defense.defenseOn != 0) {
-                    $scope.o_ddo.push(element.match + ": " + element.defense.defenseOn);
-                }
-                if (element.defense.defenseComments != "") {
-                    $scope.o_ddc.push(element.match + ": " + element.defense.defenseComments);
-                }
-                if (element.generalComments != "") {
-                    $scope.o_ggc.push(element.match + ": " + element.generalComments);
-                }
-            }
-        }, this);
-        $scope.tf_cb = $scope.o_tf + $scope.o_cb;
-    }
-
-    $scope.translatePosition = function (pos) {
-        switch (pos){
-            case 0:
-                return "None";
-            case 1:
-                return "Left";
-            case 2:
-                return "Middle";
-            case 3:
-                return "Right";
-        }
-    }
-
-    $scope.insertAuto = function () {
-        return $scope.allData.auto.triedAndFailed;
-    }
-
-    $scope.pull_match_team = function () {
-        $http.get('/get_cycles').then(function (data) {
-                data.data.forEach(function (element) {
-                    $scope.match_team_dictionary[element.match]=[];
-                });
-                data.data.forEach(function (element) {
-                    $scope.match_team_dictionary[element.match].push(element.team);
-                });
-            });
-    }
-
+    
+    /*************************************************************************
+     ** Table page                                                         **
+     *************************************************************************/
+    
     $scope.entry_exists = function (match, team) {
         return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
     }
@@ -425,68 +217,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             return "#ffb3b3"; //red
         }
         return "#ffffb3"; //yellow
-    }
-
-    $scope.emptyDefense = function(item){
-        return !(item.defense.defenseComments === "")
-    }
-
-    $scope.emptyGeneralComments = function(item){
-        return !(item.generalComments === "" || item.generalComments.length <= 0);
-    }    
-
-    $scope.emptyMatch = function(item){
-        return !(item.match === "");
-    }
-
-    $scope.dec_counter = function(number, step) { 
-        return Math.max(0, number - step);
-    }
-
-    $scope.inc_counter = function(number, step) {
-        return number + step;
-    }
-
-    $scope.concat_comment = function(main, comment) {
-        if (!main) return comment;
-        else return main.concat(', ', comment);
-    }
-
-    $scope.get_match_string = function() {
-        return $scope.allData.match + " / " + $scope.allData.team;
-    }
-
-    $scope.get_team_style_for_match = function() {
-        var res = "header-"
-        var teams = $scope.get_teams($scope.allData.match);
-        if (teams.indexOf($scope.allData.team) <= 2)
-            return "header " + res + "blue";
-        else
-            return "header " + res + "red";
-    }
-    
-    $scope.get_top_climbers = function() {
-        $http.get('/get_top_climbers').then(function (data) {
-            $scope.top_climbers = data.data;
-        })
-    }
-
-    $scope.get_top_planters = function() {
-        $http.get('/get_top_planters').then(function (data) {
-            $scope.top_planters = data.data;
-        })
-    }
-
-    $scope.get_top_auto_planters = function() {
-        $http.get('/get_top_auto_planters').then(function (data) {
-            $scope.top_auto_planters = data.data;
-        })
-    }
-
-    $scope.get_top_shooters = function() {
-        $http.get('/get_top_shooters').then(function (data) {
-            $scope.top_shooters = data.data;
-        })
     }
   });
 
