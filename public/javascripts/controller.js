@@ -51,9 +51,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             });
     }
     
-    // clear cycle data stored.
+    // clear cycle data.
     $scope.cycle_data = {};
-    function clear_all() {
+    $scope.clear_all = function () {
         $http.get('javascripts/data.json').then(function (response) {
             $scope.cycle_data = response.data;
         }, function (err) {
@@ -61,7 +61,16 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
             console.log(err);
         });
     }
-    clear_all();
+    
+    // load cycle data from db.
+    $scope.get_cycle = function(id) {
+        $http.get('/get_cycle').then(function (response) {
+            $scope.cycle_data = response.data;
+        }, function (err) {
+            clear_data();
+            console.log(err);
+        });
+    }
     
     // pulls all matches from TBA into $scope.matches
     $scope.matches = [];
@@ -121,7 +130,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     // submit data
     $scope.submit_data = function (cycle_data) {
         $http.post('/new_cycle', {'cycle_data': cycle_data})
-             .then(function (response) {clear_all(); $location.url('/team_picker');},
+             .then(function (response) {$location.url('/team_picker');},
                    function (err) {console.log(err)});
     }
     

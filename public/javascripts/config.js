@@ -6,7 +6,10 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state({
         name: 'team_picker',
         url: '/',
-        templateUrl: '/views/team_picker.html'
+        templateUrl: '/views/team_picker.html',
+        controller: function($scope, $stateParams) {
+            $scope.clear_all();
+        }
     });
 
     $stateProvider.state({
@@ -28,12 +31,6 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     });
 
     $stateProvider.state({
-        name: 'defense',
-        url: '/defense/',
-        templateUrl: '/views/defense.html'
-    });
-
-    $stateProvider.state({
         name: 'admin',
         url: '/admin',
         templateUrl: '/views/admin.html',
@@ -41,38 +38,20 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.pull_teams_from_db();
         }
     });
-
+    
     $stateProvider.state({
         name: 'report',
         url: '/report/:id',
         templateUrl: '/views/report.html',
         controller: function ($scope, $stateParams) {
-            var id = $stateParams.id;
-            $scope.make_call(id);
+            $scope.get_cycle($stateParams.id);
         }
     });
-
-    $stateProvider.state({
-        name: 'overall_report',
-        url: '/overall_report',
-        params: {obj:null},
-        templateUrl: '/views/overall_report.html',
-        controller: function ($scope, $stateParams) {
-            var obj = $stateParams.obj;
-            $scope.overall_organize(obj);
-        }
-    });
-
+    
     $stateProvider.state({
         name: 'table',
         url: '/table',
         templateUrl: '/views/table.html'
-    });
-
-    $stateProvider.state({
-        name: 'top',
-        url: '/top',
-        templateUrl: '/views/top.html',
     });
 
     $urlRouterProvider.otherwise('/');
