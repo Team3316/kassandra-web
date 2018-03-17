@@ -9,6 +9,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         templateUrl: '/views/team_picker.html',
         controller: function($scope, $stateParams) {
             $scope.clear_all();
+            $scope.pull_matches_from_tba();
         }
     });
 
@@ -51,7 +52,11 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider.state({
         name: 'table',
         url: '/table',
-        templateUrl: '/views/table.html'
+        templateUrl: '/views/table.html',
+        controller: function ($scope, $stateParams) {
+            $scope.pull_matches_from_tba();
+            $scope.pull_match_team();
+        }
     });
 
     $urlRouterProvider.otherwise('/');

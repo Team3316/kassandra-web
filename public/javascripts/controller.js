@@ -103,26 +103,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         if (!match) return [];
         return match.alliances.blue.teams.concat(match.alliances.red.teams);
     }
-    
-    
-    
-    $scope.pull_top_exchange = function() {
-        $http.get('/top_exchange').then(function (data) {
-            $scope.top_exchange = data.data;
-        })
-    }
-    
-    $scope.pull_top_switch = function() {
-        $http.get('/top_exchange').then(function (data) {
-            $scope.top_exchange = data.data;
-        })
-    }
-    
-    $scope.pull_top_scale = function() {
-        $http.get('/top_exchange').then(function (data) {
-            $scope.top_exchange = data.data;
-        })
-    }
 
     /*************************************************************************
      ** Data submiting functions                                            **
@@ -160,7 +140,6 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     }
     
     $scope.team_selected = function (team) {
-        $scope.db_team = team;
         $http.get("/get_all_cycles_by_team/" + team).then(function(data){
             $scope.team_cycles = data.data;
         });
@@ -171,10 +150,9 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $scope.$apply();
     }
 
-    window.get_overall = function () {
-        var team = parseInt($scope.db_team);
+    $scope.export_csv = function (team) {
         $http.get('/get_cycles_by_team/' + team).then(function (data) {
-            $state.go('overall_report', { obj: data.data });
+            
         });
     }
 
@@ -216,18 +194,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.team_filtered = function (team, filter_team) {
         return filter_team && team.includes(filter_team);
     }
-
-    $scope.get_color = function (numerator, denominator, lower, upper) {
-        var num = numerator/denominator;
-        if (num > upper) {
-            return "#b3ffb3"; //green
-        }
-        if (num < lower) {
-            return "#ffb3b3"; //red
-        }
-        return "#ffffb3"; //yellow
-    }
-  });
+});
 
 app.directive('capitalize', function() {
     return {
