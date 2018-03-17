@@ -9,7 +9,7 @@
   ],
   "version": "0.0.0",
   "engines": {
-    "node": "6.94"
+    "node": "9.8.0"
   },
   "private": true,
   "scripts": {
