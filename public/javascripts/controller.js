@@ -110,7 +110,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     // submit data
     $scope.submit_data = function (cycle_data) {
         $http.post('/new_cycle', {'cycle_data': cycle_data})
-             .then(function (response) {$location.url('/team_picker');},
+             .then(function (response) {$location.url('/team_picker')},
                    function (err) {console.log(err)});
     }
     

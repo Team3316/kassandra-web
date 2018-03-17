@@ -49,15 +49,11 @@ db.once('open', function() {
   console.log("connected!");
 });
 
-exports.newCycle = function (cycle){
-  if(!cycle){
-    return;
-  }
+exports.newCycle = function (res, cycle){
   var cycle = new Cycle(cycle);
-   cycle.save(function(err, task){
-        if (err) return console.error(err);
-        console.log("Added cycle!");
-  });
+   cycle.save(function(err, doc) {
+        res.send(JSON.stringify(doc));
+   });
 };
 
 exports.getAllTeams = function (res){

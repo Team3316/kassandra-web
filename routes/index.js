@@ -43,7 +43,7 @@ router.get('/get_all_teams', function(req, res, next) {
 
 router.post('/new_cycle',function(req,res,next){
   var cycle = req.param('cycle_data');  
-  mongo.newCycle(cycle);
+  mongo.newCycle(res, cycle);
 });
 
 router.get('/eventname', function(req, res, next) {
