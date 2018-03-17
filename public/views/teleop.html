@@ -28,6 +28,9 @@
             <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.scale=dec_counter(cycle_data.teleop.scale, 1)">−1</button>
     </div>
 
+    <p class="comments-types">End Game</p>
+    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.platform" />Platform</label>
+    
     <p class="comments-types">Climb</p>
     <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="0" />Nothing</label>
     <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="1" />Failed</label>

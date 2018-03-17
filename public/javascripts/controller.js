@@ -214,7 +214,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
                 formatted_element.push(0); // Teleop Scale Fails
                 formatted_element.push(element.teleop.exchange);
                 formatted_element.push(0); // Teleop Exchange Fails
-                formatted_element.push("FALSE"); // Platform
+                formatted_element.push(element.teleop.platform ? "TRUE" : "FALSE");
                 formatted_element.push(climb_map[element.teleop.climb]);
                 formatted_element.push(climb_map[element.teleop.partner_climb]);
                 formatted_element.push(element.tech_foul ? "TRUE" : "FALSE");

@@ -35,6 +35,7 @@ var cycle = new mongoose.Schema({
         switch_fail:Number,
         scale:Number,
         scale_fail:Number,
+        platform:Boolean,
         climb:Number,
         partner_climb:Number,
     },
