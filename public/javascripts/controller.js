@@ -64,7 +64,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     
     // load cycle data from db.
     $scope.get_cycle = function(id) {
-        $http.get('/get_cycle').then(function (response) {
+        $http.get('/get_cycle/' + id).then(function (response) {
             $scope.cycle_data = response.data;
         }, function (err) {
             clear_data();
@@ -192,7 +192,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.hideCycle = function (id) {
         $http.get("/hide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
-                $scope.is_visible = false;
+                $scope.cycle_data.is_visible = false;
             }
         });
     }
@@ -200,7 +200,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.unhideCycle = function (id) {
         $http.get("/unhide_cycle/" + id).then(function(data){
             if(data.data.nModified == 1) {
-                $scope.is_visible = true;
+                $scope.cycle_data.is_visible = true;
             }
         });
     }

@@ -90,7 +90,7 @@ exports.getCycles = function (res){
 };
 
 exports.getCycle = function (res, id){
-  Cycle.find({_id:id}, function(err, doc){
+  Cycle.findOne({_id:id}, function(err, doc){
     res.send(JSON.stringify(doc));
   });
 };

@@ -1,50 +1,26 @@
-<button class="leftArrow" ui-sref="admin"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<button class="leftArrow" ui-sref="team_picker"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
+<div class="center page-title">
+    <h3>Report</h3>
+</div>
+<div class="content">
+    <button id="hideCycle" ng-click="hideCycle(cycle_data._id);" ng-show="cycle_data.is_visible">Hide</button>
+    <button id="unhideCycle" ng-click="unhideCycle(cycle_data._id);" ng-show="!cycle_data.is_visible">Unhide</button>
 
-<div class="center"><h1 class= "title">{{team}} / {{match}}</h1></div>
-
-<div class="match-content">
-
-<div><h3>  Report Single Match</h3></div>
-
-<button id="hideCycle" ng-click="hideCycle(id);" ng-show="is_visible">Hide</button>
-<button id="unhideCycle" ng-click="unhideCycle(id);" ng-show="!is_visible">Unhide</button>
-
-    <h3 class="comments-types">Autonomous</h3>
-    <p class="pReport">Tried and failed: {{tf}}</p>
-    <p class="pReport">Crossed baseline: {{cb}}</p>
-    <p class="pReport">Estimated points: {{ep}}</p>
-    <p class="pReport">Successfully planted gears: {{spg}}</p>
-    <p class="pReport">Missed gears: {{mg}}</p>
-    <p class="pReport">Dropped gears: {{dg}}</p>
-    <p class="pReport">Position: {{translatePosition(pos)}}</p>
-    
-    <h3 class="comments-types">Teleop</h3>
-    <p class="pReport"><img src="../images/Gear.png" class="image_icon"><i> Gears collected from:</i></p>
-        <table align="center" class = "stats_table">
-            <th ng-style="{background:get_color(tgcfh,1,0.4,0.8)}">HP</th>
-            <th ng-style="{background:get_color(tgcff,1,0.2,0.5)}">floor</th>
-            <tr><td ng-style="{background:get_color(tgcfh,1,0.4,0.8)}">{{tgcfh}}</td>
-            <td ng-style="{background:get_color(tgcff,1,0.2,0.5)}">{{tgcff}}</td></tr>
-        </table>
-    <p class="pReport">Successfully planted gears: {{tspg}}</p>
-    <p class="pReport">Dropped gears: {{tdg}}</p>
-    <p class="pReport"><img src="../images/Fuel.png" class="image_icon"><i> Fuel collected from: </i></p>
-    
-    <table align="center" class = "stats_table">
-        <th ng-style="{background:get_color(tfcff,1,0.5,0.5)}">floor</th>
-        <th ng-style="{background:get_color(tfcfho,1,0.5,0.5)}">hoppers</th>
-        <th ng-style="{background:get_color(tfcfh,1,0.5,0.5)}">HP</th>
-        <tr><td ng-style="{background:get_color(tfcff,1,0.5,0.5)}">{{tfcff}}</td>
-        <td ng-style="{background:get_color(tfcfho,1,0.5,0.5)}">{{tfcfho}}</td>
-        <td ng-style="{background:get_color(tfcfh,1,0.5,0.5)}">{{tfcfh}}</td></tr>
-    </table>
-    <p class="pReport">Estimated points: {{tep}}</p>
-    <p class="pReport"><img src="../images/Touchpad.png" class="image_icon"> Climbing: {{tcs}}</p>
-    <h3 class="comments-types">Defense</h3>
-    <p class="pReport">Defense on: {{ddo}}</p>
-    <p class="pReport">Defense comments: {{ddc}}</p>
-    
-    <h3 class="comments-types">General</h3>
-    <p class="pReport">General comments: {{ggc}}</p>
-
+    <p class="comments-types">Autonomous</p>
+    <p class="pReport" style="color: {{cycle_data.auto.auto_run ? 'green' : 'red'}}">AutoRun: {{cycle_data.auto.auto_run}}</p>
+    <p class="pReport">Switch: {{cycle_data.auto.switch}}</p>
+    <p class="pReport">Scale: {{cycle_data.auto.scale}}</p>
+    <p class="comments-types">Teleop</p>
+    <p class="pReport" style="color: {{cycle_data.teleop.collect_floor ? 'green' : 'red'}}">Floor Collection: {{cycle_data.teleop.collect_floor}}</p>
+    <p class="pReport" style="color: {{cycle_data.teleop.collect_pyramid ? 'green' : 'red'}}">Pyramid Collection: {{cycle_data.teleop.collect_pyramid}}</p>
+    <p class="pReport" style="color: {{cycle_data.teleop.collect_portal ? 'green' : 'red'}}">Portal Collection: {{cycle_data.teleop.collect_portal}}</p>
+    <p class="pReport">Exchange: {{cycle_data.teleop.exchange}}</p>
+    <p class="pReport">Switch: {{cycle_data.teleop.switch}}</p>
+    <p class="pReport">Scale: {{cycle_data.teleop.scale}}</p>
+    <p class="pReport" style="color: {{{0: 'orange', 1: 'red', 2: 'green'}[cycle_data.teleop.climb]}}">Climb: {{{0: 'Nothing', 1: 'Failed', 2: 'Climbed'}[cycle_data.teleop.climb]}}</p>
+    <p class="pReport" style="color: {{{0: 'orange', 1: 'red', 2: 'green'}[cycle_data.teleop.partner_climb]}}">Partner Climb: {{{0: 'Nothing', 1: 'Failed', 2: 'Climbed'}[cycle_data.teleop.partner_climb]}}</p>
+    <p class="comments-types">Comments</p>
+    <p class="pReport" style="color: {{cycle_data.tech_foul ? 'red' : 'green'}}">Tech Foul: {{cycle_data.tech_foul}}</p>
+    <p class="pReport">Comments: {{cycle_data.comments}}</p>
 </div>
