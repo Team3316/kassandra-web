@@ -16,6 +16,10 @@ router.get('/', function(req, res, next) {
 router.get('/get_cycles', function(req, res, next) {
   mongo.getCycles(res);
   });
+  
+router.get('/export_cycles', function(req, res, next) {
+    mongo.exportCycles(res);
+});
 
 router.get('/get_cycle/:id', function(req, res, next) {
   mongo.getCycle(res, req.params.id);

@@ -48,4 +48,4 @@ Report:
 
 Export:
     Controller:
-        export_csv(id) --> /get_cycles_by_team/:id --> getCyclesByTeam(id, false) --> Download CSV
+        export_csv() --> /export_cycles/ --> exportCycles(id, false) --> Download CSV

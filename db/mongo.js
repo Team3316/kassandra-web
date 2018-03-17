@@ -73,6 +73,12 @@ exports.getCycles = function (res){
   });
 };
 
+exports.exportCycles = function (res){
+  Cycle.find({is_visible:true}, function(err, doc){
+    res.send(JSON.stringify(doc));
+  });
+};
+
 exports.getCycle = function (res, id){
   Cycle.findOne({_id:id}, function(err, doc){
     res.send(JSON.stringify(doc));

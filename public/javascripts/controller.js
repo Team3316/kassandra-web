@@ -150,10 +150,79 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
         $location.path('/report/' + btn.value);
         $scope.$apply();
     }
+    
+    function exportToCsv(filename, rows) {
+        var processRow = function (row) {
+            var finalVal = '';
+            for (var j = 0; j < row.length; j++) {
+                var innerValue = row[j] === null ? '' : row[j].toString();
+                if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                };
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+            }
+            return finalVal + '\n';
+        };
 
-    $scope.export_csv = function (team) {
-        $http.get('/get_cycles_by_team/' + team).then(function (data) {
-            
+        var csvFile = '';
+        for (var i = 0; i < rows.length; i++) {
+            csvFile += processRow(rows[i]);
+        }
+
+        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    $scope.export_csv = function () {
+        $http.get('/export_cycles/').then(function (data) {
+            var climb_map = {0: "Didn't Try", 1: "Failed", 2: "Successful"};
+            var formatted_data = [['Header']];
+            data.data.forEach(function (element) {
+                var formatted_element = [];
+                formatted_element.push('') // Full Name
+                formatted_element.push(element.team);
+                formatted_element.push(element.match);
+                formatted_element.push(element.auto.auto_run ? "TRUE" : "FALSE");
+                formatted_element.push('FALSE'); // Auto Exchange
+                formatted_element.push(element.auto.switch);
+                formatted_element.push(0); // Auto Switch Fails
+                formatted_element.push(element.auto.scale);
+                formatted_element.push(0); // Auto Scale Fails
+                formatted_element.push(''); // Collection
+                formatted_element.push(element.teleop.switch);
+                formatted_element.push(0); // Teleop Switch Fails
+                formatted_element.push(element.teleop.scale);
+                formatted_element.push(0); // Teleop Scale Fails
+                formatted_element.push(element.teleop.exchange);
+                formatted_element.push(0); // Teleop Exchange Fails
+                formatted_element.push("FALSE"); // Platform
+                formatted_element.push(climb_map[element.teleop.climb]);
+                formatted_element.push(climb_map[element.teleop.partner_climb]);
+                formatted_element.push(element.tech_foul ? "TRUE" : "FALSE");
+                formatted_element.push(''); // Defence Comments
+                formatted_element.push(element.comments);
+                formatted_data.push(formatted_element);
+            });
+            exportToCsv('export.csv', formatted_data);
         });
     }
 

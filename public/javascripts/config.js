@@ -58,6 +58,14 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.pull_match_team();
         }
     });
+    
+    $stateProvider.state({
+        name: 'export',
+        url: '/export',
+        controller: function ($scope, $stateParams) {
+            $scope.export_csv();
+        }
+    });
 
     $urlRouterProvider.otherwise('/');
 });
