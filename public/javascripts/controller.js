@@ -142,6 +142,7 @@ app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, 
     $scope.team_selected = function (team) {
         $http.get("/get_all_cycles_by_team/" + team).then(function(data){
             $scope.team_cycles = data.data;
+            $scope.selected_team = team;
         });
     }
     

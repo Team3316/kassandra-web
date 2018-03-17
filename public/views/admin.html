@@ -8,9 +8,10 @@
         <md-option ng-repeat="team in db_teams" value="{{team}}">{{team}}</md-option>
     </md-select>
 </md-input-container>
-<div class="center" ng-init="db_team && team_selected(db_team);">
+<div class="center" ng-init="selected_team && team_selected(selected_team)">
+    <div ng-show="selected_team">Team {{selected_team}}</div>
     <div class="btn-group-vertical">
-    <button class="btn btn-primary btn-lg" onclick="get_single_match(this);" ng-repeat="cycle in team_cycles" value="{{cycle._id}}" ng-style="set_color(cycle)">{{cycle.match}}</button>
+        <button class="btn btn-primary btn-lg" onclick="get_single_match(this);" ng-repeat="cycle in team_cycles" value="{{cycle._id}}" ng-style="set_color(cycle)">{{cycle.match}}</button>
     </div>
 </div>
 

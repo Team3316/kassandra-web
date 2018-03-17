@@ -33,7 +33,7 @@ Final:
         
 Table:
     Controller:
-        pull_matches_from_tba() --> thebluealliance.com --> $scope.matches
+        pull_matches_from_tba() --> /eventname -->  thebluealliance.com --> $scope.matches
         pull_match_team() --> /get_cycles --> getCycles --> $scope.match_team_dictionary
     Table:
         entry_exists(match, team)
