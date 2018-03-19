@@ -11,7 +11,7 @@
 
     
 <md-input-container>
-    <md-select ng-model="cycle_data.match" ng-change="teams=get_teams_in_match(cycle_data.match);" ng-show="!customMatch">
+    <md-select ng-model="cycleData.match" ng-change="teams=getTeamsInMatch(cycleData.match);" ng-show="!customMatch">
         <md-select-header>
             <input ng-model="matches_filter" type="text" class="form-control input-lg" ng-keydown="$event.stopPropagation()">
         </md-select-header>
@@ -21,19 +21,19 @@
     </md-select>
 </md-input-container>
 
-    <input ng-model="cycle_data.match" ng-show="customMatch" ng-change="teams=get_teams_in_match(cycle_data.match);" style="width: 60%;" capitalize/>
+    <input ng-model="cycleData.match" ng-show="customMatch" ng-change="teams=getTeamsInMatch(cycleData.match);" style="width: 60%;" capitalize/>
 </div>
 
-<div ng-show="cycle_data.match">
+<div ng-show="cycleData.match">
     <label>Team</label>
-    <md-select ng-model="cycle_data.team" ng-show="!customMatch">
+    <md-select ng-model="cycleData.team" ng-show="!customMatch">
         <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
     </md-select>
-    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="cycle_data.team" ng-show="customMatch" style="width: 60%;" maxlength="4" />
+    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="cycleData.team" ng-show="customMatch" style="width: 60%;" maxlength="4" />
 </div>
 
 <div class="center">
-    <button ui-sref="autonomous" ng-show="cycle_data.match && cycle_data.team">Continue</button>
+    <button ui-sref="autonomous" ng-show="cycleData.match && cycleData.team">Continue</button>
 </div>
 </div>
 

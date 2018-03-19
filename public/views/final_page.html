@@ -1,22 +1,22 @@
 <button class="leftArrow" ui-sref="teleop"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
+<div class="header">{{cycleData.team}} \ {{cycleData.match}}</div>
 <div class="center page-title">
     <h3>Comments</h3>
 </div>
 <div class = "text-comment">
-    <label><input type="checkbox" value="0" ng-model="cycle_data.tech_foul" />Commited a Tech Foul</label>
+    <label><input type="checkbox" value="0" ng-model="cycleData.tech_foul" />Commited a Tech Foul</label>
     <p class = "comments-types">Comments</p>
-    <textarea class="form-control" rows="5" ng-model="cycle_data.comments"></textarea>
+    <textarea class="form-control" rows="5" ng-model="cycleData.comments"></textarea>
     <br />
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Bad Driver')">Bad Driver</button>
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Null Zone Foul')">Null Zone Foul</button>
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Launching Foul')">Launching Foul</button>
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Stopped Working')">Stopped Working</button>
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Slow Collection')">Slow Collection</button>
-    <button class="btn btn-info commentButton" ng-click="cycle_data.comments = concat_comment(cycle_data.comments, 'Slow Climb')">Slow Climb</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Bad Driver')">Bad Driver</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Null Zone Foul')">Null Zone Foul</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Launching Foul')">Launching Foul</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Stopped Working')">Stopped Working</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Collection')">Slow Collection</button>
+    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Climb')">Slow Climb</button>
 
 <div class="center">
-    <button ng-click="submit_data(cycle_data)">Submit<span class="glyphicon glyphicon-ok"></span></button>
+    <button ng-click="submitData(cycleData)">Submit<span class="glyphicon glyphicon-ok"></span></button>
 </div>
 
 </div>

@@ -13,7 +13,7 @@
     <th>Red 3</th>
 <tr ng-repeat="match in matches | filter:filter_team">
     <th>{{match.name}}</th>
-    <td ng-class = "{filtered:team_filtered(team, filter_team), checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
-    <td ng-class = "{filtered:team_filtered(team, filter_team), checked:entry_exists(match.name,team), unchecked:!entry_exists(match.name,team)}" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
+    <td ng-class = "{filtered:teamFiltered(team, filter_team), checked:entryExists(match.name,team), unchecked:!entryExists(match.name,team)}" ng-repeat="team in match.alliances.blue.teams">{{team}}</td>
+    <td ng-class = "{filtered:teamFiltered(team, filter_team), checked:entryExists(match.name,team), unchecked:!entryExists(match.name,team)}" ng-repeat="team in match.alliances.red.teams">{{team}}</td>
 </tr>
 </table>

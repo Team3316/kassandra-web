@@ -1,5 +1,5 @@
 /* global app */
-app.config(($mdThemingProvider, $stateProvider, $urlRouterProvider) => {
+app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('cyan')
     .accentPalette('teal')
@@ -8,9 +8,9 @@ app.config(($mdThemingProvider, $stateProvider, $urlRouterProvider) => {
     name: 'team_picker',
     url: '/',
     templateUrl: '/views/team_picker.html',
-    controller: ($scope, $stateParams) => {
-      $scope.clear_all()
-      $scope.pull_matches_from_tba()
+    controller: function ($scope, $stateParams) {
+      $scope.clearAll()
+      $scope.pullMatchesFromTBA()
     }
   })
 
@@ -36,8 +36,8 @@ app.config(($mdThemingProvider, $stateProvider, $urlRouterProvider) => {
     name: 'admin',
     url: '/admin',
     templateUrl: '/views/admin.html',
-    controller: ($scope, $stateParams) => {
-      $scope.pull_teams_from_db()
+    controller: function ($scope, $stateParams) {
+      $scope.pullTeamsFromDB()
     }
   })
 
@@ -45,8 +45,8 @@ app.config(($mdThemingProvider, $stateProvider, $urlRouterProvider) => {
     name: 'report',
     url: '/report/:id',
     templateUrl: '/views/report.html',
-    controller: ($scope, $stateParams) => {
-      $scope.get_cycle($stateParams.id)
+    controller: function ($scope, $stateParams) {
+      $scope.getCycle($stateParams.id)
     }
   })
 
@@ -54,17 +54,17 @@ app.config(($mdThemingProvider, $stateProvider, $urlRouterProvider) => {
     name: 'table',
     url: '/table',
     templateUrl: '/views/table.html',
-    controller: ($scope, $stateParams) => {
-      $scope.pull_matches_from_tba()
-      $scope.pull_match_team()
+    controller: function ($scope, $stateParams) {
+      $scope.pullMatchesFromTBA()
+      $scope.pullMatchTeam()
     }
   })
 
   $stateProvider.state({
     name: 'export',
     url: '/export',
-    controller: ($scope, $stateParams) => {
-      $scope.export_csv()
+    controller: function ($scope, $stateParams) {
+      $scope.exportCSV()
     }
   })
 
