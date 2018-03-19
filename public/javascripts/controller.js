@@ -73,7 +73,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
    * Pulls all matches from TBA into $scope.matches
    */
   $scope.matches = []
-  $scope.pullMatchesFromTBA = function () {
+  $scope.pullMatchesFromTBA = () => {
     // Fetch current event name from server
     $http.get('/eventname').then(({ data }) => {
       const url = 'https://www.thebluealliance.com/api/v2/event/2018' + data + '/matches'
@@ -111,7 +111,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
   /*
    * Submits cycle data
    */
-  $scope.submitData = function (cycleData) {
+  $scope.submitData = cycleData => {
     $http.post('/new_cycle', { cycleData })
       .then(() => $location.url('/team_picker'))
       .catch(err => console.err(err))
@@ -195,7 +195,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
         '', // Full Name
         element.team,
         element.match,
-        element.auto.auto_run ? 'TRUE' : 'FALSE',
+        element.auto.autoRun ? 'TRUE' : 'FALSE',
         'FALSE', // Auto Exchange
         element.auto.switch,
         0, // Auto Switch Fails
@@ -210,8 +210,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
         0, // Teleop Exchange Fails
         element.teleop.platform ? 'TRUE' : 'FALSE',
         climbMap[element.teleop.climb],
-        climbMap[element.teleop.partner_climb],
-        element.tech_foul ? 'TRUE' : 'FALSE',
+        climbMap[element.teleop.partnerClimb],
+        element.techFoul ? 'TRUE' : 'FALSE',
         '', // Defense Comments
         element.comments
       ]))

@@ -4,24 +4,24 @@
     <h3>Report</h3>
 </div>
 <div class="content">
-    <button id="hideCycle" ng-click="hideCycle(cycleData._id);" ng-show="cycleData.is_visible">Hide</button>
-    <button id="unhideCycle" ng-click="unhideCycle(cycleData._id);" ng-show="!cycleData.is_visible">Unhide</button>
+    <button id="hideCycle" ng-click="hideCycle(cycleData._id);" ng-show="cycleData.isVisible">Hide</button>
+    <button id="unhideCycle" ng-click="unhideCycle(cycleData._id);" ng-show="!cycleData.isVisible">Unhide</button>
 
     <p class="comments-types">Autonomous</p>
-    <p class="pReport" style="color: {{cycleData.auto.auto_run ? 'green' : 'red'}}">AutoRun: {{cycleData.auto.auto_run}}</p>
+    <p class="pReport" style="color: {{cycleData.auto.autoRun ? 'green' : 'red'}}">AutoRun: {{cycleData.auto.autoRun}}</p>
     <p class="pReport">Switch: {{cycleData.auto.switch}}</p>
     <p class="pReport">Scale: {{cycleData.auto.scale}}</p>
     <p class="comments-types">Teleop</p>
-    <p class="pReport" style="color: {{cycleData.teleop.collect_floor ? 'green' : 'red'}}">Floor Collection: {{cycleData.teleop.collect_floor}}</p>
-    <p class="pReport" style="color: {{cycleData.teleop.collect_pyramid ? 'green' : 'red'}}">Pyramid Collection: {{cycleData.teleop.collect_pyramid}}</p>
-    <p class="pReport" style="color: {{cycleData.teleop.collect_portal ? 'green' : 'red'}}">Portal Collection: {{cycleData.teleop.collect_portal}}</p>
+    <p class="pReport" style="color: {{cycleData.teleop.collectFloor ? 'green' : 'red'}}">Floor Collection: {{cycleData.teleop.collectFloor}}</p>
+    <p class="pReport" style="color: {{cycleData.teleop.collectPyramid ? 'green' : 'red'}}">Pyramid Collection: {{cycleData.teleop.collectPyramid}}</p>
+    <p class="pReport" style="color: {{cycleData.teleop.collectPortal ? 'green' : 'red'}}">Portal Collection: {{cycleData.teleop.collectPortal}}</p>
     <p class="pReport">Exchange: {{cycleData.teleop.exchange}}</p>
     <p class="pReport">Switch: {{cycleData.teleop.switch}}</p>
     <p class="pReport">Scale: {{cycleData.teleop.scale}}</p>
     <p class="comments-types">End Game</p>
     <p class="pReport">Platform: {{cycleData.teleop.platform}}</p>
     <p class="pReport" style="color: {{{0: 'orange', 1: 'red', 2: 'green'}[cycleData.teleop.climb]}}">Climb: {{{0: 'Nothing', 1: 'Failed', 2: 'Climbed'}[cycleData.teleop.climb]}}</p>
-    <p class="pReport" style="color: {{{0: 'orange', 1: 'red', 2: 'green'}[cycleData.teleop.partner_climb]}}">Partner Climb: {{{0: 'Nothing', 1: 'Failed', 2: 'Climbed'}[cycleData.teleop.partner_climb]}}</p>
+    <p class="pReport" style="color: {{{0: 'orange', 1: 'red', 2: 'green'}[cycleData.teleop.partnerClimb]}}">Partner Climb: {{{0: 'Nothing', 1: 'Failed', 2: 'Climbed'}[cycleData.teleop.partnerClimb]}}</p>
     <p class="comments-types">Comments</p>
     <p class="pReport" style="color: {{cycleData.tech_foul ? 'red' : 'green'}}">Tech Foul: {{cycleData.tech_foul}}</p>
     <p class="pReport">Comments: {{cycleData.comments}}</p>
