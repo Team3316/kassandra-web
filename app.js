@@ -5,8 +5,7 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
-const index = require('./routes/index')
-
+const index = require('./router')
 const app = express()
 
 // view engine setup

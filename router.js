@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { join } = require('path')
-const mongo = require('../db/mongo.js')
+const mongo = require('./db/mongo.js')
 const router = Router()
 
 /* GET home page. */
