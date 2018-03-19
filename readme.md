@@ -1,3 +1,18 @@
+Kassandra
+===
+> D-Bug's scouting system
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
+## TODO
+ - [ ] Use an actual CSV encoding library and not the in-house implementation
+ - [ ] Move the CSV export to the backend
+ - [ ] Make the UI better looking (ahem ahem material design)
+ - [ ] Dependency management
+ - [ ] React?
+ - [ ] Make the code more ES2017+
+ - [ ] Move to TypeScript?
+
 Team Picker:
     Controller:
         clear_all() --> javascripts/data.json --> $scope.cycle_data
