@@ -40,8 +40,11 @@ app.use((err, req, res, next) => {
   res.render('error')
 })
 
-app.listen(8080, () => {
-  console.log('listen port 8080')
+const listen = (port) => new Promise((resolve, reject) => {
+  app.listen(port, () => resolve(port))
 })
 
-module.exports = app
+module.exports = {
+  app,
+  listen
+}

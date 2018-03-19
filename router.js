@@ -1,7 +1,16 @@
 const { Router } = require('express')
 const { join } = require('path')
-const mongo = require('./db/mongo.js')
 const router = Router()
+
+const {
+  newCycle,
+  getAllTeams,
+  getCycles,
+  exportCycles,
+  getCycleById,
+  shouldHideCycle,
+  getCyclesByTeam
+} = require('./db/routes')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -13,23 +22,23 @@ router.get('/', (req, res, next) => {
   res.render(join(__dirname, 'index.html'))
 })
 
-router.get('/get_cycles', (req, res, next) => mongo.getCycles(res))
+router.get('/get_cycles', getCycles)
 
-router.get('/export_cycles', (req, res, next) => mongo.exportCycles(res))
+router.get('/export_cycles', exportCycles)
 
-router.get('/get_cycle/:id', (req, res, next) => mongo.getCycle(res, req.params.id))
+router.get('/get_cycle/:id', getCycleById)
 
-router.get('/hide_cycle/:id', (req, res, next) => mongo.hideCycle(res, req.params.id))
+router.get('/hide_cycle/:id', shouldHideCycle(true))
 
-router.get('/unhide_cycle/:id', (req, res, next) => mongo.unhideCycle(res, req.params.id))
+router.get('/unhide_cycle/:id', shouldHideCycle(false))
 
-router.get('/get_cycles_by_team/:id', (req, res, next) => mongo.getCyclesByTeam(res, req.params.id, false))
+router.get('/get_cycles_by_team/:id', getCyclesByTeam(false))
 
-router.get('/get_all_cycles_by_team/:id', (req, res, next) => mongo.getCyclesByTeam(res, req.params.id, true))
+router.get('/get_all_cycles_by_team/:id', getCyclesByTeam(true))
 
-router.get('/get_all_teams', (req, res, next) => mongo.getAllTeams(res))
+router.get('/get_all_teams', getAllTeams)
 
-router.post('/new_cycle', (req, res, next) => mongo.newCycle(res, req.param('cycle_data')))
+router.post('/new_cycle', newCycle)
 
 router.get('/eventname', (req, res, next) => res.send(process.env.EVENTNAME))
 
