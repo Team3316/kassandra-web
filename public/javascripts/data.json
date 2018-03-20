@@ -1,27 +1,27 @@
 {
-    "match":"",
-    "team":0,
-    "auto":{
-        "auto_run":false,
-        "switch":0,
-        "switch_fail":0,
-        "scale":0,
-        "scale_fail":0
-    },
-    "teleop":{
-        "collect_floor":false,
-        "collect_portal":false,
-        "collect_pyramid":false,
-        "exchange":0,
-        "exchange_fail":0,
-        "switch":0,
-        "switch_fail":0,
-        "scale":0,
-        "scale_fail":0,
-        "platform":false,
-        "climb":0,
-        "partner_climb":0
-    },
-    "tech_foul":false,
-    "comments":""
+  "match": "",
+  "team": 0,
+  "auto": {
+    "autoRun": false,
+    "switch": 0,
+    "switchFail": 0,
+    "scale": 0,
+    "scaleFail": 0
+  },
+  "teleop":{
+    "collectFloor": false,
+    "collectPortal": false,
+    "collectPyramid": false,
+    "exchange": 0,
+    "exchangeFail": 0,
+    "switch": 0,
+    "switchFail": 0,
+    "scale": 0,
+    "scaleFail": 0,
+    "platform": false,
+    "climb": 0,
+    "partnerClimb": 0
+  },
+  "techFoul": false,
+  "comments": ""
 }
