@@ -261,11 +261,15 @@ app.directive('capitalize', function () {
         }
         return capitalized
       }
+<<<<<<< HEAD
       modelCtrl.$parsers.push(capitalize)
       capitalize(scope[attrs.ngModel])
     }
   }
 })
+=======
+    };
+  });
 
 app.directive('myclick', function() {
     return function(scope, element, attrs) {
@@ -276,3 +280,4 @@ app.directive('myclick', function() {
         });
     };
 });
+>>>>>>> Added myclick directive and updated auton page to use it for test
