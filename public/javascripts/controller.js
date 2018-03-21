@@ -1,286 +1,268 @@
-var app = angular.module("Kassandra", ['ngMaterial', 'ngCookies', 'ui.router']);
-app.controller('ctr', function ($rootScope, $scope, $http, $cookies, $location, $state) {
-    
-    /*************************************************************************
-     ** Util functions                                                      **
-     *************************************************************************/
-     
-    function format_team(team_str) {
-        // Format used by TBA: frc3316 --> 3316
-        return team_str.replace('frc', '');
-    }
-    
-    function format_match(element, index, arr) {
-        var match = element.key.split("_");
-        element.name = match[match.length - 1].toUpperCase();
-        element.alliances.red.teams = element.alliances.red.teams.map(format_team);
-        element.alliances.blue.teams = element.alliances.blue.teams.map(format_team);
-    }
-    
-    function sort_by_time(a, b) {
-        if (a.time < b.time) return -1;
-        if (a.time > b.time) return 1;
-        return 0;
-    }
-    
-    function is_empty_match (item) {
-        return !(item.match === "");
-    }
-    
-    function sort_parse_int(a, b) {
-        a_int = parseInt(a, 10);
-        b_int = parseInt(b, 10);
+/* global angular, Blob, URL */
+const app = angular.module('Kassandra', ['ngMaterial', 'ngCookies', 'ui.router'])
 
-        return a_int - b_int;
-    }
-    
-    /*************************************************************************
-     ** Data pulling into local variables                                   **
-     *************************************************************************/
-    
-    // Map from match number to teams in DB
-    $scope.match_team_dictionary = {};
-    $scope.pull_match_team = function () {
-        $http.get('/get_cycles').then(function (data) {
-                data.data.forEach(function (element) {
-                    $scope.match_team_dictionary[element.match]=[];
-                });
-                data.data.forEach(function (element) {
-                    $scope.match_team_dictionary[element.match].push(element.team);
-                });
-            });
-    }
-    
-    // clear cycle data.
-    $scope.cycle_data = {};
-    $scope.clear_all = function () {
-        $http.get('javascripts/data.json').then(function (response) {
-            $scope.cycle_data = response.data;
-        }, function (err) {
-            $scope.cycle_data = {};
-            console.log(err);
-        });
-    }
-    
-    // load cycle data from db.
-    $scope.get_cycle = function(id) {
-        $http.get('/get_cycle/' + id).then(function (response) {
-            $scope.cycle_data = response.data;
-        }, function (err) {
-            clear_data();
-            console.log(err);
-        });
-    }
-    
-    // pulls all matches from TBA into $scope.matches
-    $scope.matches = [];
-    $scope.pull_matches_from_tba = function () {
-        // Fetch current event name from server
-        $http.get('/eventname').then(function (response) {
-            var url = "https://www.thebluealliance.com/api/v2/event/2018" + response.data + "/matches";
-            
-            // Headers required by TBA API
-            var config = {
-                headers: {
-                    'Content-Type': 'application/json; charset="utf-8"',
-                    'X-TBA-App-Id': '3316:Kassandra:3.0'
-                }
-            };
-            
-            // Fetch matches of given event name from TBA
-            $http.get(url, config).then(function (response) {
-                var data = response[Object.keys(response)[0]];
-                data.sort(sort_by_time);
-                data.forEach(format_match);
-                $scope.matches = data.filter(is_empty_match);
-            }, function (err) {console.log(err)});
-        }, function (err) {console.log(err)});
-    }    
+app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $location, $state) {
+  // Format used by TBA: frc3316 --> 3316
+  const formatTeam = teamStr => teamStr.replace('frc', '')
 
-    // gets teams of the given match from $scope.matches
-    $scope.get_teams_in_match = function (match) {
-        var match = $scope.matches.find(function(m) { return m.name == match });
-        if (!match) return [];
-        return match.alliances.blue.teams.concat(match.alliances.red.teams);
-    }
+  const formatMatch = element => {
+    const match = element.key.split('_')
+    element.name = match[match.length - 1].toUpperCase()
+    element.alliances.red.teams = element.alliances.red.teams.map(formatTeam)
+    element.alliances.blue.teams = element.alliances.blue.teams.map(formatTeam)
+    return element
+  }
 
-    /*************************************************************************
-     ** Data submiting functions                                            **
-     *************************************************************************/
-    // submit data
-    $scope.submit_data = function (cycle_data) {
-        $http.post('/new_cycle', {'cycle_data': cycle_data})
-             .then(function (response) {$location.url('/team_picker')},
-                   function (err) {console.log(err)});
-    }
-    
-    $scope.dec_counter = function(number, step) { 
-        return Math.max(0, number - step);
-    }
+  const sortByTime = (a, b) => {
+    if (a.time < b.time) return -1
+    if (a.time > b.time) return 1
+    return 0
+  }
 
-    $scope.inc_counter = function(number, step) {
-        return number + step;
-    }
+  const isEmptyMatch = item => item.match !== ''
+  const sortParseInt = (a, b) => parseInt(a, 10) - parseInt(b, 10)
 
-    $scope.concat_comment = function(main, comment) {
-        if (!main) return comment;
-        else return main.concat(', ', comment);
-    }
+  /*************************************************************************
+   ** Data pulling into local variables                                   **
+   *************************************************************************/
 
+  /*
+   * Creates a map of the teams per match number in the DB
+   */
+  $scope.teamsPerMatch = {}
+  $scope.pullMatchTeam = () => {
+    $http.get('/get_cycles').then(({ data }) => {
+      $scope.teamsPerMatch = data.reduce((prev, { match, team }) => {
+        const lastData = prev[match]
+        prev[match] = !!lastData && lastData.length > 0 ? [...lastData, team] : [team]
+        return prev
+      }, {})
+    })
+  }
 
-    /*************************************************************************
-     ** Admin page                                                          **
-     *************************************************************************/
-    // pulls teams from DB to $scope.db_teams
-    $scope.pull_teams_from_db = function () {
-        $http.get("/get_all_teams").then(function (data) {
-            $scope.db_teams = data.data;
-            $scope.db_teams.sort(sort_parse_int);
-        });
-    }
-    
-    $scope.team_selected = function (team) {
-        $http.get("/get_all_cycles_by_team/" + team).then(function(data){
-            $scope.team_cycles = data.data;
-            $scope.selected_team = team;
-        });
-    }
-    
-    window.get_single_match = function (btn) {
-        $location.path('/report/' + btn.value);
-        $scope.$apply();
-    }
-    
-    function exportToCsv(filename, rows) {
-        var processRow = function (row) {
-            var finalVal = '';
-            for (var j = 0; j < row.length; j++) {
-                var innerValue = row[j] === null ? '' : row[j].toString();
-                if (row[j] instanceof Date) {
-                    innerValue = row[j].toLocaleString();
-                };
-                var result = innerValue.replace(/"/g, '""');
-                if (result.search(/("|,|\n)/g) >= 0)
-                    result = '"' + result + '"';
-                if (j > 0)
-                    finalVal += ',';
-                finalVal += result;
-            }
-            return finalVal + '\n';
-        };
+  /*
+   * Clears cycle data
+   */
+  $scope.cycleData = {}
+  $scope.clearAll = () => {
+    $http.get('javascripts/data.json')
+      .then(({ data }) => {
+        $scope.cycleData = data
+      })
+      .catch(err => {
+        $scope.cycleData = {}
+        console.err(err)
+      })
+  }
 
-        var csvFile = '';
-        for (var i = 0; i < rows.length; i++) {
-            csvFile += processRow(rows[i]);
+  /*
+   * Loads cycle data from db
+   */
+  $scope.getCycle = id => {
+    $http.get('/get_cycle/' + id)
+      .then(({ data }) => {
+        $scope.cycleData = data
+      })
+      .catch(err => {
+        clear_data()
+        console.err(err)
+      })
+  }
+
+  /*
+   * Pulls all matches from TBA into $scope.matches
+   */
+  $scope.matches = []
+  $scope.pullMatchesFromTBA = () => {
+    // Fetch current event name from server
+    $http.get('/eventname').then(({ data }) => {
+      const url = 'https://www.thebluealliance.com/api/v2/event/2018' + data + '/matches'
+
+      // Headers required by TBA API
+      const config = {
+        headers: {
+          'Content-Type': 'application/json; charset="utf-8"',
+          'X-TBA-App-Id': '3316:Kassandra:3.0'
         }
-
-        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
-        if (navigator.msSaveBlob) { // IE 10+
-            navigator.msSaveBlob(blob, filename);
-        } else {
-            var link = document.createElement("a");
-            if (link.download !== undefined) { // feature detection
-                // Browsers that support HTML5 download attribute
-                var url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", filename);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-    }
-
-    $scope.export_csv = function () {
-        $http.get('/export_cycles/').then(function (data) {
-            var climb_map = {0: "Didn't Try", 1: "Failed", 2: "Successful"};
-            var formatted_data = [['Header']];
-            data.data.forEach(function (element) {
-                var formatted_element = [];
-                formatted_element.push('') // Full Name
-                formatted_element.push(element.team);
-                formatted_element.push(element.match);
-                formatted_element.push(element.auto.auto_run ? "TRUE" : "FALSE");
-                formatted_element.push('FALSE'); // Auto Exchange
-                formatted_element.push(element.auto.switch);
-                formatted_element.push(0); // Auto Switch Fails
-                formatted_element.push(element.auto.scale);
-                formatted_element.push(0); // Auto Scale Fails
-                formatted_element.push(''); // Collection
-                formatted_element.push(element.teleop.switch);
-                formatted_element.push(0); // Teleop Switch Fails
-                formatted_element.push(element.teleop.scale);
-                formatted_element.push(0); // Teleop Scale Fails
-                formatted_element.push(element.teleop.exchange);
-                formatted_element.push(0); // Teleop Exchange Fails
-                formatted_element.push(element.teleop.platform ? "TRUE" : "FALSE");
-                formatted_element.push(climb_map[element.teleop.climb]);
-                formatted_element.push(climb_map[element.teleop.partner_climb]);
-                formatted_element.push(element.tech_foul ? "TRUE" : "FALSE");
-                formatted_element.push(''); // Defence Comments
-                formatted_element.push(element.comments);
-                formatted_data.push(formatted_element);
-            });
-            exportToCsv('export.csv', formatted_data);
-        });
-    }
-
-    $scope.set_color = function (match) {
-        if (match.is_visible) {
-            return { "background-color": "#008CBA" };
-        } else {
-            return { "background-color": "#333" };
-        }
-    }
-
-    /*************************************************************************
-     ** Report page                                                         **
-     *************************************************************************/
-    $scope.hideCycle = function (id) {
-        $http.get("/hide_cycle/" + id).then(function(data){
-            if(data.data.nModified == 1) {
-                $scope.cycle_data.is_visible = false;
-            }
-        });
-    }
-
-    $scope.unhideCycle = function (id) {
-        $http.get("/unhide_cycle/" + id).then(function(data){
-            if(data.data.nModified == 1) {
-                $scope.cycle_data.is_visible = true;
-            }
-        });
-    }
-    
-    /*************************************************************************
-     ** Table page                                                         **
-     *************************************************************************/
-    
-    $scope.entry_exists = function (match, team) {
-        return (match in $scope.match_team_dictionary) && ($scope.match_team_dictionary[match].includes(parseInt(team)));
-    }
-
-    $scope.team_filtered = function (team, filter_team) {
-        return filter_team && team.includes(filter_team);
-    }
-});
-
-app.directive('capitalize', function() {
-    return {
-      require: 'ngModel',
-      link: function(scope, element, attrs, modelCtrl) {
-        var capitalize = function(inputValue) {
-          if (inputValue == undefined) inputValue = '';
-          var capitalized = inputValue.toUpperCase();
-          if (capitalized !== inputValue) {
-            modelCtrl.$setViewValue(capitalized);
-            modelCtrl.$render();
-          }
-          return capitalized;
-        }
-        modelCtrl.$parsers.push(capitalize);
-        capitalize(scope[attrs.ngModel]); // capitalize initial value
       }
-    };
-  });
+
+      // Fetch matches of given event name from TBA
+      return $http.get(url, config)
+    }).then(({ data }) => {
+      $scope.matches = data
+        .sort(sortByTime)
+        .map(formatMatch)
+        .filter(isEmptyMatch)
+    }).catch(err => console.err(err))
+  }
+
+  /*
+   * Gets teams of the given match from $scope.matches
+   */
+  $scope.getTeamsInMatch = matchId => {
+    const match = $scope.matches.find((m) => m.name === matchId)
+    return !match ? [] : match.alliances.blue.teams.concat(match.alliances.red.teams)
+  }
+
+  /*************************************************************************
+   ** Data submiting functions                                            **
+   *************************************************************************/
+
+  /*
+   * Submits cycle data
+   */
+  $scope.submitData = cycleData => {
+    $http.post('/new_cycle', { cycleData })
+      .then(() => $location.url('/team_picker'))
+      .catch(err => console.err(err))
+  }
+
+  $scope.decCounter = (number, step) => Math.max(0, number - step)
+  $scope.incCounter = (number, step) => number + step
+
+  $scope.concatComment = (main, comment) => !main ? comment : main.concat(', ', comment)
+
+  /*************************************************************************
+   ** Admin page                                                          **
+   *************************************************************************/
+  // pulls teams from DB to $scope.db_teams
+  $scope.pullTeamsFromDB = () => {
+    $http.get('/get_all_teams').then(({ data }) => {
+      $scope.db_teams = data.sort(sortParseInt)
+    })
+  }
+
+  $scope.teamSelected = team => {
+    $http.get('/get_all_cycles_by_team/' + team).then(({ data }) => {
+      $scope.team_cycles = data
+      $scope.selectedTeam = team
+    })
+  }
+
+  window.getSingleMatch = ({ value }) => {
+    $location.path('/report/' + value)
+    $scope.$apply()
+  }
+
+  // TODO - CHANGE FROM BARAK'S CODE TO AN ACTUAL CSV ENCODER.
+  const processRow = row => {
+    let finalVal = ''
+    for (let j = 0; j < row.length; j++) {
+      let innerValue = row[j] === null ? '' : row[j].toString()
+      if (row[j] instanceof Date) {
+        innerValue = row[j].toLocaleString()
+      }
+      let result = innerValue.replace(/"/g, '""')
+      if (result.search(/("|,|\n)/g) >= 0) {
+        result = '"' + result + '"'
+      }
+      if (j > 0) {
+        finalVal += ','
+      }
+      finalVal += result
+    }
+    return finalVal + '\n'
+  }
+
+  // TODO - Move this to the backend. This shouldn't envolve JavaScript code but rather should be generated automatically.
+  const exportToCsv = (filename, rows) => {
+    const csvFile = rows.reduce((prev, curr) => {
+      return prev + processRow(curr)
+    }, '')
+
+    const blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' })
+    if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, filename)
+    } else {
+      const link = document.createElement('a')
+      if (link.download !== undefined) { // feature detection
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob)
+        link.setAttribute('href', url)
+        link.setAttribute('download', filename)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    }
+  }
+
+  $scope.exportCSV = () => {
+    $http.get('/export_cycles/').then(({ data }) => {
+      const climbMap = ['Didn\'t Try', 'Failed', 'Successful']
+      const formattedData = data.map(element => ([
+        '', // Full Name
+        element.team,
+        element.match,
+        element.auto.autoRun ? 'TRUE' : 'FALSE',
+        'FALSE', // Auto Exchange
+        element.auto.switch,
+        0, // Auto Switch Fails
+        element.auto.scale,
+        0, // Auto Scale Fails
+        '', // Collection
+        element.teleop.switch,
+        0, // Teleop Switch Fails
+        element.teleop.scale,
+        0, // Teleop Scale Fails
+        element.teleop.exchange,
+        0, // Teleop Exchange Fails
+        element.teleop.platform ? 'TRUE' : 'FALSE',
+        climbMap[element.teleop.climb],
+        climbMap[element.teleop.partnerClimb],
+        element.techFoul ? 'TRUE' : 'FALSE',
+        '', // Defense Comments
+        element.comments
+      ]))
+      exportToCsv('export.csv', [['Header']].concat(formattedData))
+    })
+  }
+
+  $scope.setColor = ({ isVisible }) => ({ 'background-color': isVisible ? '#008CBA' : '#333' })
+
+  /*************************************************************************
+   ** Report page                                                         **
+   *************************************************************************/
+  $scope.hideCycle = id => {
+    $http.get('/hide_cycle/' + id).then(({ data }) => {
+      if (data.nModified === 1) {
+        $scope.cycleData.isVisible = false
+      }
+    })
+  }
+
+  $scope.unhideCycle = id => {
+    $http.get('/unhide_cycle/' + id).then(({ data }) => {
+      if (data.nModified === 1) {
+        $scope.cycleData.isVisible = true
+      }
+    })
+  }
+
+  /*************************************************************************
+   ** Table page                                                         **
+   *************************************************************************/
+
+  $scope.entryExists = (match, team) => (match in $scope.teamsPerMatch) && ($scope.teamsPerMatch[match].includes(parseInt(team)))
+  $scope.teamFiltered = (team, filterTeam) => filterTeam && team.includes(filterTeam)
+})
+
+app.directive('capitalize', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attrs, modelCtrl) {
+      const capitalize = function (inputValue) {
+        if (inputValue === undefined) inputValue = ''
+        const capitalized = inputValue.toUpperCase()
+        if (capitalized !== inputValue) {
+          modelCtrl.$setViewValue(capitalized)
+          modelCtrl.$render()
+        }
+        return capitalized
+      }
+      modelCtrl.$parsers.push(capitalize)
+      capitalize(scope[attrs.ngModel])
+    }
+  }
+})

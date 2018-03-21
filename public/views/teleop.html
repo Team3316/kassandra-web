@@ -1,45 +1,45 @@
 <button class="leftArrow" ui-sref="autonomous"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
+<div class="header">{{cycleData.team}} \ {{cycleData.match}}</div>
 <div class="center page-title">
     <h3>Teleoperated</h3>
 </div>
 <div class="content">
     <p class="comments-types">Collection</p>
-    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_floor" />Floor</label>
-    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_pyramid" />Pyramid</label>
-    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.collect_portal" />Portal</label>
+    <label><input type="checkbox" value="0" ng-model="cycleData.teleop.collectFloor" />Floor</label>
+    <label><input type="checkbox" value="0" ng-model="cycleData.teleop.collectPyramid" />Pyramid</label>
+    <label><input type="checkbox" value="0" ng-model="cycleData.teleop.collectPortal" />Portal</label>
     
     <p class="comments-types">Power Cubes</p>
-    <label>Exchange: {{cycle_data.teleop.exchange}}<label><br>
+    <label>Exchange: {{cycleData.teleop.exchange}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.exchange=inc_counter(cycle_data.teleop.exchange, 1)">+1</button>
-            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.exchange=dec_counter(cycle_data.teleop.exchange, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycleData.teleop.exchange=incCounter(cycleData.teleop.exchange, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycleData.teleop.exchange=decCounter(cycleData.teleop.exchange, 1)">−1</button>
     </div>
     
-    <label>Switch: {{cycle_data.teleop.switch}}<label><br>
+    <label>Switch: {{cycleData.teleop.switch}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.switch=inc_counter(cycle_data.teleop.switch, 1)">+1</button>
-            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.switch=dec_counter(cycle_data.teleop.switch, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycleData.teleop.switch=incCounter(cycleData.teleop.switch, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycleData.teleop.switch=decCounter(cycleData.teleop.switch, 1)">−1</button>
     </div>
     
-    <label>Scale: {{cycle_data.teleop.scale}}<label><br>
+    <label>Scale: {{cycleData.teleop.scale}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="cycle_data.teleop.scale=inc_counter(cycle_data.teleop.scale, 1)">+1</button>
-            <button class="btn btn-danger btn-lg" ng-click="cycle_data.teleop.scale=dec_counter(cycle_data.teleop.scale, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycleData.teleop.scale=incCounter(cycleData.teleop.scale, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycleData.teleop.scale=decCounter(cycleData.teleop.scale, 1)">−1</button>
     </div>
 
     <p class="comments-types">End Game</p>
-    <label><input type="checkbox" value="0" ng-model="cycle_data.teleop.platform" />Platform</label>
+    <label><input type="checkbox" value="0" ng-model="cycleData.teleop.platform" />Platform</label>
     
     <p class="comments-types">Climb</p>
-    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="0" />Nothing</label>
-    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="1" />Failed</label>
-    <label><input type="radio" name="climb" ng-model="cycle_data.teleop.climb" value="2" />Climbed</label>
+    <label><input type="radio" name="climb" ng-model="cycleData.teleop.climb" value="0" />Nothing</label>
+    <label><input type="radio" name="climb" ng-model="cycleData.teleop.climb" value="1" />Failed</label>
+    <label><input type="radio" name="climb" ng-model="cycleData.teleop.climb" value="2" />Climbed</label>
     
     <p class="comments-types">Partner Climb</p>
-    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="0" />Nothing</label>
-    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="1" />Failed</label>
-    <label><input type="radio" name="partner_climb" ng-model="cycle_data.teleop.partner_climb" value="2" />Climbed</label>
+    <label><input type="radio" name="partner_climb" ng-model="cycleData.teleop.partnerClimb" value="0" />Nothing</label>
+    <label><input type="radio" name="partner_climb" ng-model="cycleData.teleop.partnerClimb" value="1" />Failed</label>
+    <label><input type="radio" name="partner_climb" ng-model="cycleData.teleop.partnerClimb" value="2" />Climbed</label>
 </div>
 
 <div class="center">

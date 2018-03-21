@@ -1,22 +1,22 @@
 <button class="leftArrow" ui-sref="team_picker"><span class="glyphicon glyphicon-chevron-left"></span></button>
-<div class="header">{{cycle_data.team}} \ {{cycle_data.match}}</div>
+<div class="header">{{cycleData.team}} \ {{cycleData.match}}</div>
 <div class="center page-title">
     <h3>Autonomous</h3>
 </div>
 <div class="content">
-    <label><input type="checkbox" ng-model="cycle_data.auto.auto_run" value="0" />Auto Run</label>
+    <label><input type="checkbox" ng-model="cycleData.auto.autoRun" value="0" />Auto Run</label>
 
     <p class="comments-types">Power Cubes</p>
-    <label>Switch: {{cycle_data.auto.switch}}<label><br>
+    <label>Switch: {{cycleData.auto.switch}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="cycle_data.auto.switch=inc_counter(cycle_data.auto.switch, 1)">+1</button>
-            <button class="btn btn-danger btn-lg" ng-click="cycle_data.auto.switch=dec_counter(cycle_data.auto.switch, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycleData.auto.switch=incCounter(cycleData.auto.switch, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycleData.auto.switch=decCounter(cycleData.auto.switch, 1)">−1</button>
     </div>
     
-    <label>Scale: {{cycle_data.auto.scale}}<label><br>
+    <label>Scale: {{cycleData.auto.scale}}<label><br>
     <div class="btn-group">
-            <button class="btn btn-success btn-lg" ng-click="cycle_data.auto.scale=inc_counter(cycle_data.auto.scale, 1)">+1</button>
-            <button class="btn btn-danger btn-lg" ng-click="cycle_data.auto.scale=dec_counter(cycle_data.auto.scale, 1)">−1</button>
+            <button class="btn btn-success btn-lg" ng-click="cycleData.auto.scale=incCounter(cycleData.auto.scale, 1)">+1</button>
+            <button class="btn btn-danger btn-lg" ng-click="cycleData.auto.scale=decCounter(cycleData.auto.scale, 1)">−1</button>
     </div>
 </div>
 
