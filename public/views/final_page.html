@@ -8,15 +8,15 @@
     <p class = "comments-types">Comments</p>
     <textarea class="form-control" rows="5" ng-model="cycleData.comments"></textarea>
     <br />
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Bad Driver')">Bad Driver</button>
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Null Zone Foul')">Null Zone Foul</button>
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Launching Foul')">Launching Foul</button>
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Stopped Working')">Stopped Working</button>
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Collection')">Slow Collection</button>
-    <button class="btn btn-info commentButton" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Climb')">Slow Climb</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Bad Driver')">Bad Driver</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Null Zone Foul')">Null Zone Foul</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Launching Foul')">Launching Foul</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Stopped Working')">Stopped Working</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Collection')">Slow Collection</button>
+    <button class="btn btn-info commentButton" type="button" ng-click="cycleData.comments = concatComment(cycleData.comments, 'Slow Climb')">Slow Climb</button>
 
 <div class="center">
-    <button ng-click="submitData(cycleData)">Submit<span class="glyphicon glyphicon-ok"></span></button>
+    <button type="submit" ng-click="submitData(cycleData)">Submit<span class="glyphicon glyphicon-ok"></span></button>
 </div>
 
 </div>

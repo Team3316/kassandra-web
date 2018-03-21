@@ -4,8 +4,8 @@
     <h3>Report</h3>
 </div>
 <div class="content">
-    <button id="hideCycle" ng-click="hideCycle(cycleData._id);" ng-show="cycleData.isVisible">Hide</button>
-    <button id="unhideCycle" ng-click="unhideCycle(cycleData._id);" ng-show="!cycleData.isVisible">Unhide</button>
+    <button id="hideCycle" type="button" ng-click="hideCycle(cycleData._id);" ng-show="cycleData.isVisible">Hide</button>
+    <button id="unhideCycle" type="button" ng-click="unhideCycle(cycleData._id);" ng-show="!cycleData.isVisible">Unhide</button>
 
     <p class="comments-types">Autonomous</p>
     <p class="pReport" style="color: {{cycleData.auto.autoRun ? 'green' : 'red'}}">AutoRun: {{cycleData.auto.autoRun}}</p>
