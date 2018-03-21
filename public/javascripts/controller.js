@@ -269,14 +269,10 @@ app.directive('capitalize', function () {
 
 app.directive('myclick', function() {
     return function(scope, element, attrs) {
-        element.bind('touchstart mousedown click', function(event) {
+        element.bind('touchstart click', function(event) {
             event.preventDefault();
             event.stopPropagation();
             scope.$apply(attrs['myclick']);
-        });
-        element.bind('touchend mouseup', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
         });
     };
 });
