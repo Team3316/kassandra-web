@@ -17,7 +17,7 @@ const exportCycles = (req, res) => Cycle.find({ isVisible: true })
 const getCycleById = (req, res) => Cycle.findOne({ _id: req.params.id })
   .then(cycle => res.json(cycle))
 
-const shouldHideCycle = (hideStatus) => (req, res) => Cycle.update({ _id: req.params.id }, { isVisible: hideStatus })
+const setCycleVisibility = (hideStatus) => (req, res) => Cycle.update({ _id: req.params.id }, { isVisible: hideStatus })
   .then(cycle => res.json(cycle))
 
 const getCyclesByTeam = (getAll) => (req, res) => {
@@ -32,6 +32,6 @@ module.exports = {
   getCycles,
   exportCycles,
   getCycleById,
-  shouldHideCycle,
+  setCycleVisibility,
   getCyclesByTeam
 }

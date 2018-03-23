@@ -31,7 +31,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
    */
   $scope.teamsPerMatch = {}
   $scope.pullMatchTeam = () => {
-    $http.get('/get_cycles').then(({ data }) => {
+    $http.get('/export_cycles').then(({ data }) => {
       $scope.teamsPerMatch = data.reduce((prev, { match, team }) => {
         const lastData = prev[match]
         prev[match] = !!lastData && lastData.length > 0 ? [...lastData, team] : [team]

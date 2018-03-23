@@ -8,7 +8,7 @@ const {
   getCycles,
   exportCycles,
   getCycleById,
-  shouldHideCycle,
+  setCycleVisibility,
   getCyclesByTeam
 } = require('./db/routes')
 
@@ -28,9 +28,9 @@ router.get('/export_cycles', exportCycles)
 
 router.get('/get_cycle/:id', getCycleById)
 
-router.get('/hide_cycle/:id', shouldHideCycle(true))
+router.get('/hide_cycle/:id', setCycleVisibility(false))
 
-router.get('/unhide_cycle/:id', shouldHideCycle(false))
+router.get('/unhide_cycle/:id', setCycleVisibility(true))
 
 router.get('/get_cycles_by_team/:id', getCyclesByTeam(false))
 
