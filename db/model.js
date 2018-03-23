@@ -63,7 +63,7 @@ const dedupeCycles = () => Cycle.aggregate([{
     doc.dups.shift()
     return doc.dups
   }).reduce((p, c) => p.concat(c), [])
-}).then(dupsIds => Cycle.update({ _id: { $in: dupsIds } }, { $set: { isVisible: false } }))
+}).then(dupsIds => Cycle.update({ _id: { $in: dupsIds } }, { $set: { isVisible: false } }, { multi: true }))
 
 const connect = () => mongoose.connect(MONGO_URL)
 
