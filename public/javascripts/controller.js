@@ -21,6 +21,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
 
   const isEmptyMatch = item => item.match !== ''
   const sortParseInt = (a, b) => parseInt(a, 10) - parseInt(b, 10)
+  
+  $scope.getValueColor = Value => ({ 'color': Value ? 'green' : 'red' })
 
   /*************************************************************************
    ** Data pulling into local variables                                   **
@@ -134,6 +136,13 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
 
   $scope.teamSelected = team => {
     $http.get('/get_all_cycles_by_team/' + team).then(({ data }) => {
+      $scope.team_cycles = data
+      $scope.selectedTeam = team
+    })
+  }
+  
+  $scope.getCyclesByTeam = team => {
+    $http.get('/get_cycles_by_team/' + team).then(({ data }) => {
       $scope.team_cycles = data
       $scope.selectedTeam = team
     })

@@ -1,0 +1,15 @@
+<button class="leftArrow" ui-sref="admin"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div class="header">{{selectedTeam}}</div>
+<div class="center page-title">
+    <h3>Team Report</h3>
+</div>
+<div class="content">
+    <p class="comments-types">Autonomous</p>
+    <table class="table table-striped table-condensed table-bordered" align="center">
+        <th>Match</th>
+        <th ng-repeat="cycle in team_cycles">{{cycle.match}}</th>
+        <tr><th>Auto Run</th><td ng-repeat="cycle in team_cycles" ng-style="getValueColor(cycle.auto.autoRun)">{{cycle.auto.autoRun}}</td></tr>
+        <tr><th>Switch</th><td ng-repeat="cycle in team_cycles" ng-style="getValueColor(cycle.auto.switch)">{{cycle.auto.switch}}</td></tr>
+        <tr><th>Scale</th><td ng-repeat="cycle in team_cycles" ng-style="getValueColor(cycle.auto.scale)">{{cycle.auto.scale}}</td></tr>
+    </table>  
+</div>

@@ -49,6 +49,15 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       $scope.getCycle($stateParams.id)
     }
   })
+  
+  $stateProvider.state({
+    name: 'team_report',
+    url: '/team_report/:team',
+    templateUrl: '/views/team_report.html',
+    controller: function ($scope, $stateParams) {
+      $scope.getCyclesByTeam($stateParams.team)
+    }
+  })
 
   $stateProvider.state({
     name: 'table',

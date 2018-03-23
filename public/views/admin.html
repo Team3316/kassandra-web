@@ -11,6 +11,7 @@
 <div class="center" ng-init="selectedTeam && teamSelected(selectedTeam)">
     <div ng-show="selectedTeam">Team {{selectedTeam}}</div>
     <div class="btn-group-vertical">
+        <button class="btn btn-primary btn-lg" ui-sref="team_report({team: selectedTeam})" ng-show="selectedTeam">Team Report</button>
         <button class="btn btn-primary btn-lg" onclick="getSingleMatch(this);" ng-repeat="cycle in team_cycles" value="{{cycle._id}}" ng-style="setColor(cycle)">{{cycle.match}}</button>
     </div>
 </div>
