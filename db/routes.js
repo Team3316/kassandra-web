@@ -5,8 +5,7 @@ const newCycle = (req, res, next) => {
   cycle.save().then(doc => res.json(doc))
 }
 
-const getAllTeams = (req, res) => Cycle.find({}, 'team')
-  .then(docs => docs.map(d => d._doc.team).sort())
+const getAllTeams = (req, res) => Cycle.distinct('team', {})
   .then(teams => res.json(teams))
 
 const getCycles = (req, res) => Cycle.find({})
