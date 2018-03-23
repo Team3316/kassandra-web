@@ -3,40 +3,39 @@
 </div>
 
 <div class="team_picker_dialogues">
-<div>
-    <label style="display: inline;">Match (</label>
-    <label for="customMatch" style="display: inline; padding-left: 0px">Custom?</label>
-    <input type="checkbox" id="customMatch" ng-model="customMatch">
-    <label for="customMatch" style="display: inline; padding-left: 0px">)</label>
+    <div>
+        <label style="display: inline;">Match (</label>
+        <label for="customMatch" style="display: inline; padding-left: 0px">Custom?</label>
+        <input type="checkbox" id="customMatch" ng-model="customMatch">
+        <label for="customMatch" style="display: inline; padding-left: 0px">)</label>
+        
+        <md-input-container>
+            <md-select ng-model="cycleData.match" ng-change="teams=getTeamsInMatch(cycleData.match);" ng-show="!customMatch">
+                <md-select-header>
+                    <input ng-model="matches_filter" type="text" class="form-control input-lg" ng-keydown="$event.stopPropagation()">
+                </md-select-header>
+                <md-optgroup>
+                    <md-option ng-repeat="match in matches | filter: {name:matches_filter}" value="{{match.name}}">{{match.name}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
 
-    
-<md-input-container>
-    <md-select ng-model="cycleData.match" ng-change="teams=getTeamsInMatch(cycleData.match);" ng-show="!customMatch">
-        <md-select-header>
-            <input ng-model="matches_filter" type="text" class="form-control input-lg" ng-keydown="$event.stopPropagation()">
-        </md-select-header>
-        <md-optgroup>
-            <md-option ng-repeat="match in matches | filter: {name:matches_filter}" value="{{match.name}}">{{match.name}}</md-option>
-        </md-optgroup>
-    </md-select>
-</md-input-container>
+        <input ng-model="cycleData.match" ng-show="customMatch" ng-change="teams=getTeamsInMatch(cycleData.match);" style="width: 60%;" capitalize/>
+    </div>
 
-    <input ng-model="cycleData.match" ng-show="customMatch" ng-change="teams=getTeamsInMatch(cycleData.match);" style="width: 60%;" capitalize/>
-</div>
+    <div ng-show="cycleData.match">
+        <label>Team</label>
+        <md-select ng-model="cycleData.team" ng-show="!customMatch">
+            <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
+        </md-select>
+        <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="cycleData.team" ng-show="customMatch" style="width: 60%;" maxlength="4" />
+    </div>
 
-<div ng-show="cycleData.match">
-    <label>Team</label>
-    <md-select ng-model="cycleData.team" ng-show="!customMatch">
-        <md-option class="ateam" ng-repeat="team in teams" value="{{team}}">{{team}}</md-option>
-    </md-select>
-    <input type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="cycleData.team" ng-show="customMatch" style="width: 60%;" maxlength="4" />
+    <div class="center">
+        <button class="btn btn-default btn-lg" ui-sref="autonomous" ng-show="cycleData.match && cycleData.team">Continue &#8618</button>
+    </div>
 </div>
 
 <div class="center">
-    <button ui-sref="autonomous" ng-show="cycleData.match && cycleData.team">Continue</button>
-</div>
-</div>
-
-<div class="center">
-    <button class="btn btn-default btn-lg" ui-sref="admin">Admin &#8618</button>
+    <md-button class="md-raised" ui-sref="admin" ng-hide="cycleData.match && cycleData.team">Admin &#8618</button>
 </div>
