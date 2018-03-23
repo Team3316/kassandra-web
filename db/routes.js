@@ -8,9 +8,6 @@ const newCycle = (req, res, next) => {
 const getAllTeams = (req, res) => Cycle.distinct('team', {})
   .then(teams => res.json(teams))
 
-const getCycles = (req, res) => Cycle.find({})
-  .then(cycles => res.json(cycles))
-
 const exportCycles = (req, res) => Cycle.find({ isVisible: true })
   .then(cycles => res.json(cycles))
 
@@ -29,7 +26,6 @@ const getCyclesByTeam = (getAll) => (req, res) => {
 module.exports = {
   newCycle,
   getAllTeams,
-  getCycles,
   exportCycles,
   getCycleById,
   setCycleVisibility,

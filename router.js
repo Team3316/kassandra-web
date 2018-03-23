@@ -5,7 +5,6 @@ const router = Router()
 const {
   newCycle,
   getAllTeams,
-  getCycles,
   exportCycles,
   getCycleById,
   setCycleVisibility,
@@ -21,8 +20,6 @@ router.get('/', (req, res, next) => {
   res.header('Cache-Control', 'no-cache')
   res.render(join(__dirname, 'index.html'))
 })
-
-router.get('/get_cycles', getCycles)
 
 router.get('/export_cycles', exportCycles)
 
