@@ -18,9 +18,28 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
     if (a.time > b.time) return 1
     return 0
   }
+  
+  const matchValue = {PM: 0, QM: 1000, QF: 2000, SF: 3000, F1: 4000};
+  const getMatchNumber = match => {
+      if (Number.isInteger(match)) return match
+      
+      const matchType = match.slice(0,2)
+      var value = matchValue[matchType]
+      if (matchType == 'F1')
+          value += parseInt(match[3])
+      else if (matchType == 'QF' || matchType == 'SF')
+          value += parseInt(match[2]) * 100 + parseInt(match[4])
+      else
+          value += parseInt(match.slice(2,4))
+      return value
+  }
+  
+  $scope.sortByMatch = (a, b) => getMatchNumber(a.value) - getMatchNumber(b.value)
 
   const isEmptyMatch = item => item.match !== ''
   const sortParseInt = (a, b) => parseInt(a, 10) - parseInt(b, 10)
+  
+  $scope.getValueColor = Value => ({ 'color': Value ? 'green' : 'red' })
 
   /*************************************************************************
    ** Data pulling into local variables                                   **
@@ -134,6 +153,13 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
 
   $scope.teamSelected = team => {
     $http.get('/get_all_cycles_by_team/' + team).then(({ data }) => {
+      $scope.team_cycles = data
+      $scope.selectedTeam = team
+    })
+  }
+  
+  $scope.getCyclesByTeam = team => {
+    $http.get('/get_cycles_by_team/' + team).then(({ data }) => {
       $scope.team_cycles = data
       $scope.selectedTeam = team
     })
