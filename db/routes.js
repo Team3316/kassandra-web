@@ -1,4 +1,4 @@
-const { Cycle, dedupeCycles } = require('./model')
+const { Cycle, dedupeCycles, formatCsvOutput } = require('./model')
 
 const newCycle = (req, res, next) => {
   const cycle = new Cycle(req.body.cycleData)
@@ -27,6 +27,10 @@ const hideDuplicates = (req, res, next) => dedupeCycles()
   .then(data => res.json(data))
   .catch(err => next(err))
 
+const getCsvOutput = (req, res) => Cycle.find({ isVisible: true })
+  .then(cycles => cycles.map(formatCsvOutput))
+  .then(formatted => res.json(formatted))
+
 module.exports = {
   newCycle,
   getAllTeams,
@@ -34,5 +38,6 @@ module.exports = {
   getCycleById,
   setCycleVisibility,
   getCyclesByTeam,
-  hideDuplicates
+  hideDuplicates,
+  getCsvOutput
 }

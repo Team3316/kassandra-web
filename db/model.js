@@ -65,9 +65,36 @@ const dedupeCycles = () => Cycle.aggregate([{
   }).reduce((p, c) => p.concat(c), [])
 }).then(dupsIds => Cycle.update({ _id: { $in: dupsIds } }, { $set: { isVisible: false } }, { multi: true }))
 
+const climbMap = ['Didn\'t Try', 'Failed', 'Successful']
+const formatCsvOutput = cycle => ([
+  '', // Full Name
+  cycle.team,
+  cycle.match,
+  cycle.auto.autoRun ? 'TRUE' : 'FALSE',
+  'FALSE', // Auto Exchange
+  cycle.auto.switch,
+  0, // Auto Switch Fails
+  cycle.auto.scale,
+  0, // Auto Scale Fails
+  '', // Collection
+  cycle.teleop.switch,
+  0, // Teleop Switch Fails
+  cycle.teleop.scale,
+  0, // Teleop Scale Fails
+  cycle.teleop.exchange,
+  0, // Teleop Exchange Fails
+  cycle.teleop.platform ? 'TRUE' : 'FALSE',
+  climbMap[cycle.teleop.climb],
+  climbMap[cycle.teleop.partnerClimb],
+  cycle.techFoul ? 'TRUE' : 'FALSE',
+  '', // Defense Comments
+  cycle.comments
+])
+
 const connect = () => mongoose.connect(MONGO_URL)
 
 module.exports = {
+  formatCsvOutput,
   dedupeCycles,
   MONGO_URL,
   connect,
