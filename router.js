@@ -8,7 +8,8 @@ const {
   exportCycles,
   getCycleById,
   setCycleVisibility,
-  getCyclesByTeam
+  getCyclesByTeam,
+  hideDuplicates
 } = require('./db/routes')
 
 /* GET home page. */
@@ -20,6 +21,8 @@ router.get('/', (req, res, next) => {
   res.header('Cache-Control', 'no-cache')
   res.render(join(__dirname, 'index.html'))
 })
+
+router.get('/hide_duplicates', hideDuplicates)
 
 router.get('/export_cycles', exportCycles)
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = Promise // Use the included Promise implementation instead of mpromise
 
 const MONGO_URL = process.env.DEBUG === 'localhost'
-  ? 'localhost:27017/kassandra'
+  ? 'mongodb://localhost:27017/kassandra'
   : process.env.MONGODB_URI
 
 const collection = `cycles_${process.env.EVENTNAME}`
@@ -37,9 +37,38 @@ const cycleSchema = new mongoose.Schema({
 
 const Cycle = mongoose.model('Cycle', cycleSchema)
 
+const dedupeCycles = () => Cycle.aggregate([{
+  $match: {
+    isVisible: true
+  }
+}, {
+  $group: {
+    _id: {
+      match: '$match',
+      team: '$team',
+      teleop: '$teleop',
+      auto: '$auto',
+      techFoul: '$techFoul',
+      comments: '$comments'
+    },
+    cycleCount: { $sum: 1 },
+    dups: { $push: '$_id' }
+  }
+}, {
+  $match: {
+    cycleCount: { $gt: 1 }
+  }
+}]).then(docs => {
+  return docs.map(doc => {
+    doc.dups.shift()
+    return doc.dups
+  }).reduce((p, c) => p.concat(c), [])
+}).then(dupsIds => Cycle.update({ _id: { $in: dupsIds } }, { $set: { isVisible: false } }))
+
 const connect = () => mongoose.connect(MONGO_URL)
 
 module.exports = {
+  dedupeCycles,
   MONGO_URL,
   connect,
   Cycle
