@@ -64,7 +64,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
         $scope.cycleData = data
       })
       .catch(err => {
-        clear_data()
+        $scope.cycleData = {}
         console.err(err)
       })
   }
