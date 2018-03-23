@@ -10,7 +10,8 @@ const {
   setCycleVisibility,
   getCyclesByTeam,
   hideDuplicates,
-  getCsvOutput
+  getCsvOutput,
+  getCsvByTeam
 } = require('./db/routes')
 
 /* GET home page. */
@@ -40,6 +41,8 @@ router.get('/get_all_cycles_by_team/:id', getCyclesByTeam(true))
 router.get('/get_all_teams', getAllTeams)
 
 router.get('/get_csv', getCsvOutput)
+
+router.get('/get_csv/:team', getCsvByTeam)
 
 router.post('/new_cycle', newCycle)
 

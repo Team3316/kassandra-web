@@ -31,6 +31,10 @@ const getCsvOutput = (req, res) => Cycle.find({ isVisible: true })
   .then(cycles => cycles.map(formatCsvOutput))
   .then(formatted => res.json(formatted))
 
+const getCsvByTeam = (req, res) => Cycle.find({ isVisible: true, team: req.params.team })
+  .then(cycles => cycles.map(formatCsvOutput))
+  .then(formatted => res.json(formatted))
+
 module.exports = {
   newCycle,
   getAllTeams,
@@ -39,5 +43,6 @@ module.exports = {
   setCycleVisibility,
   getCyclesByTeam,
   hideDuplicates,
-  getCsvOutput
+  getCsvOutput,
+  getCsvByTeam
 }
