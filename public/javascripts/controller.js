@@ -18,27 +18,28 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
     if (a.time > b.time) return 1
     return 0
   }
-  
-  const matchValue = {PM: 0, QM: 1000, QF: 2000, SF: 3000, F1: 4000};
+
+  const matchValue = {PM: 0, QM: 1000, QF: 2000, SF: 3000, F1: 4000}
   const getMatchNumber = match => {
-      if (Number.isInteger(match)) return match
-      
-      const matchType = match.slice(0,2)
-      var value = matchValue[matchType]
-      if (matchType == 'F1')
-          value += parseInt(match[3])
-      else if (matchType == 'QF' || matchType == 'SF')
-          value += parseInt(match[2]) * 100 + parseInt(match[4])
-      else
-          value += parseInt(match.slice(2,4))
-      return value
+    if (Number.isInteger(match)) return match
+
+    const matchType = match.slice(0, 2)
+    var value = matchValue[matchType]
+    if (matchType === 'F1') {
+      value += parseInt(match[3])
+    } else if (matchType === 'QF' || matchType === 'SF') {
+      value += parseInt(match[2]) * 100 + parseInt(match[4])
+    } else {
+      value += parseInt(match.slice(2, 4))
+    }
+    return value
   }
-  
+
   $scope.sortByMatch = (a, b) => getMatchNumber(a.value) - getMatchNumber(b.value)
 
   const isEmptyMatch = item => item.match !== ''
   const sortParseInt = (a, b) => parseInt(a, 10) - parseInt(b, 10)
-  
+
   $scope.getValueColor = Value => ({ 'color': Value ? 'green' : 'red' })
 
   /*************************************************************************
@@ -157,7 +158,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
       $scope.selectedTeam = team
     })
   }
-  
+
   $scope.getCyclesByTeam = team => {
     $http.get('/get_cycles_by_team/' + team).then(({ data }) => {
       $scope.team_cycles = data
@@ -168,81 +169,6 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
   window.getSingleMatch = ({ value }) => {
     $location.path('/report/' + value)
     $scope.$apply()
-  }
-
-  // TODO - CHANGE FROM BARAK'S CODE TO AN ACTUAL CSV ENCODER.
-  const processRow = row => {
-    let finalVal = ''
-    for (let j = 0; j < row.length; j++) {
-      let innerValue = row[j] === null ? '' : row[j].toString()
-      if (row[j] instanceof Date) {
-        innerValue = row[j].toLocaleString()
-      }
-      let result = innerValue.replace(/"/g, '""')
-      if (result.search(/("|,|\n)/g) >= 0) {
-        result = '"' + result + '"'
-      }
-      if (j > 0) {
-        finalVal += ','
-      }
-      finalVal += result
-    }
-    return finalVal + '\n'
-  }
-
-  // TODO - Move this to the backend. This shouldn't envolve JavaScript code but rather should be generated automatically.
-  const exportToCsv = (filename, rows) => {
-    const csvFile = rows.reduce((prev, curr) => {
-      return prev + processRow(curr)
-    }, '')
-
-    const blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' })
-    if (navigator.msSaveBlob) { // IE 10+
-      navigator.msSaveBlob(blob, filename)
-    } else {
-      const link = document.createElement('a')
-      if (link.download !== undefined) { // feature detection
-        // Browsers that support HTML5 download attribute
-        const url = URL.createObjectURL(blob)
-        link.setAttribute('href', url)
-        link.setAttribute('download', filename)
-        link.style.visibility = 'hidden'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-      }
-    }
-  }
-
-  $scope.exportCSV = () => {
-    $http.get('/export_cycles/').then(({ data }) => {
-      const climbMap = ['Didn\'t Try', 'Failed', 'Successful']
-      const formattedData = data.map(element => ([
-        '', // Full Name
-        element.team,
-        element.match,
-        element.auto.autoRun ? 'TRUE' : 'FALSE',
-        'FALSE', // Auto Exchange
-        element.auto.switch,
-        0, // Auto Switch Fails
-        element.auto.scale,
-        0, // Auto Scale Fails
-        '', // Collection
-        element.teleop.switch,
-        0, // Teleop Switch Fails
-        element.teleop.scale,
-        0, // Teleop Scale Fails
-        element.teleop.exchange,
-        0, // Teleop Exchange Fails
-        element.teleop.platform ? 'TRUE' : 'FALSE',
-        climbMap[element.teleop.climb],
-        climbMap[element.teleop.partnerClimb],
-        element.techFoul ? 'TRUE' : 'FALSE',
-        '', // Defense Comments
-        element.comments
-      ]))
-      exportToCsv('export.csv', [['Header']].concat(formattedData))
-    })
   }
 
   $scope.setColor = ({ isVisible }) => ({ 'background-color': isVisible ? '#008CBA' : '#333' })

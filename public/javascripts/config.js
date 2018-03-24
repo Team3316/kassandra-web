@@ -69,13 +69,5 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     }
   })
 
-  $stateProvider.state({
-    name: 'export',
-    url: '/export',
-    controller: function ($scope, $stateParams) {
-      $scope.exportCSV()
-    }
-  })
-
   $urlRouterProvider.otherwise('/')
 })
