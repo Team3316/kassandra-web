@@ -6,7 +6,7 @@ Kassandra
 
 ## TODO
  - [ ] Use an actual CSV encoding library and not the in-house implementation
- - [ ] Move the CSV export to the backend
+ - [x] Move the CSV export to the backend
  - [ ] Make the UI better looking (ahem ahem material design)
  - [ ] Dependency management
  - [ ] React?
