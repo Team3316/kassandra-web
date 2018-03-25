@@ -78,7 +78,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       $scope.getTeamsAverages()
 
       $scope.sortTeamsAverages = () => {
-        let key = `${$scope.sortFilter}Average`
+        let key = $scope.sortFilter
         $scope.teamsAverages = $scope.teamsAverages.sort((a, b) => {
           if (a[key] > b[key]) return -1
           if (a[key] < b[key]) return 1
