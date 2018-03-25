@@ -101,13 +101,17 @@ const getAverages = () => Cycle.aggregate([{
     scaleAverage: { $avg: { $sum: ['$auto.scale', '$teleop.scale'] } },
     switchAverage: { $avg: { $sum: ['$auto.switch', '$teleop.switch'] } },
     exchangeAverage: { $avg: '$teleop.exchange' },
-    overallAverage: { $avg: { $sum: [
-      '$auto.scale',
-      '$teleop.scale',
-      '$auto.switch',
-      '$teleop.scale',
-      '$teleop.exchange'
-    ] } }
+    overallAverage: {
+      $avg: {
+        $sum: [
+          '$auto.scale',
+          '$auto.switch',
+          '$teleop.scale',
+          '$teleop.switch',
+          '$teleop.exchange'
+        ]
+      }
+    }
   }
 }])
 
