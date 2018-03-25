@@ -91,11 +91,32 @@ const formatCsvOutput = cycle => ([
   cycle.comments
 ])
 
+const getAverages = () => Cycle.aggregate([{
+  $match: {
+    isVisible: true
+  }
+}, {
+  $group: {
+    _id: '$team',
+    scaleAverage: { $avg: { $sum: ['$auto.scale', '$teleop.scale'] } },
+    switchAverage: { $avg: { $sum: ['$auto.switch', '$teleop.switch'] } },
+    exchangeAverage: { $avg: '$teleop.exchange' },
+    overallAverage: { $avg: { $sum: [
+      '$auto.scale',
+      '$teleop.scale',
+      '$auto.switch',
+      '$teleop.scale',
+      '$teleop.exchange'
+    ] } }
+  }
+}])
+
 const connect = () => mongoose.connect(MONGO_URL)
 
 module.exports = {
   formatCsvOutput,
   dedupeCycles,
+  getAverages,
   MONGO_URL,
   connect,
   Cycle

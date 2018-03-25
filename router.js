@@ -11,7 +11,8 @@ const {
   getCyclesByTeam,
   hideDuplicates,
   getCsvOutput,
-  getCsvByTeam
+  getCsvByTeam,
+  getTeamsAverages
 } = require('./db/routes')
 
 /* GET home page. */
@@ -45,6 +46,8 @@ router.get('/get_csv', getCsvOutput)
 router.get('/get_csv/:team', getCsvByTeam)
 
 router.post('/new_cycle', newCycle)
+
+router.get('/get_teams_averages', getTeamsAverages)
 
 router.get('/eventname', (req, res, next) => res.send(process.env.EVENTNAME))
 
