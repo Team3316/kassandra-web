@@ -1,4 +1,4 @@
-/* global angular, Blob, URL */
+/* global angular */
 const app = angular.module('Kassandra', ['ngMaterial', 'ngCookies', 'ui.router'])
 
 app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $location, $state) {
@@ -195,9 +195,22 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
   /*************************************************************************
    ** Table page                                                         **
    *************************************************************************/
-
   $scope.entryExists = (match, team) => (match in $scope.teamsPerMatch) && ($scope.teamsPerMatch[match].includes(parseInt(team)))
   $scope.teamFiltered = (team, filterTeam) => filterTeam && team.includes(filterTeam)
+
+  /*************************************************************************
+   ** Alliance picking page
+   *************************************************************************/
+  $scope.teamsAverages = []
+  $scope.getTeamsAverages = () => {
+    $http.get('/get_teams_averages').then(({ data }) => {
+      $scope.teamsAverages = data.sort((a, b) => {
+        if (a.overallAverage > b.overallAverage) return -1
+        if (a.overallAverage < b.overallAverage) return 1
+        return 0
+      })
+    })
+  }
 })
 
 app.directive('capitalize', function () {

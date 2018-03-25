@@ -1,0 +1,34 @@
+<md-content>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 flex md-truncate>Rankings</h2>
+    </div>
+  </md-toolbar>
+
+  <md-input-group>
+    <label>Sort by</label>
+    <md-select ng-model="sortFilter" ng-change="sortTeamsAverages()" placeholder="Sort by">
+      <md-option value="overall">Overall</md-option>
+      <md-option value="scale">Scale</md-option>
+      <md-option value="switch">Switch</md-option>
+      <md-option value="exchange">Exchange</md-option>
+    </md-select>
+  </md-input-group>
+
+  <br />
+  <md-divider />
+  <br />
+  <br />
+
+  <label>Ranks:</label>
+  <md-divider />
+  <md-list>
+    <md-list-item class="md-2-line" ng-repeat="avg in teamsAverages">
+      <div class="md-list-item-text">
+        <h3>{{$index + 1}}. Team #{{avg._id}}</h3>
+        <p>Overall: {{avg.overallAverage}} | Scale: {{avg.scaleAverage}} | Switch: {{avg.switchAverage}} | Exchange: {{avg.exchangeAverage}}</p>
+      </div>
+      <md-divider />
+    </md-list-item>
+  </md-list>
+</md-content>

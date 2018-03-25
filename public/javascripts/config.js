@@ -1,8 +1,8 @@
 /* global app */
 app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('cyan')
-    .accentPalette('teal')
+    .primaryPalette('orange')
+    .accentPalette('grey')
 
   $stateProvider.state({
     name: 'team_picker',
@@ -49,7 +49,7 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       $scope.getCycle($stateParams.id)
     }
   })
-  
+
   $stateProvider.state({
     name: 'team_report',
     url: '/team_report/:team',
@@ -66,6 +66,25 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     controller: function ($scope, $stateParams) {
       $scope.pullMatchesFromTBA()
       $scope.pullMatchTeam()
+    }
+  })
+
+  $stateProvider.state({
+    name: 'rankings',
+    url: '/rankings',
+    templateUrl: '/views/rankings.html',
+    controller: function ($scope, $stateParams) {
+      $scope.sortFilter = 'overall'
+      $scope.getTeamsAverages()
+
+      $scope.sortTeamsAverages = () => {
+        let key = `${$scope.sortFilter}Average`
+        $scope.teamsAverages = $scope.teamsAverages.sort((a, b) => {
+          if (a[key] > b[key]) return -1
+          if (a[key] < b[key]) return 1
+          return 0
+        })
+      }
     }
   })
 
