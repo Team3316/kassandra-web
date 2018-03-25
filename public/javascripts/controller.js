@@ -209,6 +209,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
         if (a.overallAverage < b.overallAverage) return 1
         return 0
       }).map(avg => ({
+        _id: avg._id,
         overall: Math.round(avg.overallAverage),
         scale: Math.round(avg.scaleAverage),
         switch: Math.round(avg.switchAverage),
