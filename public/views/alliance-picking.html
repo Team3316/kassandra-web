@@ -1,0 +1,32 @@
+<md-content>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 flex md-truncate>Alliance Picking</h2>
+    </div>
+  </md-toolbar>
+
+  <md-input-group>
+    <label>Next Pick:</label>
+    <md-select ng-model="pickFilter" ng-change="changePicks()" placeholder="Sort by">
+      <md-option value="firstPick">1st pick</md-option>
+      <md-option value="secondPick">2nd pick</md-option>
+      <md-option value="other">Other teams</md-option>
+    </md-select>
+  </md-input-group>
+
+  <br />
+  <md-divider />
+  <br />
+  <br />
+
+  <label>Teams to pick:</label>
+  <md-divider />
+  <md-list>
+    <md-list-item class="md-2-line" ng-repeat="team in pickedTeams">
+      <div class="md-list-item-text">
+        <h3>{{team.rank}} Team #{{team.number}}</h3>
+        <p>Scale: {{team.scale}} | Switch: {{team.switch}} | Exchange: {{team.exchange}}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+</md-content>

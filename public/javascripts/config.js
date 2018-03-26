@@ -88,5 +88,46 @@ app.config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider) {
     }
   })
 
+  $stateProvider.state({
+    name: 'alliance_picking',
+    url: '/alliance_picking',
+    templateUrl: '/views/alliance-picking.html',
+    controller: function ($scope) {
+      $scope.pickFilter = 'firstPick'
+
+      const teamsDisplay = rankings => rankings.map(teamRank => {
+        const { number, rank } = teamRank
+        const averages = $scope.teamsAverages.filter(({ _id }) => _id === number)[0]
+        const emptyAvg = {
+          scale: -1,
+          switch: -1,
+          exchange: -1
+        }
+
+        return {
+          number,
+          rank,
+          scale: (averages || emptyAvg).scale,
+          switch: (averages || emptyAvg).switch,
+          exchange: (averages || emptyAvg).exchange
+        }
+      })
+
+      $scope.getTeamsAverages()
+        .then(() => $scope.getTeamsRankings())
+        .then(({ firstPick, secondPick, other }) => {
+          console.log($scope.teamsAverages)
+          $scope.pickedTeams = teamsDisplay(firstPick)
+          $scope.firstPick = firstPick
+          $scope.secondPick = secondPick
+          $scope.other = other
+        })
+
+      $scope.changePicks = () => {
+        $scope.pickedTeams = teamsDisplay($scope[$scope.pickFilter])
+      }
+    }
+  })
+
   $urlRouterProvider.otherwise('/')
 })

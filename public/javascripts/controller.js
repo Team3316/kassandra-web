@@ -202,8 +202,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
    ** Alliance picking page
    *************************************************************************/
   $scope.teamsAverages = []
-  $scope.getTeamsAverages = () => {
-    $http.get('/get_teams_averages').then(({ data }) => {
+  $scope.getTeamsAverages = () => $http.get('/get_teams_averages')
+    .then(({ data }) => {
       $scope.teamsAverages = data.sort((a, b) => {
         if (a.overallAverage > b.overallAverage) return -1
         if (a.overallAverage < b.overallAverage) return 1
@@ -216,7 +216,21 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
         exchange: Math.round(avg.exchangeAverage)
       }))
     })
-  }
+
+  $scope.getTeamsRankings = () => $http.get('/rankings')
+    .then(({ data }) => {
+      const rankings = data.sort((a, b) => {
+        if (a.rank < b.rank) return -1
+        if (a.rank > b.rank) return 1
+        return 0
+      }).filter(r => r.number !== 3316)
+
+      return {
+        firstPick: rankings.filter((_, i) => i <= 8),
+        secondPick: rankings.filter((_, i) => i > 8 && i <= 16),
+        other: rankings.filter((_, i) => i > 16)
+      }
+    })
 })
 
 app.directive('capitalize', function () {
