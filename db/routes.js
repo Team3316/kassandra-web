@@ -45,8 +45,8 @@ const getTeamsAverages = (req, res) => getAverages()
   .then(docs => res.json(docs))
 
 const addRankings = (req, res) => Promise.all(
-  req.body.ranks.map(data => {
-    const team = new Team(data)
+  req.body.ranks.map((number, i) => {
+    const team = new Team({ number, rank: i + 1 })
     return team.save()
   })
 ).then(docs => res.json(docs))
