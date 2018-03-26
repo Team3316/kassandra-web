@@ -1,4 +1,5 @@
 const {
+  Team,
   Cycle,
   getAverages,
   dedupeCycles,
@@ -43,6 +44,13 @@ const getCsvByTeam = (req, res) => Cycle.find({ isVisible: true, team: req.param
 const getTeamsAverages = (req, res) => getAverages()
   .then(docs => res.json(docs))
 
+const setRankings = (req, res) => Promise.all(
+  req.body.newRanks.map((number, i) => Team.update({ number }, { $set: { rank: i + 1 } }))
+).then(resp => res.json(resp))
+
+const getRankings = (req, res) => Team.find({})
+  .then(teams => res.json(teams))
+
 module.exports = {
   newCycle,
   getAllTeams,
@@ -53,5 +61,7 @@ module.exports = {
   hideDuplicates,
   getCsvOutput,
   getCsvByTeam,
-  getTeamsAverages
+  getTeamsAverages,
+  setRankings,
+  getRankings
 }

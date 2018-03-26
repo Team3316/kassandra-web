@@ -5,7 +5,7 @@ const MONGO_URL = process.env.DEBUG === 'localhost'
   ? 'mongodb://localhost:27017/kassandra'
   : process.env.MONGODB_URI
 
-const collection = `cycles_${process.env.EVENTNAME}`
+const cycleCollection = `cycles_${process.env.EVENTNAME}`
 const cycleSchema = new mongoose.Schema({
   match: String,
   team: Number,
@@ -33,9 +33,17 @@ const cycleSchema = new mongoose.Schema({
   techFoul: Boolean,
   comments: String,
   isVisible: { type: Boolean, default: true }
-}, { collection })
+}, { collection: cycleCollection })
 
 const Cycle = mongoose.model('Cycle', cycleSchema)
+
+const teamCollection = `teams_${process.env.EVENTNAME}`
+const teamSchema = new mongoose.Schema({
+  number: Number,
+  rank: Number
+}, { collection: teamCollection })
+
+const Team = mongoose.model('Team', teamSchema)
 
 const dedupeCycles = () => Cycle.aggregate([{
   $match: {
@@ -123,5 +131,6 @@ module.exports = {
   getAverages,
   MONGO_URL,
   connect,
-  Cycle
+  Cycle,
+  Team
 }
