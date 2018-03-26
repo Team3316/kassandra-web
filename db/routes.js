@@ -44,7 +44,14 @@ const getCsvByTeam = (req, res) => Cycle.find({ isVisible: true, team: req.param
 const getTeamsAverages = (req, res) => getAverages()
   .then(docs => res.json(docs))
 
-const setRankings = (req, res) => Promise.all(
+const addRankings = (req, res) => Promise.all(
+  req.body.ranks.map(data => {
+    const team = new Team(data)
+    return team.save()
+  })
+).then(docs => res.json(docs))
+
+const updateRankings = (req, res) => Promise.all(
   req.body.newRanks.map((number, i) => Team.update({ number }, { $set: { rank: i + 1 } }))
 ).then(resp => res.json(resp))
 
@@ -62,6 +69,7 @@ module.exports = {
   getCsvOutput,
   getCsvByTeam,
   getTeamsAverages,
-  setRankings,
+  addRankings,
+  updateRankings,
   getRankings
 }

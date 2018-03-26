@@ -14,7 +14,8 @@ const {
   getCsvByTeam,
   getTeamsAverages,
   getRankings,
-  setRankings
+  addRankings,
+  updateRankings
 } = require('./db/routes')
 
 /* GET home page. */
@@ -53,7 +54,9 @@ router.get('/get_teams_averages', getTeamsAverages)
 
 router.get('/rankings', getRankings)
 
-router.post('/rankings', setRankings)
+router.post('/rankings', addRankings)
+
+router.put('/rankings', updateRankings)
 
 router.get('/eventname', (req, res, next) => res.send(process.env.EVENTNAME))
 
