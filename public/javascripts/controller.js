@@ -227,8 +227,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $http, $cookies, $locati
 
       return {
         firstPick: rankings.filter((_, i) => i <= 8),
-        secondPick: rankings.filter((_, i) => i > 8 && i <= 16),
-        other: rankings.filter((_, i) => i > 16)
+        secondPick: rankings.filter((_, i) => i > 8 && i <= 22),
+        other: rankings.filter((_, i) => i > 22)
       }
     })
 })
